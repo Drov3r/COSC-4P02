@@ -1,0 +1,20 @@
+greeting	 hi hi. hello how are you ? hey . hows it going good morning good evening good afternoon howdy 
+calendar	 Where do I find my course calendar ?
+timetable	 Where do I find my course timetable ?
+credits	 Should I add 3.0 credits in Winter ?
+restricted	 What does restricted mean ?
+conflict	 What can I do if I have a scheduling conflict ?
+tuition	 When will tuition fees be updated ?
+resp	 How do I order a confirmation letter for an RESP ?
+electives	 Where can I find a list of electives ?
+class_types	 What do the different class type acronyms mean ?
+lec_lec2	 What is the difference between LEC and LEC2 ?
+permission	 What does permission of instructor mean ?
+context_credits	 Where do I find information on context credits ?
+where_register	 Where do I go to register ?
+text_books	 Where do I find my text books ?
+advisor	 How do I find my academic advisor ?
+course_codes	 What do the letters in the course codes mean ?
+durations	 What do the durations mean ?
+days_of_week	 What do the day-of-the-week letters mean ?
+building_codes	 What do the building codes mean ?
