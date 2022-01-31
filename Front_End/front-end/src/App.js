@@ -13,6 +13,7 @@ function App() {
   // 'click' is the variable we can access, 'setClick' is our "setter function"
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
+  const [dialogue,setDialogue] = useState([])
 
   // function to handle the menu clicks
   function clickMenu(){
@@ -26,18 +27,23 @@ function App() {
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
-
+        
   })
 
   function chatLogs(){
 
-      return(
-          <div>
-            <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-              <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>Some Text</h3>
-            </div>
-          </div>
+    const divItUp = dialogue.map(function(data, index) {
+      return (
+        <div>
+        <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+          <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data}</h3>
+        </div>
+      </div>
       )
+    })
+
+      return divItUp
+      
   }
 
   function menuItems(){
@@ -71,8 +77,11 @@ function App() {
 
   function sendMsg(){
 
-    console.log("send")
-
+    const data = dialogue
+    data.push(newMsg)
+    setDialogue(data)
+    console.log(dialogue)
+    setNewMsg('')
   }
 
 
@@ -108,27 +117,27 @@ function App() {
           : /* ELSE */
               
               <>
-              <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', }}>
+              <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>
                     
                     {chatLogs()}
 
               </div>
 
-              <div style={{position:'absolute', bottom:0, left:0, height:'10%', width:'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
+              <div style={{position:'absolute', top:'90%', left:0, height:'10%', width:'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden'}}>
                     
-                    <div style={{height:'100%', width:'100%',}}>
+                    <div style={{height:'100%', width:'100%',backgroundColor:'white'}}>
                     
-                      <div style={{display:'inline-block', width:'60%',height:'100%', }}>
+                      <div style={{position:'absolute', top:'0', left:0, height:'100%',width:'65%',padding:'3%',  }}>
                         
                         {enterMessage()}
 
                       </div>
 
-                      <div style={{display:'inline-block', width:'15%',height:'100%',  marginLeft:'2%',}}>
+                      <div style={{position:'absolute', top:'0', left:'70%', height:'100%',width:'30%',padding:'3%',  }}>
                         
                         {/* Send Message Button*/}
                         <a onClick={()=>sendMsg()}> 
-                          <img src={send} style={{width:'40px',paddingTop:'30%'}}/>
+                          <img src={send} style={{width:'40px',}}/>
                         </a>
 
                       </div>
