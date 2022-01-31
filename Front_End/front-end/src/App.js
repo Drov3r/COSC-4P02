@@ -13,13 +13,12 @@ function App() {
   // 'click' is the variable we can access, 'setClick' is our "setter function"
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
-  const [dialogue,setDialogue] = useState([])
+  const [dialogue,setDialogue] = useState([{message:'hey, im badger bot', bot:true, }])
 
   // function to handle the menu clicks
   function clickMenu(){
 
       setClick(!click)
-      //console.log(click)
 
   }
 
@@ -33,13 +32,25 @@ function App() {
   function chatLogs(){
 
     const divItUp = dialogue.map(function(data, index) {
-      return (
-        <div>
-        <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-          <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data}</h3>
+      
+      if(data.bot==true){
+        return (
+          <div>
+          <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+            <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+          </div>
         </div>
-      </div>
-      )
+        )
+      }else{
+        return (
+          <div>
+          <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+            <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+          </div>
+        </div>
+        )
+      }
+      
     })
 
       return divItUp
@@ -72,15 +83,31 @@ function App() {
 
   function setNewMsgFunction(e){
       setNewMsg(e.target.value)
-      console.log(e.target.value)
   }
 
   function sendMsg(){
 
+    // copy the global array
     const data = dialogue
-    data.push(newMsg)
+    
+    // human msg
+    // create a message object, get the message from the newMsg state, which is set in input tag
+    const newHumanMessage = {message:newMsg, bot:false}
+    // push new message object to array
+    data.push(newHumanMessage)
+
+    // auto bot msg
+    // create a message object, get the message from the newMsg state, which is set in input tag
+    const newBotMessage = {message:"Im not smart yet. Soon though.", bot:true}
+    // push new message object to array
+    data.push(newBotMessage)
+
+    // set the state with the new array
     setDialogue(data)
-    console.log(dialogue)
+
+    
+
+    // empty the text input
     setNewMsg('')
   }
 
