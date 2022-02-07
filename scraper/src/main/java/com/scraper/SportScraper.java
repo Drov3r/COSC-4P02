@@ -1,22 +1,17 @@
-package com.example;
+package com.scraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public final class App {
-    private App() throws IOException {
-        scrapeEvents();
-    }
-
-    public void scrapeEvents() throws IOException{
-        Document doc = Jsoup.connect("https://niagara2022games.ca/events/").get();
+public final class SportScraper {
+    public SportScraper() throws IOException {
+        Document doc = Jsoup.connect("https://niagara2022games.ca/sports/").get();
         Elements cards = doc.body().getElementsByClass("card rounded shadow");
 
         ArrayList<String[]> events = new ArrayList<>(); // format will be: name, date, description, link, imageURL
@@ -51,13 +46,9 @@ public final class App {
                 }
             }
         }
-
+        System.out.println("");
         for (String[] strings : events) {
-            System.out.println(strings[0] + " " + strings[1] + " " + strings[2] + " " + strings[3] + " " + strings[4]);
+            System.out.println(strings[0] + "\n" + strings[1] + "\n" + strings[2] + "\n" + strings[3] + "\n" + strings[4] + "\n");
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        App a = new App();
     }
 }
