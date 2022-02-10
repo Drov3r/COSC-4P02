@@ -9,6 +9,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+
+
+
+
+
+/***************************************************************************************************************
+         * *************************************INCOMPLETE *************************************************************
+         * ************************************************************************************************************** */
+
+         
 public final class SportScraper {
     public SportScraper() throws IOException {
         Document doc = Jsoup.connect("https://niagara2022games.ca/sports/").get();
