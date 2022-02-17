@@ -44,13 +44,13 @@ public final class Scraper {
 
         CardScraper newsScraper = new CardScraper("news");
         ArrayList<String[]> news = getFromDB("news", new String[]{"name", "date", "description", "link", "imageURL"});
-        insertCards(newsScraper, events, "news");
-        deleteCards(newsScraper, events, "news");
+        insertCards(newsScraper, news, "news");
+        deleteCards(newsScraper, news, "news");
 
         CardScraper alumniScraper = new CardScraper("alumni");
         ArrayList<String[]> alumni = getFromDB("alumni", new String[]{"name", "date", "description", "link", "imageURL"});
-        insertCards(alumniScraper, events, "alumni");
-        deleteCards(alumniScraper, events, "alumni");
+        insertCards(alumniScraper, alumni, "alumni");
+        deleteCards(alumniScraper, alumni, "alumni");
 
     }
 
