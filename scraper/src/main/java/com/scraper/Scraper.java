@@ -35,23 +35,21 @@ public final class Scraper {
 
         connection = connectToDB();
 
-        // scraping events, create another ____scraper for each page 
-        // selects events currently in db, then adds any that aren't there, removes any that were there before and aren't anymore
-        CardScraper eventScraper = new CardScraper("events");
-        ArrayList<String[]> events = getFromDB("events", new String[]{"name", "date", "description", "link", "imageURL"});
-        insertCards(eventScraper, events, "events");
-        deleteCards(eventScraper, events, "events");      
+        // create another scrape for each page 
+        scrape("events", new String[]{"name", "date", "description", "link", "imageURL"});
+        scrape("news", new String[]{"name", "date", "description", "link", "imageURL"});
+        scrape("alumni", new String[]{"name", "date", "description", "link", "imageURL"});
 
-        CardScraper newsScraper = new CardScraper("news");
-        ArrayList<String[]> news = getFromDB("news", new String[]{"name", "date", "description", "link", "imageURL"});
-        insertCards(newsScraper, news, "news");
-        deleteCards(newsScraper, news, "news");
+    }
 
-        CardScraper alumniScraper = new CardScraper("alumni");
-        ArrayList<String[]> alumni = getFromDB("alumni", new String[]{"name", "date", "description", "link", "imageURL"});
-        insertCards(alumniScraper, alumni, "alumni");
-        deleteCards(alumniScraper, alumni, "alumni");
-
+    /**
+     * selects events currently in db, then adds any that aren't there, removes any that were there before and aren't anymore
+     */
+    public void scrape(String tableName, String[] headers) throws IOException{
+        CardScraper scraper = new CardScraper(tableName);
+        ArrayList<String[]> items = getFromDB(tableName, headers);
+        insertCards(scraper, items, tableName);
+        deleteCards(scraper, items, tableName);
     }
 
     public void insertCards(CardScraper cardScraper, ArrayList<String[]> cards, String tableName){
