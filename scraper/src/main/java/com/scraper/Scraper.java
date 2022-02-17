@@ -46,27 +46,28 @@ public final class Scraper {
      * selects events currently in db, then adds any that aren't there, removes any that were there before and aren't anymore
      */
     public void scrape(String tableName, String[] headers) throws IOException{
+        // use if to determine which scraper to use
         CardScraper scraper = new CardScraper(tableName);
         ArrayList<String[]> items = getFromDB(tableName, headers);
-        insertCards(scraper, items, tableName);
+        insertCards(scraper, items, tableName, headers);
         deleteCards(scraper, items, tableName);
     }
 
-    public void insertCards(CardScraper cardScraper, ArrayList<String[]> cards, String tableName){
-        String sql = "INSERT INTO " + tableName + "(name, date, description, link, imageURL) VALUES(?,?,?,?,?)";
+    public void insertCards(CardScraper scraper, ArrayList<String[]> items, String tableName, String[] headers){
+
+        String sql = generateInsertSQL(tableName, headers);
+        
+        System.out.println(sql);
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            // event format will be: name, date, description, link, imageURL
-            for (String[] card : cardScraper.cards) {
-                if (!exists(card, cards)){
-                    statement.setString(1, card[0]); // set name
-                    statement.setString(2, card[1]); // set date
-                    statement.setString(3, card[2]); // set description
-                    statement.setString(4, card[3]); // set link
-                    statement.setString(5, card[4]); // set imageURL
+            for (String[] item : scraper.items) {
+                if (!exists(item, items)){
+                    for (int i=0; i<headers.length; i++){
+                        statement.setString(i+1, item[i]);
+                    }
                     statement.addBatch();
-                    System.out.println("added to " + tableName + " - " + card[0]);
+                    System.out.println("added to " + tableName + " - " + item[0]);
                 }
             }
             statement.executeBatch();
@@ -75,12 +76,27 @@ public final class Scraper {
         }
     }
 
+    public String generateInsertSQL(String tableName, String[] headers){
+        String sql = "INSERT INTO " + tableName + "(";
+        for (int i=0; i<headers.length; i++){
+            sql += headers[i];
+            if ((i+1)<headers.length) sql+=", ";
+        }
+        sql += ") VALUES(";
+        for (int i=0; i<headers.length; i++){
+            sql += "?";
+            if ((i+1)<headers.length) sql+=",";
+            else sql+=")";
+        }
+        return sql;
+    }
+    
     public void deleteCards(CardScraper cardScraper, ArrayList<String[]> cards, String tableName){
         String sql = "DELETE FROM " + tableName + " WHERE name=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             for (String[] card : cards) {
-                if (!exists(card, cardScraper.cards)){
+                if (!exists(card, cardScraper.items)){
                     statement.setString(1, card[0]);
                     statement.addBatch();
                     System.out.println("deleted from " + tableName + " - " + card[0]);

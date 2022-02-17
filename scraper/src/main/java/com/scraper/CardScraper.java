@@ -11,7 +11,7 @@ import org.jsoup.select.Elements;
 
 public final class CardScraper {
 
-    public ArrayList<String[]> cards = new ArrayList<>(); // format will be: name, date, description, link, imageURL
+    public ArrayList<String[]> items = new ArrayList<>(); // format will be: name, date, description, link, imageURL
 
     public CardScraper(String cardType) throws IOException {
 
@@ -44,13 +44,13 @@ public final class CardScraper {
             imageMatcher.find();
             descriptionMatcher.find();
             if (linkMatcher!=null && nameMatcher != null && descriptionMatcher != null && imageMatcher != null && dateMatcher != null ){
-                if (cards.size()>0){
-                    if (!linkMatcher.group(1).contains(cards.get(cards.size()-1)[0])){
-                        cards.add(new String[]{nameMatcher.group(1), dateMatcher.group(1), descriptionMatcher.group(1), linkMatcher.group(1), imageMatcher.group(1)});
+                if (items.size()>0){
+                    if (!linkMatcher.group(1).contains(items.get(items.size()-1)[0])){
+                        items.add(new String[]{nameMatcher.group(1), dateMatcher.group(1), descriptionMatcher.group(1), linkMatcher.group(1), imageMatcher.group(1)});
                     }
                 }
                 else {
-                    cards.add(new String[]{nameMatcher.group(1), dateMatcher.group(1), descriptionMatcher.group(1), linkMatcher.group(1), imageMatcher.group(1)});
+                    items.add(new String[]{nameMatcher.group(1), dateMatcher.group(1), descriptionMatcher.group(1), linkMatcher.group(1), imageMatcher.group(1)});
                 }
             }
         }
