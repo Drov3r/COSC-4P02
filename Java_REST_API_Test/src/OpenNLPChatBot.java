@@ -146,8 +146,8 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private DoccatModel trainCategorizerModel() throws FileNotFoundException, IOException {
-		// faq-categorizer.txt is a custom training data with categories as per our chat requirements.
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("faq-categorizer.txt"));
+		// TrainingFile.txt is a custom training data with categories as per our chat requirements.
+		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("TrainingFile.txt"));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
 		ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
