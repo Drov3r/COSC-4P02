@@ -2,17 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 
 import menu from './icons/menu-black.png'
-import send from './icons/plane-red.png'
+import send from './icons/plane-blue.png'
 
 import { useEffect, useState } from 'react';
 
 import Hamburger from 'hamburger-react'
 
-import cuid from 'cuid';
-
 import { v4 as uuidv4 } from 'uuid';
 
-
+/*
+This is where all the developed code for the apps front end is
+*/
 function App() {
 
   // initialize our click state variable to 'false'
@@ -24,37 +24,40 @@ function App() {
 
   const uuid = uuidv4();
 
-  // function to handle the menu clicks
+  // Setter function to handle the menu clicks
   function clickMenu(){
 
       setClick(!click)
-
   }
 
   /*
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
-        
+        // currently not being used 
   })
 
+  /*
+  This function returns the dialogue message HTML <h3> tag, wrapped in a stylized div
+  */
   function chatLogs(){
 
     const divItUp = dialogue.map(function(data, index) {
       
+      // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         return (
           <div>
-          <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-            <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+          <div style={{marginTop:'25px',borderRadius:'20px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+            <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
           </div>
         </div>
         )
       }else{
         return (
           <div>
-            <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-              <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+            <div style={{marginTop:'25px',borderRadius:'20px', backgroundColor:'#007F90', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+              <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
             </div>
           </div>
         )
@@ -66,15 +69,21 @@ function App() {
       
   }
 
+  /*
+  This function returns the menu header HTML <h1> tag, wrapped in a stylized div
+  */
   function menuItems(){
 
       return(
           <div>
-            <h1 style={{fontSize:'40px', color:'#EB5757', margin:'10%'}}>Menu</h1>
+            <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%'}}>Menu</h1>
           </div>
       )
   }
 
+  /*
+  This function returns the message box HTML <input> tag, wrapped in a stylized div
+  */
   function enterMessage(){
 
       return(
@@ -84,33 +93,37 @@ function App() {
           placeholder={'Message'} 
           
           style={{marginLeft:'5%',borderRadius:'70px', width:'90%', height:'40px', 
-          resize:'none', outlineColor:'#EB5757', outlineWidth:'2px', borderStyle:'solid', 
-          borderWidth:'2px', borderColor:'#EB5757', fontFamily:'Arial' }}
+          resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
+          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial' }}
           />
         </div>
       ) 
 
   }
 
+  /*
+  Setter function sets the data from the html input tag to the global array
+  */
   function setNewMsgFunction(e){
 
     setNewMsg(e.target.value)
 
   }
 
+  /*
+  This function does a post request to the java server to send the 
+  msg to the NLP and recives a response, then adds both the human 
+  msg and the response to the array of dialogue messages
+  */
   async function sendMsg(){
-
 
     let msg = ""
     
-
     const header = {
         method: "post",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({ "message": newMsg, "conversationID": uuid, "timestamp": Date.now() })
     };
-
-    console.log(header)
 
     const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
     const res = await response.json()
@@ -119,22 +132,22 @@ function App() {
       msg = res.message
 
       // copy the global array
-      const dataz = dialogue
+      const data = dialogue
       
       // human msg
       // create a message object, get the message from the newMsg state, which is set in input tag
       const newHumanMessage = {message:newMsg, bot:false}
       // push new message object to array
-      dataz.push(newHumanMessage)
+      data.push(newHumanMessage)
 
       // auto bot msg
       // create a message object, get the message from the newMsg state, which is set in input tag
       const newBotMessage = {message:msg, bot:true}
       // push new message object to array
-      dataz.push(newBotMessage)
+      data.push(newBotMessage)
 
       // set the state with the new array
-      setDialogue(dataz)
+      setDialogue(data)
 
       
       // empty the text input
@@ -143,12 +156,14 @@ function App() {
   }
 
 
-
+  /*
+  MAIN render Loop
+  */
   return (
     <div style={{height:'100%', width:'100%', backgroundColor:'white'}}>
         
         {/* Header */}
-        <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#EB5757', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
+        <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
           
             {/* Menu Bar */}
             <div style={{position:'absolute', top:'25%', right:'5%',}}>
@@ -202,7 +217,6 @@ function App() {
                       </div>
 
                     </div>
-
               </div>
               </>}
     </div>
