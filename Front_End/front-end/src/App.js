@@ -19,7 +19,7 @@ function App() {
   // 'click' is the variable we can access, 'setClick' is our "setter function"
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
-  const [dialogue,setDialogue] = useState([{message:'hey, im badger bot', bot:true, }])
+  const [dialogue,setDialogue] = useState([{message:'Hello, Im Badger Bot', bot:true, }])
   const [fetchRequest, setFetchRequest] = useState();
 
   const uuid = uuidv4();
@@ -90,6 +90,7 @@ function App() {
         <div style={{width:'100%', height:'100%', }}>
           <input value={newMsg} 
           onChange={setNewMsgFunction} 
+          onKeyDown={enterButtonClicked} 
           placeholder={'Message'} 
           
           style={{marginLeft:'5%',borderRadius:'70px', width:'90%', height:'40px', 
@@ -111,24 +112,40 @@ function App() {
   }
 
   /*
+
+  */
+  function enterButtonClicked(e){
+
+    if(e.keyCode == 13){
+      sendMsg()
+    }
+  }
+
+  /*
   This function does a post request to the java server to send the 
   msg to the NLP and recives a response, then adds both the human 
   msg and the response to the array of dialogue messages
   */
   async function sendMsg(){
 
+    // get the human message
+    const humanMsg = newMsg
+
+    // empty the text input
+    setNewMsg(' ')
+
     let msg = ""
     
     const header = {
         method: "post",
         headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ "message": newMsg, "conversationID": uuid, "timestamp": Date.now() })
+        body: JSON.stringify({ "message": humanMsg, "conversationID": uuid, "timestamp": Date.now() })
     };
 
     const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
-    const res = await response.json()
+    
+      const res = await response.json()
       
-    console.log(res.message)
       msg = res.message
 
       // copy the global array
@@ -136,7 +153,7 @@ function App() {
       
       // human msg
       // create a message object, get the message from the newMsg state, which is set in input tag
-      const newHumanMessage = {message:newMsg, bot:false}
+      const newHumanMessage = {message:humanMsg, bot:false}
       // push new message object to array
       data.push(newHumanMessage)
 
@@ -148,11 +165,8 @@ function App() {
 
       // set the state with the new array
       setDialogue(data)
-
-      
-      // empty the text input
-      setNewMsg('')
     
+      setNewMsg('')
   }
 
 
