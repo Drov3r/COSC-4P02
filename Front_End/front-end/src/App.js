@@ -6,6 +6,12 @@ import send from './icons/plane-red.png'
 
 import { useEffect, useState } from 'react';
 
+import Hamburger from 'hamburger-react'
+
+import cuid from 'cuid';
+
+import { v4 as uuidv4 } from 'uuid';
+
 
 function App() {
 
@@ -14,6 +20,9 @@ function App() {
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
   const [dialogue,setDialogue] = useState([{message:'hey, im badger bot', bot:true, }])
+  const [fetchRequest, setFetchRequest] = useState();
+
+  const uuid = uuidv4();
 
   // function to handle the menu clicks
   function clickMenu(){
@@ -44,10 +53,10 @@ function App() {
       }else{
         return (
           <div>
-          <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-            <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+            <div style={{marginTop:'25px',borderRadius:'70px', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+              <h3 style={{fontSize:'20px', color:'#EB5757', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+            </div>
           </div>
-        </div>
         )
       }
       
@@ -69,6 +78,7 @@ function App() {
   function enterMessage(){
 
       return(
+        <div style={{width:'100%', height:'100%', }}>
           <input value={newMsg} 
           onChange={setNewMsgFunction} 
           placeholder={'Message'} 
@@ -77,38 +87,59 @@ function App() {
           resize:'none', outlineColor:'#EB5757', outlineWidth:'2px', borderStyle:'solid', 
           borderWidth:'2px', borderColor:'#EB5757', fontFamily:'Arial' }}
           />
+        </div>
       ) 
 
   }
 
   function setNewMsgFunction(e){
-      setNewMsg(e.target.value)
+
+    setNewMsg(e.target.value)
+
   }
 
-  function sendMsg(){
+  async function sendMsg(){
 
-    // copy the global array
-    const data = dialogue
-    
-    // human msg
-    // create a message object, get the message from the newMsg state, which is set in input tag
-    const newHumanMessage = {message:newMsg, bot:false}
-    // push new message object to array
-    data.push(newHumanMessage)
 
-    // auto bot msg
-    // create a message object, get the message from the newMsg state, which is set in input tag
-    const newBotMessage = {message:"Im not smart yet. Soon though.", bot:true}
-    // push new message object to array
-    data.push(newBotMessage)
-
-    // set the state with the new array
-    setDialogue(data)
-
+    let msg = ""
     
 
-    // empty the text input
-    setNewMsg('')
+    const header = {
+        method: "post",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ "message": newMsg, "conversationID": uuid, "timestamp": Date.now() })
+    };
+
+    console.log(header)
+
+    const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
+    const res = await response.json()
+      
+    console.log(res.message)
+      msg = res.message
+
+      // copy the global array
+      const dataz = dialogue
+      
+      // human msg
+      // create a message object, get the message from the newMsg state, which is set in input tag
+      const newHumanMessage = {message:newMsg, bot:false}
+      // push new message object to array
+      dataz.push(newHumanMessage)
+
+      // auto bot msg
+      // create a message object, get the message from the newMsg state, which is set in input tag
+      const newBotMessage = {message:msg, bot:true}
+      // push new message object to array
+      dataz.push(newBotMessage)
+
+      // set the state with the new array
+      setDialogue(dataz)
+
+      
+      // empty the text input
+      setNewMsg('')
+    
   }
 
 
@@ -123,9 +154,10 @@ function App() {
             <div style={{position:'absolute', top:'25%', right:'5%',}}>
               
               {/* Wrap menu img in clickable tag */}
-              <a onClick={()=>clickMenu()}> 
+              <Hamburger color={'white'} onToggle={()=>clickMenu()}/>
+             {/*<a onClick={()=>clickMenu()}> 
                 <img src={menu} style={{width:'40px', transform: click==true?"rotate(90deg)":'none', transition:'all 0.25s ease-in-out'}}/>
-              </a>
+              </a>*/}
             
             </div>
 
@@ -154,13 +186,13 @@ function App() {
                     
                     <div style={{height:'100%', width:'100%',backgroundColor:'white'}}>
                     
-                      <div style={{position:'absolute', top:'0', left:0, height:'100%',width:'65%',padding:'3%',  }}>
+                      <div style={{position:'absolute', top:'0', left:0, height:'100%',width:'80%',paddingTop:'20px', }}>
                         
                         {enterMessage()}
 
                       </div>
 
-                      <div style={{position:'absolute', top:'0', left:'70%', height:'100%',width:'30%',padding:'3%',  }}>
+                      <div style={{position:'absolute', top:'0', left:'80%', height:'100%',width:'20%',paddingTop:'20px'  }}>
                         
                         {/* Send Message Button*/}
                         <a onClick={()=>sendMsg()}> 
