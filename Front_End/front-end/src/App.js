@@ -35,6 +35,8 @@ function App() {
   */
   useEffect(()=>{
         // currently not being used 
+
+        document.title = "Boomer Bot"
   })
 
   /*
