@@ -11,7 +11,7 @@ This is where all the developed code for the apps front end is
 function App() {
 
   // initialize our click state variable to 'false'
-  // 'click' is the variable we can access, 'setClick' is our "setter function"
+  // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
   const [dialogue,setDialogue] = useState([{message:'Hello, Im Badger Bot', bot:true, }])
