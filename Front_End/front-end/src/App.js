@@ -1,13 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-
 import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
-
-import { useEffect, useState } from 'react';
-
+import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
-
+import { TailSpin } from  'react-loader-spinner'
 import { v4 as uuidv4 } from 'uuid';
 
 /*
@@ -20,88 +15,30 @@ function App() {
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
   const [dialogue,setDialogue] = useState([{message:'Hello, Im Badger Bot', bot:true, }])
-  const [fetchRequest, setFetchRequest] = useState();
-
+  const [loadingWheel, setLoadingWheel] = useState(false);
+  const scrollReference = useRef()
   const uuid = uuidv4();
-
-  // Setter function to handle the menu clicks
-  function clickMenu(){
-
-      setClick(!click)
-  }
 
   /*
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
         // currently not being used 
-
         document.title = "Boomer Bot"
   })
 
-  /*
-  This function returns the dialogue message HTML <h3> tag, wrapped in a stylized div
-  */
-  function chatLogs(){
+  /* Setter function to handle the menu clicks */
+  function clickMenu(){
 
-    const divItUp = dialogue.map(function(data, index) {
-      
-      // if the message is from the bot, display on left, otherwise right
-      if(data.bot==true){
-        return (
-          <div>
-          <div style={{marginTop:'25px',borderRadius:'20px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-            <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
-          </div>
-        </div>
-        )
-      }else{
-        return (
-          <div>
-            <div style={{marginTop:'25px',borderRadius:'20px', backgroundColor:'#007F90', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-              <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
-            </div>
-          </div>
-        )
-      }
-      
-    })
-
-      return divItUp
-      
+    setClick(!click)
   }
 
   /*
-  This function returns the menu header HTML <h1> tag, wrapped in a stylized div
+  This function scrolls the dialogue box to the bottom whenever a new message is added
   */
-  function menuItems(){
-
-      return(
-          <div>
-            <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%'}}>Menu</h1>
-          </div>
-      )
-  }
-
-  /*
-  This function returns the message box HTML <input> tag, wrapped in a stylized div
-  */
-  function enterMessage(){
-
-      return(
-        <div style={{width:'100%', height:'100%', }}>
-          <input value={newMsg} 
-          onChange={setNewMsgFunction} 
-          onKeyDown={enterButtonClicked} 
-          placeholder={'Message'} 
-          
-          style={{marginLeft:'5%',borderRadius:'70px', width:'90%', height:'40px', 
-          resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
-          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial' }}
-          />
-        </div>
-      ) 
-
+  function scrollToBottom(){
+   
+      scrollReference.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   /*
@@ -114,7 +51,8 @@ function App() {
   }
 
   /*
-
+  This function checks whether the keyboard button clicked is 
+  equivalent to the 'enter' button
   */
   function enterButtonClicked(e){
 
@@ -124,14 +62,36 @@ function App() {
   }
 
   /*
+  This function displays a loading wheel while the loadingWheel 
+  variable is set to true (during post requests)
+  */
+  function displayLoadingWheel(){
+    if(loadingWheel==true){
+      return <TailSpin color="#004F71" height={80} width={80} />
+    }       
+  }
+
+  /*
   This function does a post request to the java server to send the 
   msg to the NLP and recives a response, then adds both the human 
-  msg and the response to the array of dialogue messages
+  msg and the response to the array of dialogue messages. the array is 
+  mapped in the main renderer
   */
   async function sendMsg(){
 
+    // turn the loading wheel on
+    setLoadingWheel(true)
+
     // get the human message
     const humanMsg = newMsg
+    // copy the global array of messages
+    const data = dialogue  
+    // create a message object, get the message from the newMsg state, which is set in input tag
+    const newHumanMessage = {message:humanMsg, bot:false}
+    // push new message object to array
+    data.push(newHumanMessage)
+    // set the state with the new array with new human msg
+    setDialogue(data)
 
     // empty the text input
     setNewMsg(' ')
@@ -150,25 +110,87 @@ function App() {
       
       msg = res.message
 
-      // copy the global array
-      const data = dialogue
-      
-      // human msg
-      // create a message object, get the message from the newMsg state, which is set in input tag
-      const newHumanMessage = {message:humanMsg, bot:false}
-      // push new message object to array
-      data.push(newHumanMessage)
-
       // auto bot msg
       // create a message object, get the message from the newMsg state, which is set in input tag
       const newBotMessage = {message:msg, bot:true}
       // push new message object to array
       data.push(newBotMessage)
 
-      // set the state with the new array
+      // set the state with the new array with bot msg
       setDialogue(data)
     
+      // force a re-render
       setNewMsg('')
+      
+      // turn the loading wheel off
+      setLoadingWheel(false)
+
+      scrollToBottom()
+  }
+
+  /*
+  This function returns the menu header using an HTML <h1> tag, wrapped in a stylized div
+  */
+  function displayMenuItems(){
+
+      return(
+          <div>
+            <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%'}}>Menu</h1>
+          </div>
+      )
+  }
+
+  /*
+  This function returns the dialogue message using an HTML <h3> tag, wrapped in a stylized div
+  */
+  function displayChatLogs(){
+
+    const divItUp = dialogue.map(function(data, index) {
+      
+      // if the message is from the bot, display on left, otherwise right
+      if(data.bot==true){
+        return (
+          <div key={index}>
+          <div style={{marginTop:'25px',borderRadius:'20px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+            <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+          </div>
+        </div>
+        )
+      }else{
+        return (
+          <div key={index}>
+            <div style={{marginTop:'25px',borderRadius:'20px', backgroundColor:'#007F90', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+              <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
+            </div>
+          </div>
+        )
+      }
+      
+    })
+
+      return <div>{divItUp}<div ref={scrollReference}/></div>
+      
+  }
+
+  /*
+  This function returns the message box HTML <input> tag, wrapped in a stylized div
+  */
+  function displayMessageInput(){
+
+      return(
+        <div style={{width:'100%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center', }}>
+          <input value={newMsg} 
+          onChange={setNewMsgFunction} 
+          onKeyDown={enterButtonClicked} 
+          placeholder={'Message'} 
+          
+          style={{marginLeft:'5%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
+          resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
+          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial' }}
+          />
+        </div>
+      ) 
+
   }
 
 
@@ -180,28 +202,19 @@ function App() {
         
         {/* Header */}
         <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
-          
             {/* Menu Bar */}
             <div style={{position:'absolute', top:'25%', right:'5%',}}>
-              
               {/* Wrap menu img in clickable tag */}
               <Hamburger color={'white'} onToggle={()=>clickMenu()}/>
-             {/*<a onClick={()=>clickMenu()}> 
-                <img src={menu} style={{width:'40px', transform: click==true?"rotate(90deg)":'none', transition:'all 0.25s ease-in-out'}}/>
-              </a>*/}
-            
             </div>
-
         </div>
 
         {/* Body */}
         {   /* IF */
           click == true ?  
-              
               <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
-                    
-                    {menuItems()}
-                    
+              
+                    {displayMenuItems()}
               </div>
 
           : /* ELSE */
@@ -209,32 +222,32 @@ function App() {
               <>
               <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>
                     
-                    {chatLogs()}
-
+                    {displayChatLogs()}
               </div>
 
               <div style={{position:'absolute', top:'90%', left:0, height:'10%', width:'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden'}}>
                     
-                    <div style={{height:'100%', width:'100%',backgroundColor:'white'}}>
+                    <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
                     
-                      <div style={{position:'absolute', top:'0', left:0, height:'100%',width:'80%',paddingTop:'20px', }}>
-                        
-                        {enterMessage()}
+                        <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'85%', marginLeft:'-40px' }}>
+                          
+                          {displayMessageInput()}
+                        </div>
 
-                      </div>
-
-                      <div style={{position:'absolute', top:'0', left:'80%', height:'100%',width:'20%',paddingTop:'20px'  }}>
-                        
-                        {/* Send Message Button*/}
-                        <a onClick={()=>sendMsg()}> 
-                          <img src={send} style={{width:'40px',}}/>
-                        </a>
-
-                      </div>
-
+                        <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
+                          
+                          {/* Send Message Button*/}
+                          <a onClick={()=>sendMsg()}> 
+                            <img src={send} style={{width:'40px',}}/>
+                          </a>
+                        </div>
                     </div>
               </div>
               </>}
+
+              <div style={{position:'absolute', top:'70%', left:0, width:'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
+                {displayLoadingWheel()}
+              </div>
     </div>
   );
 }
