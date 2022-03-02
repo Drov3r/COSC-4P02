@@ -16,7 +16,7 @@ public final class CardScraper extends Scraper{
      */
     public CardScraper(String cardType) throws IOException {
         super(cardType);
-        
+
         patterns.put("link", Pattern.compile("(?<=3\"> <a href=\")(.*)(?=\" title)", Pattern.CASE_INSENSITIVE));
         patterns.put("name", Pattern.compile("(?<=\"h4 card-title\">)(.*)(?=</h1>)", Pattern.CASE_INSENSITIVE));
         patterns.put("date", Pattern.compile("(?<=text-muted\">)(.*)(?=</small>)", Pattern.CASE_INSENSITIVE));
@@ -32,6 +32,7 @@ public final class CardScraper extends Scraper{
         
         Elements elements = doc.body().getElementsByClass("card rounded shadow");
 
+        System.out.println(doc);
 
         for (Element el : elements){
 
