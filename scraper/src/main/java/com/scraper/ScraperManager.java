@@ -28,6 +28,10 @@ public final class ScraperManager {
             cardStrings
         );
 
+        updateDB(
+            chooseScraper("sports"), 
+            new String[]{"sport","day","time","category","subCategory","location"});
+
     }
 
     /**
