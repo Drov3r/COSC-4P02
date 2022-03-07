@@ -191,7 +191,7 @@ public class OpenNLPChatBot {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private String[] breakSentences(String data) throws FileNotFoundException, IOException {
+	public String[] breakSentences(String data) throws FileNotFoundException, IOException {
 		// Better to read file once at start of program & store model in instance
 		// variable. but keeping here for simplicity in understanding.
 		try (InputStream modelIn = new FileInputStream("models/en-sent.bin")) {
