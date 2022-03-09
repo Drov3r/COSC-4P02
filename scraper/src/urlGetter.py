@@ -29,6 +29,3 @@ def get_URL():
             except:
                 print("Nuh uh! You cant do that :)")
     return all
-
-    
-get_URL()
