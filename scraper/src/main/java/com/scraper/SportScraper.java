@@ -149,6 +149,7 @@ public final class SportScraper extends Scraper{
              * **********************************************************************************************************
              */
 
+            tuple = new String[7];
             JSONObject pythonData = null;
              JSONParser jsonParser = new JSONParser();
 
@@ -166,9 +167,16 @@ public final class SportScraper extends Scraper{
                             System.out.println("\t" + roundName);
                             if (sportData.get(roundName) instanceof JSONArray){
                                 JSONArray roundData = (JSONArray)sportData.get(roundName);
+                                tuple = new String[7];
                                 for(Object round : roundData){
-                                    System.out.print(round);
-                                    //System.out.println(rStrings[0]);
+                                    JSONArray innerData = (JSONArray) round;
+                                    tuple[0] = sportName;                     // sport
+                                    tuple[1] = innerData.get(1).toString();   // date
+                                    tuple[2] = innerData.get(2).toString();   // time
+                                    tuple[3] = roundName;                     // category
+                                    tuple[4] = innerData.get(0).toString();   // subcategory
+                                    tuple[5] = innerData.get(3).toString();   // location
+                                    //items.add(tuple);
                                 }
                             }
                         }
