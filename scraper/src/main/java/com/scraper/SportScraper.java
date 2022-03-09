@@ -1,7 +1,9 @@
 package com.scraper;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,12 +13,18 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
+import com.gargoylesoftware.htmlunit.javascript.host.file.FileReader;
+import com.google.gson.JsonObject;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
          
 public final class SportScraper extends Scraper{
@@ -49,7 +57,7 @@ public final class SportScraper extends Scraper{
                 for (int k=0; k<tableRows.size(); k++){
                     currentRow = tableRows.get(k);
                     tempSport = currentRow.getCell(1).asNormalizedText();
-                    System.out.println(tempSport);
+                    //System.out.println(tempSport);
                     tuple = new String[7];
                     if (tempSport!=""){
                         sport = tempSport;
@@ -127,9 +135,67 @@ public final class SportScraper extends Scraper{
 
 
             // }
+
+
+
+
+
+
+
+
+
+            /************************************************************************************************************
+             * ***************************************    WIP    ********************************************************
+             * **********************************************************************************************************
+             */
+
+            JSONObject pythonData = null;
+             JSONParser jsonParser = new JSONParser();
+
+             try {
+                pythonData = (JSONObject) jsonParser.parse(new java.io.FileReader("scraper/src/schedule.json"));
+                Iterator<String> sportKeys = pythonData.keySet().iterator();
+                while(sportKeys.hasNext()){
+                    String sportName = sportKeys.next();
+                    System.out.println(sportName);
+                    if (pythonData.get(sportName) instanceof JSONObject){
+                        JSONObject sportData = (JSONObject)pythonData.get(sportName);
+                        Iterator<String> roundKeys = sportData.keySet().iterator();
+                        while(roundKeys.hasNext()){
+                            String roundName = roundKeys.next();
+                            System.out.println("\t" + roundName);
+                            if (sportData.get(roundName) instanceof JSONArray){
+                                JSONArray roundData = (JSONArray)sportData.get(roundName);
+                                for(Object round : roundData){
+                                    System.out.print(round);
+                                    //System.out.println(rStrings[0]);
+                                }
+                            }
+                        }
+                    }
+                }
+                // for (int i=0; i< pythonData.size(); i++){
+                //     pythonData
+                // }
+                // System.out.println(pythonData);
+                
+                
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+
+
         
 
-            printItems();
+            //printItems();
     }
 
     public static void main(String[] args) throws IOException {
