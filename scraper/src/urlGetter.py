@@ -11,19 +11,23 @@ def get_URL():
         linky = link.get('href')
         if 'niagara2022games' in linky:
             urls.append(linky)
-    
+
     all = []
     for urly in urls:
-        print(urly)
-        request = requests.get(urly)
-        soup = BeautifulSoup(request.text, 'html.parser')
-        for link in soup.find_all('a'):
-            linky = link.get('href')
-            if 'niagara2022games' in linky:
-                all.append(linky)
-
-    for url in all:
-        print(url)
+        if 'fr' not in urly:
+            try:
+                print(urly)
+                request = requests.get(urly)
+                soup = BeautifulSoup(request.text, 'html.parser')
+                for link in soup.find_all('a'):
+                    linky = link.get('href')
+                    if 'niagara2022games' in linky:
+                        try:
+                            all.append(linky)
+                        except:
+                            print("Cant append that! :)")
+            except:
+                print("Cant append that! :)")
 
     
 get_URL()
