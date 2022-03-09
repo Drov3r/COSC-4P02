@@ -11,7 +11,7 @@ from sqlalchemy import null
 from zmq import NULL
 
 #url of the page we want to scrape this url is set for mens basketball
-url = "https://cg2022.gems.pro/Result/Event_PO_T_T.aspx?Event_GUID=4a73eb84-2cd9-499b-96c5-bf89e5b11589&SetLanguage=en-CA"
+url = "https://cg2022.gems.pro/Result/Event_PO_T_T.aspx?Event_GUID=bf5fb5d5-06b9-4de6-b177-1655bf8bfcb1&SetLanguage=en-CA"
   
 # initiating the webdriver. Parameter includes the path of the webdriver.
 s = Service(r'scraper/src/chromedriver')
@@ -57,7 +57,12 @@ for tbody in table_bodies[1:-1]:
     # get the cells for a team game result
     headerCells = tbody.find_elements(by=By.CLASS_NAME, value="HeaderCell")
     if len(headerCells)>2:
-        if "Game" in headerCells[0].text and "Team" in headerCells[1].text and "Points" in headerCells[2].text:
+        if "Game" in headerCells[0].text and \
+            "Team" in headerCells[1].text and \
+            "Points" in headerCells[2].text or \
+                "Runs" in headerCells[2].text or \
+                "Goals" in headerCells[2].text or \
+                "Score" in headerCells[2].text:
 
 
             oddRows = tbody.find_elements(by=By.CLASS_NAME, value="DataRowOdd")
