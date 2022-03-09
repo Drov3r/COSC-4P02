@@ -27,7 +27,8 @@ def get_URL():
                         except:
                             print("Cant append that! :)")
             except:
-                print("Cant append that! :)")
+                print("Nuh uh! You cant do that :)")
+    return all
 
     
 get_URL()
