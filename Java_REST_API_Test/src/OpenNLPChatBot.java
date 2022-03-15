@@ -57,6 +57,7 @@ public class OpenNLPChatBot {
 		questionAnswer.put("new", "News articles on the games can be found here:_________");
 		questionAnswer.put("where", "The games will be held at :________");
 
+
 		
 		try {
 			// Train categorizer model to the training data we created.

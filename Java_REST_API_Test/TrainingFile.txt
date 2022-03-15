@@ -4,3 +4,4 @@ website         Where can i find information?, What is the website?, What is the
 start           When do the games start?, How long until the Canada games Start? , Time until the Canada games start?
 new             What is new with the Canada games?, Where can i get updates?, Whats news articles can i read?
 where           Where is the Canada games? , Where are the games located? , Where are the games being held?
+parking
