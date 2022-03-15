@@ -4,4 +4,9 @@ website         Where can i find information?, What is the website?, What is the
 start           When do the games start?, How long until the Canada games Start? , Time until the Canada games start?
 new             What is new with the Canada games?, Where can i get updates?, Whats news articles can i read?
 where           Where is the Canada games? , Where are the games located? , Where are the games being held?
-parking
+parking         is there parking? , Where is parking? , How much is parking?
+accommodations  Where are the closest hotels? , where can i stay while at the games? What accommodations can be found near the games?
+restaurants     What restaurants are close? , Where can i eat nearby? , What is there to eat nearby
+food            Can i bring food in? , Can i buy food at the games? , what food will be offered at the games?
+accessibility   What accessibility options are there? Will there be interpreters? Who can i talk to about accessibility?
+things          What activities are nearby? , What can i do in the area? , What else is there to do?
