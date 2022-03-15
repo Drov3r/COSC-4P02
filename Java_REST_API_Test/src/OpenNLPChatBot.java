@@ -31,7 +31,7 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 import opennlp.tools.util.model.ModelUtil;
-import Lookup
+
 
 /**
  * Most of this class is borrowed from: https://github.com/itsallbinary/apache-opennlp-chatbot-example
@@ -53,7 +53,7 @@ public class OpenNLPChatBot {
 		questionAnswer.put("greeting", "Hello, how can I help you?");
 		questionAnswer.put("transportation", "The Games will take place at XYZ bus routes can be found here______");
 		questionAnswer.put("website", "Information can be found on the website here: _________");
-		questionAnswer.put("start", Lookup.countdown());
+		questionAnswer.put("start", Access.countdown());
 		questionAnswer.put("new", "News articles on the games can be found here:_________");
 		questionAnswer.put("where", "The games will be held at :________");
 
