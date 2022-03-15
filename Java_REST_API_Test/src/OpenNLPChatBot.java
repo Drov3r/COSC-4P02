@@ -56,7 +56,31 @@ public class OpenNLPChatBot {
 		questionAnswer.put("start", Access.countdown());
 		questionAnswer.put("new", "News articles on the games can be found here:_________");
 		questionAnswer.put("where", "The games will be held at :________");
-
+		questionAnswer.put("parking","Parking info can be found:______________");
+		questionAnswer.put("accommodations","Hotels and other accomidations can be found:___________");
+		questionAnswer.put("restaurants","A list of near by Restaurants can be found:___________");
+		questionAnswer.put("food","Food rules can be found here:___________");
+		questionAnswer.put("accessibility", "Accessibility options can be found here:______");
+		questionAnswer.put("things", "Some activities that can be found are:_______________");
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
+		questionAnswer.put();
 
 		
 		try {
