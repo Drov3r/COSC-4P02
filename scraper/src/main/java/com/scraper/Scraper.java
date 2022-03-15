@@ -64,13 +64,8 @@ public abstract class Scraper {
         this.webClient = new WebClient(BrowserVersion.FIREFOX);
 
 
-
-
         connectToDoc(type);
 
-
-
-        
         
     }
 
@@ -86,7 +81,10 @@ public abstract class Scraper {
         }
         else if (type.equals("sports")){
             
-            
+       
+        }
+        else if (type.equals("venues")) {
+            doc = Jsoup.connect("https://niagara2022games.ca/venues/#Brock-Sport-Facilities").get();
         }
     }
 
