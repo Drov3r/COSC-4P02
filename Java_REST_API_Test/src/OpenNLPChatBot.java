@@ -62,25 +62,9 @@ public class OpenNLPChatBot {
 		questionAnswer.put("food","Food rules can be found here:___________");
 		questionAnswer.put("accessibility", "Accessibility options can be found here:______");
 		questionAnswer.put("things", "Some activities that can be found are:_______________");
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
-		questionAnswer.put();
+		questionAnswer.put("medical", "For medical emergencies please contact 911. The nearest hospital is:_________. Our medical policy can be found here");
+		questionAnswer.put("airport"," The nearest airports are:_________");
+		questionAnswer.put("viewing", "the games can be viewed from these sources:_________");
 
 		
 		try {
