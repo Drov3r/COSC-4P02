@@ -10,3 +10,6 @@ restaurants     What restaurants are close? , Where can i eat nearby? , What is 
 food            Can i bring food in? , Can i buy food at the games? , what food will be offered at the games?
 accessibility   What accessibility options are there? Will there be interpreters? Who can i talk to about accessibility?
 things          What activities are nearby? , What can i do in the area? , What else is there to do?
+medical         Where is the closest hostpital?, Where can i get medical assistance? What medical policies are there?
+airport         where is the closest airport? , how do i get to the airport? , what airport do athletes arrive in?
+viewing         where can i watch the games? , will they be live streamed? , What tv channels will be brodcasting games?
