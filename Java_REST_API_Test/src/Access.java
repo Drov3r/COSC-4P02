@@ -10,20 +10,24 @@ public class Access {
         //https://codeit.blog/2020/12/06/christmas-count-down-clock-with-java/
         LocalDate today = LocalDate.now();//getting current date
 
-        LocalDate ChristmasDay = LocalDate.of(2022, Month.JUNE, 1);// setting Christmas day
+        LocalDate GameDayStart = LocalDate.of(2022, Month.AUGUST, 6);// setting first day of sports
 
-        LocalDate nextXmas = ChristmasDay.withYear(today.getYear());// Next year Christmas
+        LocalDate nextGame = GameDayStart.withYear(today.getYear());
 
         //Add 1 if Christmas has past this year
-        if (nextXmas.isBefore(today) || nextXmas.isEqual(today)) {
-            nextXmas = nextXmas.plusYears(1);
+        if (nextGame.isBefore(today) || nextGame.isEqual(today)) {
+            nextGame = nextGame.plusYears(1);
         }
 
-        Period p = Period.between(today, nextXmas);
-        long p2 = ChronoUnit.DAYS.between(today, nextXmas);// nanoseconds in days till Christmas
+        Period p = Period.between(today, nextGame);
+        long p2 = ChronoUnit.DAYS.between(today, nextGame);// nanoseconds in days till game
         String x=("There are " + p.getMonths() + " months, and " +
                 p.getDays() + " days until the games! (" +
-                p2 + " total)");
+                p2 + " days in total)");
         return x;
+    }
+
+    public static String pullReq() {
+        return null; 
     }
 }
