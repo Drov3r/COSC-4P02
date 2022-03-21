@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
@@ -50,21 +51,23 @@ public class OpenNLPChatBot {
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
 	 */
 	public OpenNLPChatBot() {
+		String sportOrVenue = getSportOrVenue();
 		questionAnswer.put("greeting", "Hello, how can I help you?");
-		questionAnswer.put("transportation", "The Games will take place at XYZ bus routes can be found here______");
-		questionAnswer.put("website", "Information can be found on the website here: _________");
+		questionAnswer.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
+		questionAnswer.put("website", "Information can be found on the website here:");
 		questionAnswer.put("start", Access.countdown());
-		questionAnswer.put("new", "News articles on the games can be found here:_________");
-		questionAnswer.put("where", "The games will be held at :________");
+		questionAnswer.put("news", "News articles on the games can be found here:_________");
+		questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
+		System.out.println(Access.venueOrSport(sportOrVenue));
 		questionAnswer.put("parking","Parking info can be found:______________");
-		questionAnswer.put("accommodations","Hotels and other accomidations can be found:___________");
-		questionAnswer.put("restaurants","A list of near by Restaurants can be found:___________");
+		questionAnswer.put("accommodations","Hotels and other accomidations can be found: ");
+		questionAnswer.put("restaurants","A list of near by Restaurants can be found: ");
 		questionAnswer.put("food","Food rules can be found here:___________");
 		questionAnswer.put("accessibility", "Accessibility options can be found here:______");
 		questionAnswer.put("things", "Some activities that can be found are:_______________");
-		questionAnswer.put("medical", "For medical emergencies please contact 911. The nearest hospital is:_________. Our medical policy can be found here");
+		questionAnswer.put("medical", "For medical emergencies please contact 911. The nearest hospital is: St.Catharines General hospital [1200 Fourth Ave, St. Catharines, ON L2S 0A9].");
 		questionAnswer.put("airport"," The nearest airports are:_________");
-		questionAnswer.put("viewing", "the games can be viewed from these sources:_________");
+		questionAnswer.put("viewing", "The events can be viewed at these locations: ");
 
 		
 		try {
@@ -73,6 +76,52 @@ public class OpenNLPChatBot {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	//Random selector for testing purposes, simulating a question (between asking for an event or asking for a venue)
+	private String getSportOrVenue(){
+		Random rand = new Random(); 
+		int upper = 2;
+		int randInt = rand.nextInt(upper);
+		if (randInt == 0) {
+			return getSport();
+		}
+		else {
+			return getVenue();
+		}
+	}
+
+	private String getSport(){
+		Random rand = new Random(); 
+		String sport = null;
+		int upper = 4;
+		int randInt = rand.nextInt(upper);
+		if (randInt == 0) {
+			sport = "baseball";
+		}else if (randInt == 1) {
+			sport = "basketball";
+		}else if (randInt == 2) {
+			sport = "swimming";
+		}else if (randInt == 3) {
+			sport = "cycling";
+		}
+		return sport;
+	}
+
+	private String getVenue(){
+		Random rand = new Random(); 
+		String sport = null;
+		int upper = 4;
+		int randInt = rand.nextInt(upper);
+		if (randInt == 0) {
+			sport = "Brock Sport Facilities";
+		}else if (randInt == 1) {
+			sport = "Brock University";
+		}else if (randInt == 2) {
+			sport = "Canada Games Park";
+		}else if (randInt == 3) {
+			sport = "Welland International Flatwater Centre";
+		}
+		return sport;
 	}
 	
 	protected String getAnswerToQuestion(String question) {
