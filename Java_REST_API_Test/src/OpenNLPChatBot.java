@@ -51,14 +51,14 @@ public class OpenNLPChatBot {
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
 	 */
 	public OpenNLPChatBot() {
-		String sportOrVenue = getSportOrVenue();
+		//String sportOrVenue = getSportOrVenue();
 		questionAnswer.put("greeting", "Hello, how can I help you?");
 		questionAnswer.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
 		questionAnswer.put("website", "Information can be found on the website here:");
 		questionAnswer.put("start", Access.countdown());
 		questionAnswer.put("news", "News articles on the games can be found here:_________");
-		questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
-		System.out.println(Access.venueOrSport(sportOrVenue));
+		//questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
+		///System.out.println(Access.venueOrSport(sportOrVenue));
 		questionAnswer.put("parking","Parking info can be found:______________");
 		questionAnswer.put("accommodations","Hotels and other accomidations can be found: ");
 		questionAnswer.put("restaurants","A list of near by Restaurants can be found: ");
@@ -164,7 +164,7 @@ public class OpenNLPChatBot {
 	 */
 	private DoccatModel trainCategorizerModel() throws FileNotFoundException, IOException {
 		// TrainingFile.txt is a custom training data with categories as per our chat requirements.
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("TrainingFile.txt"));
+		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("./TrainingFile.txt"));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
 		ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
