@@ -7,8 +7,9 @@ public class scores {
 
 
    public static void main( String gargs[] ) throws IOException, InterruptedException  {  
-    String filePath = "ScoreScrape.py";      
-        ProcessBuilder pb = new ProcessBuilder().command("python", "-u", filePath, "main33");        
+        String filePath = "ScoreScrape.py";     
+        String url = "https://cg2022.gems.pro/Result/Event_PO_T_T.aspx?Event_GUID=4a73eb84-2cd9-499b-96c5-bf89e5b11589&SetLanguage=en-CA"; // Basketball URL 
+        ProcessBuilder pb = new ProcessBuilder().command("python", "-u", filePath, url);        
         Process p = pb.start(); 
         BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
         StringBuilder buffer = new StringBuilder();     
@@ -16,9 +17,8 @@ public class scores {
         while ((line = in.readLine()) != null){           
             buffer.append(line);
         }
-        int exitCode = p.waitFor();
-        System.out.println("The Score is: "+buffer.toString());                
-        System.out.println("Process exit value:"+exitCode);        
+        System.out.println(buffer.toString());                      
         in.close();
+        System.out.println("For a full list of scores go to: "+ url);
    }  
 } 
