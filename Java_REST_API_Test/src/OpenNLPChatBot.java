@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
 import opennlp.tools.doccat.DoccatFactory;
 import opennlp.tools.doccat.DoccatModel;
@@ -19,6 +20,10 @@ import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
+import opennlp.tools.parser.Parse;
+import opennlp.tools.parser.Parser;
+import opennlp.tools.parser.ParserFactory;
+import opennlp.tools.parser.ParserModel;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -44,30 +49,29 @@ import opennlp.tools.util.model.ModelUtil;
  */
 public class OpenNLPChatBot {
 
-	private Map<String, String> questionAnswer = new HashMap<>();
+	private Map<String, String> staticAnswers = new HashMap<>();
+	private Map<String, Function<String, String>> dynamicResposnes = new HashMap<>();
 	private DoccatModel model;
 
 	/*
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
 	 */
 	public OpenNLPChatBot() {
-		//String sportOrVenue = getSportOrVenue();
-		questionAnswer.put("greeting", "Hello, how can I help you?");
-		questionAnswer.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
-		questionAnswer.put("website", "Information can be found on the website here:");
-		questionAnswer.put("start", Access.countdown());
-		questionAnswer.put("news", "News articles on the games can be found here:_________");
-		//questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
-		///System.out.println(Access.venueOrSport(sportOrVenue));
-		questionAnswer.put("parking","Parking info can be found:______________");
-		questionAnswer.put("accommodations","Hotels and other accomidations can be found: ");
-		questionAnswer.put("restaurants","A list of near by Restaurants can be found: ");
-		questionAnswer.put("food","Food rules can be found here:___________");
-		questionAnswer.put("accessibility", "Accessibility options can be found here:______");
-		questionAnswer.put("things", "Some activities that can be found are:_______________");
-		questionAnswer.put("medical", "For medical emergencies please contact 911. The nearest hospital is: St.Catharines General hospital [1200 Fourth Ave, St. Catharines, ON L2S 0A9].");
-		questionAnswer.put("airport"," The nearest airports are:_________");
-		questionAnswer.put("viewing", "The events can be viewed at these locations: ");
+		staticAnswers.put("greeting", "Hello, how can I help you?");
+		staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
+		staticAnswers.put("website", "Information can be found on the website here:");
+		dynamicResposnes.put("start", Access::countdown);
+		dynamicResposnes.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
+		staticAnswers.put("news", "News articles on the games can be found here:_________");
+		staticAnswers.put("parking","Parking info can be found:______________");
+		staticAnswers.put("accommodations","Hotels and other accomidations can be found: ");
+		staticAnswers.put("restaurants","A list of near by Restaurants can be found: ");
+		staticAnswers.put("food","Food rules can be found here:___________");
+		staticAnswers.put("accessibility", "Accessibility options can be found here:______");
+		staticAnswers.put("things", "Some activities that can be found are:_______________");
+		staticAnswers.put("medical", "For medical emergencies please contact 911. The nearest hospital is: St.Catharines General hospital [1200 Fourth Ave, St. Catharines, ON L2S 0A9].");
+		staticAnswers.put("airport"," The nearest airports are:_________");
+		staticAnswers.put("viewing", "The events can be viewed at these locations: ");
 
 		
 		try {
@@ -146,7 +150,11 @@ public class OpenNLPChatBot {
 				String category = detectCategory(model, lemmas);
 				
 				// Get predefined answer from given category & add to answer.
-				answer = answer + " " + questionAnswer.get(category);
+				if(this.staticAnswers.containsKey(category)) {
+					answer = answer + " " + staticAnswers.get(category);
+				} else if(this.dynamicResposnes.containsKey(category)) {
+					answer = answer + " " + dynamicResposnes.get(category).apply(getNoun(sentence));
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -292,12 +300,38 @@ public class OpenNLPChatBot {
 			LemmatizerME myCategorizer = new LemmatizerME(new LemmatizerModel(modelIn));
 			String[] lemmaTokens = myCategorizer.lemmatize(tokens, posTags);
 			System.out.println("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
-
+			
 			return lemmaTokens;
-
 		}
 	}
 	
+	private String getNoun(String sentence) {
+		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) {
+			
+			ParserModel model = new ParserModel(modelIn);
+			Parser parser = ParserFactory.create(model);
+			Parse topParses[] = ParserTool.parseLine(sentence, parser, 1);
+			
+			topParses[0].show();
+			
+			return findParseByType(topParses[0], "NN");
+		} catch(IOException e) {
+		}
+		return null;
+	}
+	
+	private Parse findParseByType(Parse parseTree, String... types) {
+		if(Arrays.asList(types).contains(parseTree.getType())) {
+			return parseTree;
+		} else if(parseTree.getChildCount() > 0) {
+			for(Parse child : parseTree.getChildren()) {
+				Parse result = findParseByType(child, types);
+				if(result != null) return result;
+			}
+		}
+		return null; // Could not find.
+	}
+
 	public static void main(String... args) {
 		new WebServer();
 	}
