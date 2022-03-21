@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class ConnectToDb {
 
-    private final String pathToCredentials = "C:\\Users\\Justin_Gamer_Zone_PC\\Desktop\\Database\\creds.txt";
+    private final String pathToCredentials = "./creds.txt";
     private String url = "";
     private String user = "";
     private String password = "";
