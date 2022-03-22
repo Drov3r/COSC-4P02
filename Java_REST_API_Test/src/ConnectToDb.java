@@ -23,7 +23,7 @@ public class ConnectToDb {
     public ConnectToDb(){
     
         // Finding the db connection credentials
-        url = findCredentials()[0];
+        url = "jdbc:postgresql://localhost:5432/chatbot";
         user = findCredentials()[1];
         password = findCredentials()[2];
 
