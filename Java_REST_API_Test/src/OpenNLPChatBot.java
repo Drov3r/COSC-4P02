@@ -33,7 +33,7 @@ import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 import opennlp.tools.util.model.ModelUtil;
 
-
+import java.sql.*;
 /**
  * Most of this class is borrowed from: https://github.com/itsallbinary/apache-opennlp-chatbot-example
  * 
