@@ -33,9 +33,9 @@ public class ConnectToDb {
     
     public Connection connectToDB(){
         try {
-            Class.forName("org.postgresql.Driver");
+            
             return DriverManager.getConnection(url, user, password);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
              e.printStackTrace();
         }
         return null;
