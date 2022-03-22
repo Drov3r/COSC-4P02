@@ -51,13 +51,13 @@ public class OpenNLPChatBot {
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
 	 */
 	public OpenNLPChatBot() {
-		//String sportOrVenue = getSportOrVenue();
+		String sportOrVenue = getSportOrVenue();
 		questionAnswer.put("greeting", "Hello, how can I help you?");
 		questionAnswer.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
 		questionAnswer.put("website", "Information can be found on the website here:");
 		questionAnswer.put("start", Access.countdown());
 		questionAnswer.put("news", "News articles on the games can be found here:_________");
-		//questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
+		questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
 		///System.out.println(Access.venueOrSport(sportOrVenue));
 		questionAnswer.put("parking","Parking info can be found:______________");
 		questionAnswer.put("accommodations","Hotels and other accomidations can be found: ");
