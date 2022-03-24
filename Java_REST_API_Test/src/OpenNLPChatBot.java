@@ -12,11 +12,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import opennlp.tools.cmdline.parser.ParserTool;
+import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
 import opennlp.tools.doccat.DoccatFactory;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.doccat.DocumentSampleStream;
+import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 import opennlp.tools.parser.Parse;
@@ -35,6 +37,7 @@ import opennlp.tools.util.MarkableFileInputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
+import opennlp.tools.util.model.ModelUtil;
 
 
 /**
@@ -174,8 +177,12 @@ public class OpenNLPChatBot {
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
 		ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
+		TrainingParameters params = ModelUtil.createDefaultTrainingParameters();
+		params.put(TrainingParameters.CUTOFF_PARAM, 0);
+		DoccatFactory factory = new DoccatFactory(new FeatureGenerator[] { new BagOfWordsFeatureGenerator() });
+
 		// Train a model with classifications from above file.
-		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, TrainingParameters.defaultParams(), new DoccatFactory());
+		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, factory);
 		return model;
 	}
 
