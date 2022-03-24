@@ -13,3 +13,7 @@ parking         is there parking?
 parking         how much is parking?
 where_is        where is the event
 where_is        where is the sport
+where_is        where is cycling
+where_is        where is the arena
+where_is        where is the triathalon
+where_is        where is the swimming
