@@ -19,9 +19,6 @@ start           time until the canada games start?
 new             what is new with the canada games?
 start           where can i get updates?
 start           what news articles can i read?
-where           where is the canada games?
-where           where are the games located?
-where           where are the games being held?
 parking         is there parking?
 parking         where is parking?
 parking         how much is parking?
@@ -37,12 +34,6 @@ accessibility   who can i talk to about accessibility?
 things          what activities are nearby?
 things          what can i do in the area?
 things          what else is there to do?
-medical         where is the closest hostpital?
-medical         where can i get medical assistance?
-medical         what medical policies are there?
-airport         where is the closest airport?
-airport         how do i get to the airport?
-airport         what airport do athletes arrive in?
 viewing         where can i watch the games?
 viewing         will they be live streamed?
 viewing         what tv channels will be brodcasting games?
