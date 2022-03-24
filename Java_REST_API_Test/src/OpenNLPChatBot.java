@@ -8,16 +8,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import opennlp.tools.cmdline.parser.ParserTool;
-import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
 import opennlp.tools.doccat.DoccatFactory;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.doccat.DocumentSampleStream;
-import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 import opennlp.tools.parser.Parse;
@@ -36,7 +35,6 @@ import opennlp.tools.util.MarkableFileInputStreamFactory;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
-import opennlp.tools.util.model.ModelUtil;
 
 
 /**
@@ -60,7 +58,7 @@ public class OpenNLPChatBot {
 		staticAnswers.put("greeting", "Hello, how can I help you?");
 		staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
 		staticAnswers.put("website", "Information can be found on the website here:");
-		dynamicResposnes.put("start", Access::countdown);
+		dynamicResposnes.put("start", (unused) -> Access.countdown());
 		dynamicResposnes.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
 		staticAnswers.put("news", "News articles on the games can be found here:_________");
 		staticAnswers.put("parking","Parking info can be found:______________");
@@ -176,13 +174,8 @@ public class OpenNLPChatBot {
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
 		ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
-		DoccatFactory factory = new DoccatFactory(new FeatureGenerator[] { new BagOfWordsFeatureGenerator() });
-
-		TrainingParameters params = ModelUtil.createDefaultTrainingParameters();
-		params.put(TrainingParameters.CUTOFF_PARAM, 0);
-
 		// Train a model with classifications from above file.
-		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, factory);
+		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, TrainingParameters.defaultParams(), new DoccatFactory());
 		return model;
 	}
 
@@ -314,7 +307,7 @@ public class OpenNLPChatBot {
 			
 			topParses[0].show();
 			
-			return findParseByType(topParses[0], "NN");
+			return findParseByType(topParses[0], "NN").getText().replace(".", "").replace("!", "").replace("?", "");
 		} catch(IOException e) {
 		}
 		return null;
