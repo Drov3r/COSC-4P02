@@ -25,9 +25,6 @@ where           where are the games being held?
 parking         is there parking?
 parking         where is parking?
 parking         how much is parking?
-accommodations  where are the closest hotels?
-accommodations  where can i stay while at the games?
-accommodations  what accommodations can be found near the games?
 restaurants     what restaurants are close?
 restaurants     where can i eat nearby?
 restaurants     what is there to eat nearby
