@@ -2,11 +2,6 @@ greeting        hi
 greeting        hello
 greeting        how are you?
 greeting        hey
-greeting        how's it going
-greeting        good morning
-greeting        good evening
-greeting        good afternoon
-greeting        howdy
 transportation  how do i get to the canada games?
 transportation  how do i get to the event?
 transportation  what bus do i take?
