@@ -60,7 +60,7 @@ public class OpenNLPChatBot {
 		questionAnswer.put("where", Access.venueOrSport(sportOrVenue)); // Answers what events are at a specific venue, or where an event is hosted
 		///System.out.println(Access.venueOrSport(sportOrVenue));
 		questionAnswer.put("parking","Parking info can be found:______________");
-		questionAnswer.put("accommodations","Hotels and other accomidations can be found: ");
+		//questionAnswer.put("accommodations","Hotels and other accomidations can be found: ");
 		questionAnswer.put("restaurants","A list of near by Restaurants can be found: ");
 		questionAnswer.put("food","Food rules can be found here:___________");
 		questionAnswer.put("accessibility", "Accessibility options can be found here:______");
