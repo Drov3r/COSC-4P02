@@ -1,13 +1,55 @@
-greeting        hi
 greeting        hello
 greeting        how are you?
 greeting        hey
+greeting        how's it going
+greeting        good morning
+greeting        good evening
+greeting        good afternoon
+greeting        howdy
+transportation  how do i get to the canada games?
+transportation  how do i get to the event?
+transportation  what bus do i take?
+website         where can i find information?
+website         what is the website?
+website         what is the canada games website?
 start           when do the games start?
 start           how long until the Canada games Start?
 start           time until the canada games start?
+new             what is new with the canada games?
 start           where can i get updates?
 start           what news articles can i read?
+where           where is the canada games?
+where           where are the games located?
+where           where are the games being held?
+parking         is there parking?
+parking         where is parking?
+parking         how much is parking?
+accommodations  where are the closest hotels?
+accommodations  where can i stay while at the games?
+accommodations  what accommodations can be found near the games?
+restaurants     what restaurants are close?
+restaurants     where can i eat nearby?
+restaurants     what is there to eat nearby
+food            can i bring food in?
+food            can i buy food at the games?
+food            what food will be offered at the games?
+accessibility   what accessibility options are there?
+accessibility   will there be interpreters?
+accessibility   who can i talk to about accessibility?
+things          what activities are nearby?
+things          what can i do in the area?
+things          what else is there to do?
+medical         where is the closest hostpital?
+medical         where can i get medical assistance?
+medical         what medical policies are there?
+airport         where is the closest airport?
+airport         how do i get to the airport?
+airport         what airport do athletes arrive in?
+viewing         where can i watch the games?
+viewing         will they be live streamed?
+viewing         what tv channels will be brodcasting games?
 where_is        where is the event
+where_is        where is the sport
 where_is        where is the sport
 where_is        where is the cycling
 where_is        where is the swimming
