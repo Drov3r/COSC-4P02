@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Access {
 
     public static String countdown() {
-
+    	System.out.println("Debug Print #1");
         //https://codeit.blog/2020/12/06/christmas-count-down-clock-with-java/
         LocalDate today = LocalDate.now();//getting current date
 
