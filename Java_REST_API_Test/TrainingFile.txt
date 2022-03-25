@@ -57,4 +57,13 @@ where_is        where is the golf
 where_is        where is the triathalon
 where_is        where is the marathon
 where_is        where is the race
-where_is        where is the javalin
+where_is        where is the javelin
+when_is         when is the event
+when_is         when is the sport
+when_is         when is the cycling
+when_is         when is the swimming
+when_is         when is the golf
+when_is         when is the triathalon
+when_is         when is the marathon*
+when_is         when is the race
+when_is         when is the javelin

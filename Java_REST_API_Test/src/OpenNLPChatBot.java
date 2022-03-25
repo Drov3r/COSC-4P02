@@ -51,7 +51,7 @@ import opennlp.tools.util.model.ModelUtil;
 public class OpenNLPChatBot {
 
 	private Map<String, String> staticAnswers = new HashMap<>();
-	private Map<String, Function<String, String>> dynamicResposnes = new HashMap<>();
+	private Map<String, Function<String, String>> dynamicResponses = new HashMap<>();
 	private DoccatModel model;
 
 	/*
@@ -61,8 +61,9 @@ public class OpenNLPChatBot {
 		staticAnswers.put("greeting", "Hello, how can I help you?");
 		staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
 		staticAnswers.put("website", "Information can be found on the website here:");
-		dynamicResposnes.put("start", (unused) -> Access.countdown());
-		dynamicResposnes.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
+		dynamicResponses.put("start", (unused) -> Access.countdown());
+		dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
+		dynamicResponses.put("when_is", Access::whenIsNextEvent);
 		staticAnswers.put("news", "News articles on the games can be found here:_________");
 		staticAnswers.put("parking","Parking info can be found:______________");
 		staticAnswers.put("accommodations","Hotels and other accomidations can be found: ");
@@ -153,8 +154,8 @@ public class OpenNLPChatBot {
 				// Get predefined answer from given category & add to answer.
 				if(this.staticAnswers.containsKey(category)) {
 					answer = answer + " " + staticAnswers.get(category);
-				} else if(this.dynamicResposnes.containsKey(category)) {
-					answer = answer + " " + dynamicResposnes.get(category).apply(getNoun(sentence));
+				} else if(this.dynamicResponses.containsKey(category)) {
+					answer = answer + " " + dynamicResponses.get(category).apply(getNoun(sentence));
 				}
 			}
 		} catch(Exception e) {
