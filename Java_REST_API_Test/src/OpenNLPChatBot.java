@@ -63,7 +63,7 @@ public class OpenNLPChatBot {
 		staticAnswers.put("website", "Information can be found on the website here:");
 		dynamicResponses.put("start", (unused) -> Access.countdown());
 		dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
-		dynamicResponses.put("when_is", Access::whenIsNextEvent);
+		//dynamicResponses.put("when_is", Access::whenIsNextEvent);
 		staticAnswers.put("news", "News articles on the games can be found here:_________");
 		staticAnswers.put("parking","Parking info can be found:______________");
 		staticAnswers.put("accommodations","Hotels and other accomidations can be found: ");
