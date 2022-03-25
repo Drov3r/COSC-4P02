@@ -64,6 +64,6 @@ when_is         when is the cycling
 when_is         when is the swimming
 when_is         when is the golf
 when_is         when is the triathalon
-when_is         when is the marathon*
+when_is         when is the marathon
 when_is         when is the race
 when_is         when is the javelin
