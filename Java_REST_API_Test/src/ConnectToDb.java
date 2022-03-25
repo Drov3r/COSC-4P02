@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class ConnectToDb {
 
-    private final String pathToCredentials = "./creds.txt";
+    private final String pathToCredentials = "/creds.txt";
     private String url = "";
     private String user = "";
     private String password = "";
@@ -98,5 +98,24 @@ public class ConnectToDb {
         return toReturn;
 
 
+    }
+
+    public ArrayList<String[]> getTimeFromDB(String sql, String[] headers){
+        ArrayList<String[]> toReturn = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            
+            ResultSet result = statement.executeQuery(sql);
+            while (result.next()) {
+                String[] temp = new String[headers.length];
+                for(int i=0; i<headers.length; i++){
+                    temp[i] = result.getString(headers[i]);
+                }
+                toReturn.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toReturn;
     }
 }
