@@ -28,6 +28,22 @@ public class Access {
         return x;
     }
 
+    public static String whenIsNextEvent (String input) {
+        ConnectToDb dbconnect = new ConnectToDb(); 
+        String ans = "";
+        ArrayList<String[]> nextEvent = dbconnect.getFromDB("sports",new String[]{"sport", "day", "time"},input, "sport");
+        
+        /*
+        SELECT TOP 1 *
+        FROM sports
+        WHERE x.date > @CurrentDate
+        ORDER BY x.date ASC
+        */
+       
+        return ans;
+    }
+
+
     public static String list(ArrayList<String[]> outerList){
         String list = "";
         for (int j=0; j<outerList.size(); j++) {
@@ -57,24 +73,24 @@ public class Access {
        
         return ans;
     }
-    //If given an event/sport, will return what venues the event is hosted at
-    public static String venue(String sport){
-        ConnectToDb dbconnect = new ConnectToDb(); 
-        ArrayList<String[]> venue = null;
-        String ans = " "; 
-        // public ArrayList<String[]> getFromDB(String tableName, String[] headers, String filter, String filterColumn)
-        venue = dbconnect.getFromDB("venues",new String[]{"venue"},sport, "sport");// call DB
-        ans += list(venue);
-        return ans;
-    }
-    //If given a venue, will return what sports are hosted at the venue 
-    public static String sport(String sport){
-        ConnectToDb dbconnect = new ConnectToDb(); 
-        ArrayList<String[]> venue = null;
-        String ans = " "; 
-        // public ArrayList<String[]> getFromDB(String tableName, String[] headers, String filter, String filterColumn)
-        venue = dbconnect.getFromDB("venues",new String[]{"sport"},sport, "venue");// call DB
-        ans += list(venue);
-        return ans;
-    }
+    // //If given an event/sport, will return what venues the event is hosted at
+    // public static String venue(String sport){
+    //     ConnectToDb dbconnect = new ConnectToDb(); 
+    //     ArrayList<String[]> venue = null;
+    //     String ans = " "; 
+    //     // public ArrayList<String[]> getFromDB(String tableName, String[] headers, String filter, String filterColumn)
+    //     venue = dbconnect.getFromDB("venues",new String[]{"venue"},sport, "sport");// call DB
+    //     ans += list(venue);
+    //     return ans;
+    // }
+    // //If given a venue, will return what sports are hosted at the venue 
+    // public static String sport(String sport){
+    //     ConnectToDb dbconnect = new ConnectToDb(); 
+    //     ArrayList<String[]> venue = null;
+    //     String ans = " "; 
+    //     // public ArrayList<String[]> getFromDB(String tableName, String[] headers, String filter, String filterColumn)
+    //     venue = dbconnect.getFromDB("venues",new String[]{"sport"},sport, "venue");// call DB
+    //     ans += list(venue);
+    //     return ans;
+    // }
 }
