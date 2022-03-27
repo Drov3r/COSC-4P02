@@ -1,6 +1,6 @@
 import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
-import logo from './icons/logo.png'
+import logo from './icons/logo1.png'
 import logoBig from './icons/logo2.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
@@ -89,7 +89,9 @@ function App() {
                   <img src={logoBig} width={'250px'}/>
                 </div>
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <h1>Hi, I'm Boomer Bot, Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada</h1>
+                  <h1>
+                    Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
+                  </h1>
                 </div>
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                 
