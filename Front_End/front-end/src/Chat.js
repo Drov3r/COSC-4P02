@@ -1,6 +1,7 @@
 import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
-import logo from './icons/logo.png'
+import logo from './icons/logo1.png'
+import logoBig from './icons/logo2.png'
 import backButton from './icons/back-button.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
@@ -158,7 +159,7 @@ function Chat({setBackButton}) {
       if(data.bot==true){
         return (
           <div key={index}>
-          <div style={{marginTop:'25px',borderRadius:'20px', width:'70%', padding:'15px', margin:'3%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+          <div style={{marginTop:'25px',borderRadius:'20px', width:'60%', padding:'15px', marginTop:'3%',marginBottom:'3%', marginLeft:'10%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
             <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
           </div>
         </div>
@@ -166,7 +167,7 @@ function Chat({setBackButton}) {
       }else{
         return (
           <div key={index}>
-            <div style={{marginTop:'25px',borderRadius:'20px', backgroundColor:'#007F90', width:'70%', padding:'15px', margin:'3%', marginLeft:'21%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+            <div style={{marginTop:'25px',borderRadius:'20px', backgroundColor:'#007F90', width:'60%', padding:'15px', marginTop:'3%',marginBottom:'3%', marginLeft:'30%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
               <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
             </div>
           </div>
@@ -175,7 +176,27 @@ function Chat({setBackButton}) {
       
     })
 
-      return <div>{divItUp}<div ref={scrollReference}/></div>
+      return (
+        <div>
+          
+          <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>  
+            <div style={{margin:'25px'}}>
+              <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <img src={logoBig} width={'200px'}/>
+              </div>
+              <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <h1 style={{fontSize:'17px'}}>
+                  Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div style={{width:'80%', height:'3px', backgroundColor:'#007F90', marginLeft:'10%', opacity:'0.5'}}></div>
+          {divItUp}
+
+          <div ref={scrollReference}/>
+
+        </div>)
       
   }
 
@@ -238,8 +259,7 @@ function Chat({setBackButton}) {
     }else{
       return(
         <div>
-          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>
-                
+          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>  
             {displayChatLogs()}
           </div>
 
@@ -248,7 +268,6 @@ function Chat({setBackButton}) {
             <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
             
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'85%', marginLeft:'-40px' }}>
-                
                 {displayMessageInput()}
               </div>
 
@@ -256,7 +275,7 @@ function Chat({setBackButton}) {
                 
                 {/* Send Message Button*/}
                 <a onClick={()=>sendMsg()}> 
-                  <img src={send} style={{width:'40px',}}/>
+                  <img src={send} style={{width:'40px', marginLeft:'20px'}}/>
                 </a>
               </div>
             </div>
