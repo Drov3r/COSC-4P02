@@ -79,6 +79,38 @@ function App() {
       )
   }
 
+  function displayBody(){
+
+    return (
+          <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
+            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+              <div>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                  <img src={logoBig} width={'250px'}/>
+                </div>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                  <h1>Hi, I'm Boomer Bot, Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada</h1>
+                </div>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                
+                </div>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                    <button onClick={()=>setShowChat()}
+                    style={{width:'200px', height:'60px', borderRadius:'3px', 
+                    border:'1px solid red', backgroundColor:'red', color:'white', 
+                    fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                      Chat With Us
+                    </button>
+                </div>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+    )
+  }
+
 
   function displayPages(){
 
@@ -106,32 +138,7 @@ function App() {
         : /* ELSE */       
           
           /* Otherwise Show Home Page Body */
-          <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
-            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
-              <div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <img src={logoBig} width={'250px'}/>
-                </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <h1>Hi, I'm Boomer Bot, Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada</h1>
-                </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                
-                </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                    <button onClick={()=>setShowChat()}
-                    style={{width:'200px', height:'60px', borderRadius:'3px', 
-                    border:'1px solid red', backgroundColor:'red', color:'white', 
-                    fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
-                      Chat With Us
-                    </button>
-                </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                
-                </div>
-              </div>
-            </div>
-          </div>
+          displayBody()
         }
       </div>
             
