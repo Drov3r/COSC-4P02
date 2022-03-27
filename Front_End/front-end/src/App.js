@@ -21,8 +21,7 @@ function App() {
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
-        // currently not being used 
-        document.title = "Boomer Bot"
+      document.title = "Badger Bot"
   })
 
   /* Setter function to handle the menu clicks */
@@ -46,16 +45,20 @@ function App() {
       return(
         <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
           <div>
-            {/* Menu Button */}
-            <div style={{position:'absolute', top:'25%', left:'5%',}}>
-              <Hamburger color={'white'} onToggle={()=>clickMenu()}/>
+            {/* Label and Icon */}
+            <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+                  <img src={logo} width={'40px'}/>
+                  <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Arial', fontWeight:'200'}}>
+                    Badger Bot
+                  </h1>
+              </div>
             </div>
 
-            {/* Label and Icon */}
-            <div style={{position:'absolute', top:'0', left:'15%', height:'10%', width:'85%', }}>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <img src={logo} width={'40px'}/>
-                  <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Arial', fontWeight:'200'}}>Badger Bot</h1>
+            {/* Menu Button */}
+            <div style={{position:'absolute', top:'0', left:'0', width:'15%', height:'100%'}}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+                <Hamburger color={'white'} onToggle={()=>clickMenu()}/>
               </div>
             </div>
           </div>
@@ -79,33 +82,33 @@ function App() {
 
   function displayPages(){
 
+    /* Check chat is clicked */
     if(showChat){
       /* Show Chat Box Page */
-      return <Chat setBackButton={callbackBackButton()}/>
+
+      return <Chat setBackButton={callbackBackButton}/>
 
     }else{
       /* Show Home Page */
-      if(click == true){  
-        return (
-        <div style={{}}> 
-            {/* Header */}  
-            {displayHeader()}
-            
-            {/* Body */}
-            {displayMenuItems()}
-        </div>)
-  
-      } else {         
+
+      return (
+
+      <div>
+        {/* Header*/ 
+        displayHeader()} 
         
-        return (
-          <div style={{}}> 
-            {/* Header */}  
-            {displayHeader()}
-            
-            {/* Body */}
-            <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
-              <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
-                <div>
+        {/* Check if menu is clicked */}
+        {click == true ?  
+          
+          /* Show Menu Body*/
+          displayMenuItems()
+    
+        : /* ELSE */       
+          
+          /* Otherwise Show Home Page Body */
+          <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
+            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+              <div>
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                   <img src={logoBig} width={'250px'}/>
                 </div>
@@ -126,11 +129,14 @@ function App() {
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                 
                 </div>
-                </div>
               </div>
             </div>
-          </div>)
-      }
+          </div>
+        }
+      </div>
+            
+      )
+      
     }
 
   }
