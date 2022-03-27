@@ -1,6 +1,7 @@
 import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
 import logo from './icons/logo.png'
+import backButton from './icons/back-button.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
@@ -9,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 /*
 This is where all the developed code for the apps front end is
 */
-function App() {
+function Chat({setBackButton}) {
 
   // initialize our click state variable to 'false'
   // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
@@ -19,6 +20,7 @@ function App() {
   const [loadingWheel, setLoadingWheel] = useState(false);
   const scrollReference = useRef()
   const uuid = uuidv4();
+  const [hover, setHover] = useState(false)
 
   /*
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
@@ -29,9 +31,13 @@ function App() {
   })
 
   /* Setter function to handle the menu clicks */
-  function clickMenu(){
+  function setBackButtonClick(){
 
-    setClick(!click)
+    setBackButton()
+  }
+
+  function hoverEffect(value){
+    setHover(value)
   }
 
   /*
@@ -194,6 +200,73 @@ function App() {
 
   }
 
+  function showHeader(){
+      return(
+        <div>
+          {/* Label and Icon */}
+          <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+                <img src={logo} width={'40px'}/>
+                <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Arial', fontWeight:'200'}}>Badger Bot</h1>
+            </div>
+          </div>
+
+          {/* Back Button */}
+          <div style={{position:'absolute', top:'0', left:0,width:'15%', height:'100%'}}>
+            <a onMouseEnter={()=>hoverEffect(true)} 
+            onMouseLeave={()=>hoverEffect(false)}
+            onClick={()=>setBackButtonClick()}
+            style={{display:'flex', justifyContent:'center', alignItems:'center', 
+            height:'100%', cursor:'pointer'}}>
+              <img src={backButton} style={{width:'30px',marginLeft:hover?'-7px':'0'}}/>
+            </a>
+          </div>
+        </div>
+      )
+  }
+
+  function showBody(){
+
+    if(click == true){
+      return(
+        <div>
+            <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
+              {displayMenuItems()}
+            </div>
+        </div>
+      )
+    }else{
+      return(
+        <div>
+          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>
+                
+            {displayChatLogs()}
+          </div>
+
+          <div style={{position:'absolute', top:'90%', left:0, height:'10%', width:'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden'}}>
+                
+            <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
+            
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'85%', marginLeft:'-40px' }}>
+                
+                {displayMessageInput()}
+              </div>
+
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
+                
+                {/* Send Message Button*/}
+                <a onClick={()=>sendMsg()}> 
+                  <img src={send} style={{width:'40px',}}/>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  
+  }
+
 
   /*
   MAIN render Loop
@@ -203,62 +276,19 @@ function App() {
         
         {/* Header */}
         <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
-            {/* Menu Button */}
-            <div style={{position:'absolute', top:'25%', left:'5%',}}>
-              <Hamburger color={'white'} onToggle={()=>clickMenu()}/>
-            </div>
-
-            {/* Label and Icon */}
-            <div style={{position:'absolute', top:'0', left:'15%', height:'10%', width:'85%', }}>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <img src={logo} width={'40px'}/>
-                  <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Arial', fontWeight:'200'}}>Badger Bot</h1>
-              </div>
-            </div>
+            {showHeader()}
         </div>
 
         {/* Body */}
-        {   /* IF */
-          click == true ?  
-              <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
-              
-                    {displayMenuItems()}
-              </div>
+        {showBody()}
 
-          : /* ELSE */
-              
-              <>
-              <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>
-                    
-                    {displayChatLogs()}
-              </div>
-
-              <div style={{position:'absolute', top:'90%', left:0, height:'10%', width:'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden'}}>
-                    
-                    <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
-                    
-                        <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'85%', marginLeft:'-40px' }}>
-                          
-                          {displayMessageInput()}
-                        </div>
-
-                        <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
-                          
-                          {/* Send Message Button*/}
-                          <a onClick={()=>sendMsg()}> 
-                            <img src={send} style={{width:'40px',}}/>
-                          </a>
-                        </div>
-                    </div>
-              </div>
-              </>}
-
-              <div style={{position:'absolute', top:'70%', left:0, width:'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
-                {displayLoadingWheel()}
-              </div>
+        {/* Loading Wheel */}
+        <div style={{position:'absolute', top:'70%', left:0, width:'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
+          {displayLoadingWheel()}
+        </div>
     </div>
   );
 }
 
-export default App;
+export default Chat;
 
