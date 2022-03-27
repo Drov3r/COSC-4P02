@@ -158,18 +158,30 @@ function Chat({setBackButton}) {
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         return (
-          <div key={index}>
-          <div style={{marginTop:'25px',borderRadius:'20px', width:'60%', padding:'15px', marginTop:'3%',marginBottom:'3%', marginLeft:'10%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-            <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
-          </div>
+          <div key={index} style={{display:'block', marginTop:'25px', width:'60%', marginLeft:'10%',minHeight:'100px', }}>
+
+            <div style={{borderRadius:'20px', maxWidth:'max-content', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+              <div style={{padding:'15px',maxWidth:'max-content', }}>
+                <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial',wordWrap:'break-word'}}>
+                  {data.message}
+                </h3>
+              </div>
+            </div>
+       
         </div>
         )
       }else{
         return (
-          <div key={index}>
-            <div style={{marginTop:'25px',borderRadius:'20px', backgroundColor:'#007F90', width:'60%', padding:'15px', marginTop:'3%',marginBottom:'3%', marginLeft:'30%', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-              <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial'}}>{data.message}</h3>
-            </div>
+          <div key={index} style={{display:'block', marginTop:'25px', width:'60%', marginLeft:'30%', minHeight:'100px',}}>
+            
+              <div style={{float:'right',borderRadius:'20px', maxWidth:'max-content', backgroundColor:'#007F90', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+                <div style={{padding:'15px',maxWidth:'max-content', }}>
+                  <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial', wordWrap:'break-word'}}>
+                    {data.message}
+                  </h3>
+                </div>
+              </div>
+         
           </div>
         )
       }
@@ -180,19 +192,23 @@ function Chat({setBackButton}) {
         <div>
           
           <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>  
-            <div style={{margin:'25px'}}>
+            <div style={{marginBottom:'25px', marginTop:'35px', marginLeft:'10%', marginRight:'10%'}}>
               <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                 <img src={logoBig} width={'200px'}/>
               </div>
-              <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+              <div style={{ display:'flex', justifyContent:'center', alignItems:'center', marginTop:'25px'}}>
                 <h1 style={{fontSize:'17px'}}>
                   Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
                 </h1>
               </div>
             </div>
           </div>
-          <div style={{width:'80%', height:'3px', backgroundColor:'#007F90', marginLeft:'10%', opacity:'0.5'}}></div>
+          
+          <div style={{width:'80%', height:'3px', backgroundColor:'#007F90', marginLeft:'10%', opacity:'0.5', marginBottom:'25px'}}></div>
+          
           {divItUp}
+
+          {/*<div style={{display:'block',width:'100%', height:'200px',backgroundColor:'pink'}}>hi</div>*/}
 
           <div ref={scrollReference}/>
 
@@ -214,7 +230,7 @@ function Chat({setBackButton}) {
           
           style={{marginLeft:'5%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
           resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
-          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial' }}
+          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial', }}
           />
         </div>
       ) 
