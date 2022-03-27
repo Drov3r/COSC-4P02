@@ -34,6 +34,10 @@ function App() {
     setChat(!showChat)
   }
 
+  function callbackBackButton(){
+    setChat(false)
+  }
+
   /*
   Displays the header dynamically, based on whether we are in chat screen or not
   */
@@ -77,7 +81,7 @@ function App() {
 
     if(showChat){
       /* Show Chat Box Page */
-      return <Chat/>
+      return <Chat setBackButton={callbackBackButton()}/>
 
     }else{
       /* Show Home Page */
