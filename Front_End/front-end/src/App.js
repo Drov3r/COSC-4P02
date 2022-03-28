@@ -40,6 +40,7 @@ function App() {
   }
 
   function callbackBackButton(){
+    clearText()
     setChat(false)
   }
 
@@ -55,7 +56,6 @@ function App() {
             <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
                   <img src={logo} width={'40px'}/>
-                  <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Arial', fontWeight:'200'}}>
                   <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontWeight:'200'}}>
                     Badger Bot
                   </h1>
@@ -80,8 +80,8 @@ function App() {
   function displayMenuItems(){
 
       return(
-          <div>
-            <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%'}}>Menu</h1>
+          <div style={{position:'absolute', top:'10%', left:0, width:'100%', height:'90%'}}>
+            <h1 style={{fontSize:'40px', color:'#004F71', marginTop:'50px', marginLeft:'10%'}}>Menu</h1>
           </div>
       )
   }
@@ -89,83 +89,69 @@ function App() {
   function displayBody(){
 
     return (
-          <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
           <div style={{position:'absolute', left:0, top:'10%', height:'90%', width:'100%', }}>
             <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
               <div>
-<<<<<<< HEAD
+
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
                   <img src={logoBig} width={'250px'}/>
                 </div>
+
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
                   <h1 style={{fontSize:'17px'}}>
                     Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
                   </h1>
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
-=======
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <img src={logoBig} width={'170px'}/>
-                </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>
-                  <h1 style={{fontSize:'20px'}}>
-                    Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
-                  </h1>
-                </div>
->>>>>>> 1fbae5ba7aeedf64c6ec5a497536b087ce4daeba
-                
-                {/*<div style={{height:'100%',paddingTop:'3%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>*/}
-                  
+                                  
                 <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
+                  
                   {/* Clear message button*/}
-                  <button onClick={()=>setShowChat()}
-                    style={{width:'80px', height:'50px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
-                    border:'1px solid red', backgroundColor:'red', color:'white', 
-                    fontSize:'14px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
-                      <h1 style={{fontSize:'18px', margin:'0px'}}>Clear</h1>
-                    </button>
+                  <button onClick={()=>clearText()}
+                    style={{width:'80px', height:'52px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
+                    border:'1px solid red', backgroundColor:'red', color:'white', marginLeft:'-25px',
+                    fontSize:'14px', fontWeight:'bold', cursor:'pointer' }}>
+                      <h1 style={{fontSize:'18px', margin:'0px'}}>
+                        Clear
+                      </h1>
+                  </button>
+
+                  {/* Text Input */}
                   {displayMessageInput()}
+
                   {/* Send Message Button*/}
-                  <img src={send} style={{width:'30px',marginLeft:'-50px' }}/>
+                  <img onClick={()=>sendMessageOpenChat()} src={send} style={{width:'30px',marginLeft:'-50px',cursor:'pointer', }}/>
                 </div>
-<<<<<<< HEAD
+
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
                     <button onClick={()=>setShowChat()}
                     style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
-=======
-
-                <div style={{ display:'flex', paddingTop:'3%', justifyContent:'center', alignItems:'center'}}>
-                    <button onClick={()=>setShowChat()}
-                    style={{width:'200px', height:'60px', borderRadius:'15px', border:'1px solid red',
->>>>>>> 1fbae5ba7aeedf64c6ec5a497536b087ce4daeba
                     border:'1px solid red', backgroundColor:'red', color:'white', 
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
-                      Chat With Us
-                      <h1 style={{fontSize:'24px', margin:'0px'}}>Chat With Us</h1>
+                      <h1 style={{fontSize:'24px', margin:'0px'}}>
+                        Chat With Us
+                      </h1>
                     </button>
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
 
                 <div style={{ display:'flex', paddingTop:'3%', justifyContent:'space-evenly', alignItems:'center'}}>
-                <button onClick={()=>setShowChat()}
-                    style={{width:'150px', height:'110px', borderRadius:'15px', 
+                <button onClick={()=>{}}
+                    style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer', 
                    backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                       <img src={link} style={{width:'40px', marginBottom:'-7px'}}/>
-                      <h1 style={{fontSize:'20px', margin:'5px'}}>Main Site</h1>
+                      <h1 style={{fontSize:'20px', margin:'5px',}}>Main Site</h1>
                     </button>
                 
-                </div>
-                    <button onClick={()=>setShowChat()}
-                    style={{width:'150px', height:'110px', borderRadius:'15px', 
+                    <button onClick={()=>{}}
+                    style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer',  
                      backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                       <img src={location} style={{width:'40px', marginBottom:'-7px'}}/>
                       <h1 style={{fontSize:'20px', margin:'5px'}}>Map</h1>
                     </button>
 
-                    <button onClick={()=>setShowChat()}
-                    style={{width:'150px', height:'110px', borderRadius:'15px', 
+                    <button onClick={()=>{}}
+                    style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer',
                      backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                       <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -179,6 +165,7 @@ function App() {
               </div>
             </div>
           </div>
+          
     )
   }
 
@@ -189,7 +176,7 @@ function App() {
     if(showChat){
       /* Show Chat Box Page */
 
-      return <Chat setBackButton={callbackBackButton}/>
+      return <Chat setBackButton={callbackBackButton} homePageMsg={newMsg}/>
 
     }else{
       /* Show Home Page */
@@ -222,14 +209,14 @@ function App() {
   function displayMessageInput(){
 
     return(
-      <div style={{width:'40%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center'}}>
+      <div style={{width:'60%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center'}}>
         <input value={newMsg} 
         onChange={setNewMsgFunction} 
         onKeyDown={enterButtonClicked} 
         placeholder={'Ask Me Anything!'} 
         
         style={{borderRadius:'20px', width:'100%', height:'50px',paddingLeft:'20px', borderBottomLeftRadius:'0px', borderTopLeftRadius:'0px',
-        resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', paddingRight:'70px',
+        resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', paddingRight:'70px', cursor:'pointer',
         borderWidth:'0px', borderColor:'#E0E0E0', backgroundColor:'#E0E0E0', fontFamily:'Oswald'}}
         />
       </div>
@@ -246,8 +233,18 @@ function setNewMsgFunction(e){
 function enterButtonClicked(e){
 
   if(e.keyCode == 13){
-    
+    setChat(true)
+    //setNewMsg("")
   }
+}
+
+function clearText(){
+  setNewMsg("")
+}
+
+function sendMessageOpenChat(){
+  setChat(true)
+  //setNewMsg("")
 }
 
 

@@ -8,10 +8,12 @@ import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
 import { v4 as uuidv4 } from 'uuid';
 
+import './App.css';
+
 /*
 This is where all the developed code for the apps front end is
 */
-function Chat({setBackButton}) {
+function Chat({setBackButton, homePageMsg}) {
 
   // initialize our click state variable to 'false'
   // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
@@ -26,7 +28,7 @@ function Chat({setBackButton}) {
   const [copied, setCopied] = useState(false)
 
   /*
-  This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
+  This function is called whenever this component (Chat.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
         // currently not being used 
@@ -38,6 +40,15 @@ function Chat({setBackButton}) {
   */
   useEffect(()=>{
 
+    if(homePageMsg != "" && homePageMsg != " "){
+      sendMsg(homePageMsg)
+    }
+
+    if(window.innerWidth>800){
+      setMobile(false)
+    }else{
+      setMobile(true)
+    }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   },[])
@@ -46,7 +57,7 @@ function Chat({setBackButton}) {
     if(window.innerWidth>800){
       setMobile(false)
     }else{
-        setMobile(true)
+      setMobile(true)
     }
   }
 
@@ -67,7 +78,6 @@ function Chat({setBackButton}) {
   function copyChat(){
     let text = ""
     for(let i = 0; i<dialogue.length; i++){
-      console.log(dialogue[i].message)
         if(dialogue[i].bot){
           text = text.concat(`\nBadger Bot: ${dialogue[i].message}`)
         }else{
@@ -122,13 +132,13 @@ function Chat({setBackButton}) {
   msg and the response to the array of dialogue messages. the array is 
   mapped in the main renderer
   */
-  async function sendMsg(){
+  async function sendMsg(msgFromHomePage){
 
     // turn the loading wheel on
     setLoadingWheel(true)
 
     // get the human message
-    const humanMsg = newMsg
+    const humanMsg = msgFromHomePage ? msgFromHomePage : newMsg
     // copy the global array of messages
     const data = dialogue  
     // create a message object, get the message from the newMsg state, which is set in input tag
@@ -204,7 +214,7 @@ function Chat({setBackButton}) {
               </div>
             </div>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', maxWidth:'max-content',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
-              <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial', wordBreak:'break-word'}}>
+              <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Oswald', wordBreak:'break-word'}}>
                 {data.message}
               </h3>
             </div>
@@ -214,8 +224,8 @@ function Chat({setBackButton}) {
         return (
           <div key={index} style={{display:'block', width:'60%',marginLeft:'30%', marginBottom:'25px',   }}>
             <div style={{display:'flex', justifyContent:'right', alignItems:'center', }}>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'#007F90', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
-                <h3 style={{padding:'15px',fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial',wordBreak:'break-word' }}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'#8DE9F6', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
+                <h3 style={{padding:'15px',fontSize:'20px', color:'#007F90', fontWeight:'400', fontFamily:'Oswald',wordBreak:'break-word' }}>
                   {data.message}
                 </h3>
               </div>
@@ -270,7 +280,7 @@ function Chat({setBackButton}) {
           
           style={{marginLeft:'2%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
           resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
-          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial', }}
+          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Oswald' }}
           />
         </div>
       ) 
@@ -284,7 +294,7 @@ function Chat({setBackButton}) {
           <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
                 <img src={logo} width={'40px'}/>
-                <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Arial', fontWeight:'200'}}>Badger Bot</h1>
+                <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Oswald', fontWeight:'200'}}>Badger Bot</h1>
             </div>
           </div>
 
@@ -332,8 +342,8 @@ function Chat({setBackButton}) {
                     </div>
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                         <button onClick={()=>copyChat()}
-                        style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
-                        border:'1px solid red', backgroundColor:'red', color:'white', 
+                        style={{width:'250px', height:'60px', borderRadius:'3px', cursor:'pointer',
+                        border:'1px solid red', backgroundColor:'red', color:'white', fontFamily:'Oswald',
                         fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                           {copied?'Copied!':'Copy chat to clipboard'}
                         </button>
@@ -358,12 +368,6 @@ function Chat({setBackButton}) {
             {displayChatLogs()}
             <div style={{marginTop:'25px',marginBottom:'25px'}}>
               <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  {/*<a onClick={()=>copyChat()}
-                  style={{width:'100px', height:'60px', borderRadius:'3px', cursor:'pointer',}}>
-                    <h1 style={{color:'red',fontSize:'17px', }}>
-                      {copied?'Copied!':'Copy chat to clipboard'}
-                    </h1>
-                    </a>*/}
                   <button onClick={()=>copyChat()}
                         style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
                         border:'1px solid red', backgroundColor:'red', color:'white', 
@@ -378,7 +382,25 @@ function Chat({setBackButton}) {
                 
             <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
 
-              <div style={{display:'flex', justifyContent:'right', alignItems:'center', height:'100%',width:'40px',}}>
+                <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
+                  
+                  {/* Clear message button*/}
+                  <button onClick={()=>clearText()}
+                    style={{width:'80px', height:'52px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
+                    border:'1px solid red', backgroundColor:'red', color:'white', marginLeft:'-25px',
+                    fontSize:'14px', fontWeight:'bold', cursor:'pointer' }}>
+                      <h1 style={{fontSize:'18px', margin:'0px'}}>
+                        Clear
+                      </h1>
+                  </button>
+
+                  {/* Text Input */}
+                  {displayAltMessageInput()}
+
+                  {/* Send Message Button*/}
+                  <img onClick={()=>sendMsg()} src={send} style={{width:'30px',marginLeft:'-50px',cursor:'pointer', }}/>
+                </div> 
+              {/*<div style={{display:'flex', justifyContent:'right', alignItems:'center', height:'100%',width:'40px',}}>
                 <a onClick={()=>clearText()} style={{cursor:'pointer'}}>
                   <h1 style={{color:'red', fontSize:'16px', fontWeight:'400',}}>Clear</h1>
                 </a>
@@ -390,11 +412,11 @@ function Chat({setBackButton}) {
 
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'50px'  }}>
                 
-                {/* Send Message Button*/}
+                
                 <a onClick={()=>sendMsg()} style={{cursor:'pointer'}}> 
                   <img src={send} style={{width:'40px', marginLeft:'5px'}}/>
                 </a>
-              </div>
+              </div> */}
             </div>
 
           </div>
@@ -403,6 +425,24 @@ function Chat({setBackButton}) {
     }
   
   }
+
+  function displayAltMessageInput(){
+
+    return(
+      <div style={{width:'75%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <input value={newMsg} 
+        onChange={setNewMsgFunction} 
+        onKeyDown={enterButtonClicked} 
+        placeholder={'Message'} 
+        
+        style={{borderRadius:'20px', width:'100%', height:'50px',paddingLeft:'20px', borderBottomLeftRadius:'0px', borderTopLeftRadius:'0px',
+        resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', paddingRight:'70px', cursor:'pointer',
+        borderWidth:'0px', borderColor:'#E0E0E0', backgroundColor:'#E0E0E0', fontFamily:'Oswald'}}
+        />
+      </div>
+    ) 
+
+}
 
 
   /*
