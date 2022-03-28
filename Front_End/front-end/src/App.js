@@ -17,6 +17,7 @@ function App() {
   // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
   const [click,setClick] = useState(false) 
   const [showChat, setChat] = useState(false)
+  const [newMsg,setNewMsg] = useState("") 
   /*
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
   */
@@ -82,33 +83,74 @@ function App() {
   function displayBody(){
 
     return (
-          <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
+          <div style={{position:'absolute', left:0, height:'90%', width:'100%', }}>
             <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
               <div>
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <img src={logoBig} width={'250px'}/>
+                  <img src={logoBig} width={'170px'}/>
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <h1>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', width:'100%'}}>
+                  <h1 style={{fontSize:'20px'}}>
                     Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
                   </h1>
                 </div>
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                 
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                
+                  
+                  
+                    <div style={{height:'100%',paddingTop:'3%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
+                        
+                        {/* Clear message button*/}
+                          <img src={send} style={{width:'40px'}}/>
+                      </div>
+                      <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'85%', marginLeft:'-40px' }}>
+                      {displayMessageInput()}
+                      </div>
+
+                      <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
+                        
+                        {/* Send Message Button*/}
+                          <img src={send} style={{width:'40px', marginLeft:'-150px'}}/>
+                      </div>
+                    </div>
+                  
+                  <div style={{ display:'flex', paddingTop:'3%', justifyContent:'center', alignItems:'center'}}>
                     <button onClick={()=>setShowChat()}
-                    style={{width:'200px', height:'60px', borderRadius:'3px', 
+                    style={{width:'200px', height:'60px', borderRadius:'15px', 
                     border:'1px solid red', backgroundColor:'red', color:'white', 
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                       Chat With Us
                     </button>
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+
+                <div style={{ display:'flex', paddingTop:'3%', justifyContent:'space-evenly', alignItems:'center'}}>
+                <button onClick={()=>setShowChat()}
+                    style={{width:'200px', height:'110px', borderRadius:'15px', 
+                   backgroundColor:'#00263D', color:'white', 
+                    fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                      <img src={send} style={{width:'40px', marginLeft:'-150px'}}/>
+                    </button>
                 
-                </div>
+                    <button onClick={()=>setShowChat()}
+                    style={{width:'200px', height:'110px', borderRadius:'15px', 
+                     backgroundColor:'#00263D', color:'white', 
+                    fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                      ...
+                    </button>
+
+                    <button onClick={()=>setShowChat()}
+                    style={{width:'200px', height:'110px', borderRadius:'15px', 
+                     backgroundColor:'#00263D', color:'white', 
+                    fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                      <img src={send} style={{width:'40px', marginLeft:'-150px'}}/>
+                    </button>
+                  </div>
               </div>
             </div>
+            <div style={{backgroundColor:'#004F71', position:'fixed',bottom:'0%', width:'100%', height:'40px'}}><h1> </h1></div>
           </div>
     )
   }
@@ -149,6 +191,39 @@ function App() {
     }
 
   }
+
+  function displayMessageInput(){
+
+    return(
+      <div style={{width:'70%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center', }}>
+        <input value={newMsg} 
+        onChange={setNewMsgFunction} 
+        onKeyDown={enterButtonClicked} 
+        placeholder={'Ask Me Anything!'} 
+        
+        style={{marginLeft:'15%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
+        resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
+        borderWidth:'2px', borderColor:'#E0E0E0', backgroundColor:'#E0E0E0', fontFamily:'Arial'}}
+        />
+      </div>
+    ) 
+
+}
+
+function setNewMsgFunction(e){
+
+  setNewMsg(e.target.value)
+
+}
+
+function enterButtonClicked(e){
+
+  if(e.keyCode == 13){
+    
+  }
+}
+
+
 
  
 
