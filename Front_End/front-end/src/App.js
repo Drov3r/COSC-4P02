@@ -85,20 +85,20 @@ function App() {
           <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'100%', }}>
             <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
               <div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
                   <img src={logoBig} width={'250px'}/>
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <h1>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
+                  <h1 style={{fontSize:'17px'}}>
                     Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
                   </h1>
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
                 
                 </div>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
                     <button onClick={()=>setShowChat()}
-                    style={{width:'200px', height:'60px', borderRadius:'3px', 
+                    style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
                     border:'1px solid red', backgroundColor:'red', color:'white', 
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                       Chat With Us
