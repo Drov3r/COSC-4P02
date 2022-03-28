@@ -158,30 +158,24 @@ function Chat({setBackButton}) {
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         return (
-          <div key={index} style={{display:'block', marginTop:'25px', width:'60%', marginLeft:'10%',minHeight:'100px', }}>
-
-            <div style={{borderRadius:'20px', maxWidth:'max-content', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-              <div style={{padding:'15px',maxWidth:'max-content', }}>
-                <h3 style={{fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial',wordWrap:'break-word'}}>
-                  {data.message}
-                </h3>
-              </div>
+          <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', maxWidth:'max-content',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
+              <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial', wordBreak:'break-word'}}>
+                {data.message}
+              </h3>
             </div>
-       
-        </div>
+          </div>
         )
       }else{
         return (
-          <div key={index} style={{display:'block', marginTop:'25px', width:'60%', marginLeft:'30%', minHeight:'100px',}}>
-            
-              <div style={{float:'right',borderRadius:'20px', maxWidth:'max-content', backgroundColor:'#007F90', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
-                <div style={{padding:'15px',maxWidth:'max-content', }}>
-                  <h3 style={{fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial', wordWrap:'break-word'}}>
-                    {data.message}
-                  </h3>
-                </div>
+          <div key={index} style={{display:'block', width:'60%',marginLeft:'30%', marginBottom:'25px',   }}>
+            <div style={{display:'flex', justifyContent:'right', alignItems:'center', }}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'#007F90', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
+                <h3 style={{padding:'15px',fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Arial',wordBreak:'break-word' }}>
+                  {data.message}
+                </h3>
               </div>
-         
+            </div>      
           </div>
         )
       }
@@ -191,24 +185,26 @@ function Chat({setBackButton}) {
       return (
         <div>
           
-          <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>  
-            <div style={{marginBottom:'25px', marginTop:'35px', marginLeft:'10%', marginRight:'10%'}}>
-              <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <img src={logoBig} width={'200px'}/>
-              </div>
-              <div style={{ display:'flex', justifyContent:'center', alignItems:'center', marginTop:'25px'}}>
-                <h1 style={{fontSize:'17px'}}>
-                  Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
-                </h1>
+          <div style={{display:'block'}}>
+            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>  
+              <div style={{marginBottom:'25px', marginTop:'35px', marginLeft:'10%', marginRight:'10%'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                  <img src={logoBig} width={'200px'}/>
+                </div>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', marginTop:'25px'}}>
+                  <h1 style={{fontSize:'17px'}}>
+                    Hi, I'm Badger Bot. Ask me your questions relating to the 2022 Canada Summer Games in Niagara Canada.
+                  </h1>
+                </div>
               </div>
             </div>
           </div>
-          
+
           <div style={{width:'80%', height:'3px', backgroundColor:'#007F90', marginLeft:'10%', opacity:'0.5', marginBottom:'25px'}}></div>
           
-          {divItUp}
-
-          {/*<div style={{display:'block',width:'100%', height:'200px',backgroundColor:'pink'}}>hi</div>*/}
+          <div style={{display:'block'}}>
+            {divItUp}
+          </div>
 
           <div ref={scrollReference}/>
 
@@ -290,7 +286,7 @@ function Chat({setBackButton}) {
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
                 
                 {/* Send Message Button*/}
-                <a onClick={()=>sendMsg()}> 
+                <a onClick={()=>sendMsg()} style={{cursor:'pointer'}}> 
                   <img src={send} style={{width:'40px', marginLeft:'20px'}}/>
                 </a>
               </div>
