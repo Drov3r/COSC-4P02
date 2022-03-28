@@ -30,7 +30,7 @@ function Chat({setBackButton}) {
   */
   useEffect(()=>{
         // currently not being used 
-        document.title = "Boomer Bot"
+        document.title = "Badger Bot"
   })
 
   /*
