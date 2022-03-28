@@ -22,6 +22,8 @@ function Chat({setBackButton}) {
   const scrollReference = useRef()
   const uuid = uuidv4();
   const [hover, setHover] = useState(false)
+  const [mobile, setMobile] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   /*
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
@@ -31,6 +33,23 @@ function Chat({setBackButton}) {
         document.title = "Boomer Bot"
   })
 
+  /*
+  This function is called upon initialization of the component, much like a constructor
+  */
+  useEffect(()=>{
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  },[])
+
+  function handleResize(){
+    if(window.innerWidth>800){
+      setMobile(false)
+    }else{
+        setMobile(true)
+    }
+  }
+
   /* Setter function to handle the menu clicks */
   function setBackButtonClick(){
 
@@ -39,6 +58,24 @@ function Chat({setBackButton}) {
 
   function hoverEffect(value){
     setHover(value)
+  }
+
+  function clearText(){
+    setNewMsg("")
+  }
+
+  function copyChat(){
+    let text = ""
+    for(let i = 0; i<dialogue.length; i++){
+      console.log(dialogue[i].message)
+        if(dialogue[i].bot){
+          text = text.concat(`\nBadger Bot: ${dialogue[i].message}`)
+        }else{
+          text = text.concat(`\nUser: ${dialogue[i].message}`)
+        }
+    }
+    navigator.clipboard.writeText(text)
+    setCopied(true)
   }
 
   /*
@@ -128,12 +165,14 @@ function Chat({setBackButton}) {
       setDialogue(data)
     
       // force a re-render
-      setNewMsg('')
+      clearText()
       
       // turn the loading wheel off
       setLoadingWheel(false)
 
       scrollToBottom()
+
+      setCopied(false)
   }
 
   /*
@@ -143,7 +182,7 @@ function Chat({setBackButton}) {
 
       return(
           <div>
-            <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%'}}>Menu</h1>
+            <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%', marginTop:'20%'}}>Menu</h1>
           </div>
       )
   }
@@ -159,6 +198,11 @@ function Chat({setBackButton}) {
       if(data.bot==true){
         return (
           <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+            <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'2px solid black', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
+                <img src={logo} width={'30px'}/>
+              </div>
+            </div>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', maxWidth:'max-content',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
               <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Arial', wordBreak:'break-word'}}>
                 {data.message}
@@ -205,7 +249,7 @@ function Chat({setBackButton}) {
           <div style={{display:'block'}}>
             {divItUp}
           </div>
-
+          {mobile?<></>:<div style={{height:'25px'}}></div>}
           <div ref={scrollReference}/>
 
         </div>)
@@ -224,7 +268,7 @@ function Chat({setBackButton}) {
           onKeyDown={enterButtonClicked} 
           placeholder={'Message'} 
           
-          style={{marginLeft:'5%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
+          style={{marginLeft:'2%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
           resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
           borderWidth:'2px', borderColor:'#004F71', fontFamily:'Arial', }}
           />
@@ -271,26 +315,88 @@ function Chat({setBackButton}) {
     }else{
       return(
         <div>
-          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}>  
+           
+          {!mobile ?
+            <>
+            <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'30%', overflow:'scroll',zIndex:9}}> 
+              <div style={{display:'inline-block',width:'100%', height:'100%', backgroundColor:'#8DE9F6'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+                  <div>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                      <h1 style={{fontSize:'17px'}}>
+                        Helpful Links
+                      </h1>
+                    </div>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'500px'}}>
+                    
+                    </div>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <button onClick={()=>copyChat()}
+                        style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
+                        border:'1px solid red', backgroundColor:'red', color:'white', 
+                        fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                          {copied?'Copied!':'Copy chat to clipboard'}
+                        </button>
+                    </div>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style={{position:'absolute', top:'10%', left:'30%', height:'80%', width:'70%', overflow:'scroll',boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', zIndex:9}}> 
+              <div style={{display:'inline-block',width:'100%', height:'100%', verticalAlign:'top'}}>
+                {displayChatLogs()}
+              </div>
+            </div>
+            </>
+           : 
+          <>
+         
+          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}> 
             {displayChatLogs()}
-          </div>
+            <div style={{marginTop:'25px',marginBottom:'25px'}}>
+              <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                  {/*<a onClick={()=>copyChat()}
+                  style={{width:'100px', height:'60px', borderRadius:'3px', cursor:'pointer',}}>
+                    <h1 style={{color:'red',fontSize:'17px', }}>
+                      {copied?'Copied!':'Copy chat to clipboard'}
+                    </h1>
+                    </a>*/}
+                  <button onClick={()=>copyChat()}
+                        style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
+                        border:'1px solid red', backgroundColor:'red', color:'white', 
+                        fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                          {copied?'Copied!':'Copy chat to clipboard'}
+                  </button>
+              </div>
+            </div>
+          </div></>}
 
-          <div style={{position:'absolute', top:'90%', left:0, height:'10%', width:'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden'}}>
+          <div style={{position:'absolute', top:'90%', left: !mobile ?'30%':0, height:'10%', width:!mobile ?'70%':'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden', zIndex:9}}>
                 
             <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
-            
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'85%', marginLeft:'-40px' }}>
+
+              <div style={{display:'flex', justifyContent:'right', alignItems:'center', height:'100%',width:'40px',}}>
+                <a onClick={()=>clearText()} style={{cursor:'pointer'}}>
+                  <h1 style={{color:'red', fontSize:'16px', fontWeight:'400',}}>Clear</h1>
+                </a>
+              </div>
+
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:mobile?'75%':'85%' }}>
                 {displayMessageInput()}
               </div>
 
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'40px',  }}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'50px'  }}>
                 
                 {/* Send Message Button*/}
                 <a onClick={()=>sendMsg()} style={{cursor:'pointer'}}> 
-                  <img src={send} style={{width:'40px', marginLeft:'20px'}}/>
+                  <img src={send} style={{width:'40px', marginLeft:'5px'}}/>
                 </a>
               </div>
             </div>
+
           </div>
         </div>
       )
@@ -306,15 +412,15 @@ function Chat({setBackButton}) {
     <div style={{height:'100%', width:'100%', backgroundColor:'white'}}>
         
         {/* Header */}
-        <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
-            {showHeader()}
+        <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', zIndex:10}}>
+          {showHeader()}
         </div>
 
         {/* Body */}
         {showBody()}
 
         {/* Loading Wheel */}
-        <div style={{position:'absolute', top:'70%', left:0, width:'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
+        <div style={{position:'absolute', top:'70%', left:!mobile?'30%':0, width:!mobile?'70%':'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
           {displayLoadingWheel()}
         </div>
     </div>
