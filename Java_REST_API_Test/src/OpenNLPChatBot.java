@@ -318,7 +318,7 @@ public class OpenNLPChatBot {
 			if(noun == null) {
 				noun = findParseByType(topParses[0], "NP"); // Couldn't find noun, get the entire noun phrase
 			}
-			return noun.getText().replace(".", "").replace("!", "").replace("?", "").trim(); // Sanitize and return result
+			return noun.getCoveredText().replace(".", "").replace("!", "").replace("?", "").trim(); // Sanitize and return result
 		} catch(IOException e) {
 		}
 		return null;
