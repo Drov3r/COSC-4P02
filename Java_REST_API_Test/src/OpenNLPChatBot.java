@@ -308,30 +308,34 @@ public class OpenNLPChatBot {
 	
 	private String getNoun(String sentence) {
 		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) {
-			
+   
 			ParserModel model = new ParserModel(modelIn);
 			Parser parser = ParserFactory.create(model);
-			Parse topParses[] = ParserTool.parseLine(sentence, parser, 1);
-			
+			Parse topParses[] = ParserTool.parseLine(sentence.toLowerCase(), parser, 1);
+   
 			topParses[0].show();
-			
-			return findParseByType(topParses[0], "NN").getText().replace(".", "").replace("!", "").replace("?", "");
+			Parse noun = findParseByType(topParses[0], "NN");
+			if(noun == null) {
+				noun = findParseByType(topParses[0], "NP"); // Couldn't find noun, get the entire noun phrase
+			}
+			return noun.getText().replace(".", "").replace("!", "").replace("?", "").trim(); // Sanitize and return result
 		} catch(IOException e) {
 		}
 		return null;
 	}
 	
-	private Parse findParseByType(Parse parseTree, String... types) {
-		if(Arrays.asList(types).contains(parseTree.getType())) {
+	private Parse findParseByType(Parse parseTree, String type) {
+		if(parseTree.getType().equalsIgnoreCase(type)) {
 			return parseTree;
 		} else if(parseTree.getChildCount() > 0) {
 			for(Parse child : parseTree.getChildren()) {
-				Parse result = findParseByType(child, types);
+				Parse result = findParseByType(child, type);
 				if(result != null) return result;
 			}
 		}
 		return null; // Could not find.
 	}
+
 
 	public static void main(String... args) {
 		new WebServer();
