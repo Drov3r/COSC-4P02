@@ -60,20 +60,12 @@ public class OpenNLPChatBot {
 	public OpenNLPChatBot() {
 		staticAnswers.put("greeting", "Hello, how can I help you?");
 		staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
-		staticAnswers.put("website", "Information can be found on the website here:");
+		staticAnswers.put("viewing", "The games can be viewed at:");
 		dynamicResponses.put("start", (unused) -> Access.countdown());
 		dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
-		//dynamicResponses.put("when_is", Access::whenIsNextEvent);
-//		staticAnswers.put("news", "News articles on the games can be found here:_________");
-//		staticAnswers.put("parking","Parking info can be found:______________");
-//		staticAnswers.put("accommodations","Hotels and other accomidations can be found: ");
-//		staticAnswers.put("restaurants","A list of near by Restaurants can be found: ");
-//		staticAnswers.put("food","Food rules can be found here:___________");
-//		staticAnswers.put("accessibility", "Accessibility options can be found here:______");
-//		staticAnswers.put("things", "Some activities that can be found are:_______________");
-//		staticAnswers.put("medical", "For medical emergencies please contact 911. The nearest hospital is: St.Catharines General hospital [1200 Fourth Ave, St. Catharines, ON L2S 0A9].");
-//		staticAnswers.put("airport"," The nearest airports are:_________");
-//		staticAnswers.put("viewing", "The events can be viewed at these locations: ");
+		dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers what events are at a specific venue, or where an event is hosted
+
+
 
 		
 		try {
