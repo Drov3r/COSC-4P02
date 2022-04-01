@@ -63,11 +63,8 @@ public class OpenNLPChatBot {
 		staticAnswers.put("viewing", "The games can be viewed at:");
 		dynamicResponses.put("start", (unused) -> Access.countdown());
 		dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
-		dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers what events are at a specific venue, or where an event is hosted
+		dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers when a specific event is taking place
 
-
-
-		
 		try {
 			// Train categorizer model to the training data we created.
 			model = trainCategorizerModel();
@@ -94,13 +91,13 @@ public class OpenNLPChatBot {
 		int upper = 4;
 		int randInt = rand.nextInt(upper);
 		if (randInt == 0) {
-			sport = "baseball";
+		 	sport = "triathlon";
 		}else if (randInt == 1) {
-			sport = "basketball";
+		  	sport = "basketball";
 		}else if (randInt == 2) {
 			sport = "swimming";
 		}else if (randInt == 3) {
-			sport = "cycling";
+		 	sport = "cycling";
 		}
 		return sport;
 	}

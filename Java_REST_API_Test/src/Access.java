@@ -11,7 +11,7 @@ public class Access {
         //https://codeit.blog/2020/12/06/christmas-count-down-clock-with-java/
         LocalDate today = LocalDate.now();//getting current date
 
-        LocalDate GameDayStart = LocalDate.of(2022, Month.AUGUST, 6);// setting first day of sports***
+        LocalDate GameDayStart = LocalDate.of(2022, Month.AUGUST, 6);// setting first day of sports
 
         LocalDate nextGame = GameDayStart.withYear(today.getYear());
 
@@ -27,19 +27,12 @@ public class Access {
                 p2 + " days in total)");
         return x;
     }
-        /*
-        SELECT TOP 1 *
-        FROM sports
-        WHERE x.date > @CurrentDate
-        ORDER BY x.date ASC
-        */
+       
     public static String whenIsNextEvent (String input) {
         ConnectToDb dbconnect = new ConnectToDb(); 
         String ans = "";
-        ArrayList<String[]> nextEvent = dbconnect.getTimeFromDB("SELECT TOP 1 * FROM sports WHERE x.date > @CurrentDateORDER BY x.date ASC", new String[]{"sport", "time"});
-        
-        System.out.println(list(nextEvent));
-       
+        ArrayList<String[]> nextEvent = dbconnect.getTimeFromDB("sports", new String[]{"time"}, input, "sport");
+        ans = "The next " + input + " event will at the following time: " + list(nextEvent);
         return ans;
     }
 
