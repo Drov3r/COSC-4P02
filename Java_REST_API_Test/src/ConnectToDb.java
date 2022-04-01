@@ -24,7 +24,7 @@ public class ConnectToDb {
     public ConnectToDb(){
     
         // Finding the db connection credentials
-        url = "jdbc:postgresql://localhost:5432/chatbot";
+        url = findCredentials()[0];
         user = findCredentials()[1];
         password = findCredentials()[2];
 
@@ -100,7 +100,18 @@ public class ConnectToDb {
 
     }
 
-    public ArrayList<String[]> getTimeFromDB(String sql, String[] headers){
+    public ArrayList<String[]> getTimeFromDB(String tableName, String[] headers, String filter, String filterColumn){
+
+        String sql = "Select ";
+        for (int j=0; j<headers.length; j++) {
+            sql += headers[j];
+            if ((j+1)<headers.length) sql+=", ";
+        }
+        sql += " from " + tableName + "  where LOWER(TRIM(" + filterColumn + ")) LIKE LOWER(TRIM('%" + filter + "%'))";
+        sql += " ORDER BY time ASC LIMIT 1";
+
+        System.out.println(sql);
+
         ArrayList<String[]> toReturn = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
