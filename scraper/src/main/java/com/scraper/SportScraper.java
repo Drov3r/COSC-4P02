@@ -1,8 +1,12 @@
 package com.scraper;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,26 +67,37 @@ public final class SportScraper extends Scraper{
                         sport = tempSport;
                     }
                     else if (sport!=""){
+                        DateFormat dateFormat = new SimpleDateFormat("E, MMMM dd, yyyy HH:mm");
+                        DateFormat tupleFormat = new SimpleDateFormat("yyyy-mm-dd");
+                        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                        long dateToTuple = 00000000;
+                        try {
+                            Date d = new Date(dateFormat.parse(currentRow.getCell(3).asNormalizedText() + " " + currentRow.getCell(4).asNormalizedText()).getTime());
+                            dateToTuple = d.getTime();
+                        } catch (IndexOutOfBoundsException | java.text.ParseException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        //2015-09-01T16:34:02
                         tuple[0] = sport;                                           // sport
-                        tuple[1] = currentRow.getCell(3).asNormalizedText();        // date
-                        tuple[2] = currentRow.getCell(4).asNormalizedText();        // time
-                        tuple[3] = currentRow.getCell(5).asNormalizedText();        // category
-                        tuple[4] = currentRow.getCell(6).asNormalizedText();        // subcategory
-                        tuple[5] = currentRow.getCell(7).asNormalizedText();        // location
+                        tuple[1] = String.valueOf(dateToTuple);     // date
+                        tuple[2] = currentRow.getCell(5).asNormalizedText();        // category
+                        tuple[3] = currentRow.getCell(6).asNormalizedText();        // subcategory
+                        tuple[4] = currentRow.getCell(7).asNormalizedText();        // location
                         tupleList.add(tuple);
                         items.add(tuple);
                     }
                 }
             }
 
-            /*
+            
             for (String[] tuples : tupleList) {
                 for (String t : tuples) {
                     System.out.println(t);
                 }
                 System.out.println();
             }
-            */
+            
 
             // for (String[] t : tupleList) {
             //     String stringToParse = t[4];
@@ -153,6 +168,8 @@ public final class SportScraper extends Scraper{
             JSONObject pythonData = null;
              JSONParser jsonParser = new JSONParser();
 
+             Runtime.getRuntime().exec("scraper/src/ScoreScrape.py");
+
              try {
                 pythonData = (JSONObject) jsonParser.parse(new java.io.FileReader("scraper/src/schedule.json"));
                 Iterator<String> sportKeys = pythonData.keySet().iterator();
@@ -203,7 +220,7 @@ public final class SportScraper extends Scraper{
 
         
 
-            //printItems();
+            printItems();
     }
 
     public static void main(String[] args) throws IOException {

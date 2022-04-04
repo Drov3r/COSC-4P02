@@ -28,13 +28,13 @@ public final class ScraperManager {
         //     cardStrings
         // );
 
-        updateDB(
-            chooseScraper("venues"),
-            new String[]{"venue","description","sport"});
-
         // updateDB(
-        //     chooseScraper("sports"), 
-        //     new String[]{"sport","day","time","category","subCategory","location"});
+        //     chooseScraper("venues"),
+        //     new String[]{"venue","description","sport"});
+
+        updateDB(
+            chooseScraper("sports"), 
+            new String[]{"sport","time","category","subCategory","location"});
 
     }
 
@@ -69,8 +69,9 @@ public final class ScraperManager {
      */
     public void updateDB(Scraper scraper, String[] headers){
         ArrayList<String[]> itemsInDB = dbManager.getFromDB(scraper.type, headers);
+        dbManager.deleteFromDB(scraper, itemsInDB, scraper.type, headers);
         dbManager.insertIntoDB(scraper, itemsInDB, scraper.type, headers);
-        dbManager.deleteFromDB(scraper, itemsInDB, scraper.type);
+        
     }
 
     public static void main(String[] args) throws IOException {
