@@ -58,12 +58,18 @@ public class OpenNLPChatBot {
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
 	 */
 	public OpenNLPChatBot() {
+		try {
 		staticAnswers.put("greeting", "Hello, how can I help you?");
 		staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
 		staticAnswers.put("viewing", "The games can be viewed at:");
 		dynamicResponses.put("start", (unused) -> Access.countdown());
 		dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
 		dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers when a specific event is taking place
+
+		} catch (Exception e) {
+			System.out.println("Error " + e);
+		}
+		System.out.println(Access.whenIsNextEvent("Hello"));
 
 		try {
 			// Train categorizer model to the training data we created.
