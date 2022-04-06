@@ -52,7 +52,12 @@ public class OpenNLPChatBot {
 
 	private Map<String, String> staticAnswers = new HashMap<>();
 	private Map<String, Function<String, String>> dynamicResponses = new HashMap<>();
-	private DoccatModel model;
+	private DocumentCategorizerME categorizerModel;
+	private SentenceDetectorME sentenceDetectorModel;
+	private TokenizerME sentenceTokenizerModel;
+	private POSTaggerME posTaggingModel;
+	private LemmatizerME lemmatizerModel;
+	private ParserModel parserModel;
 
 	/*
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
@@ -73,7 +78,7 @@ public class OpenNLPChatBot {
 
 		try {
 			// Train categorizer model to the training data we created.
-			model = trainCategorizerModel();
+			loadModels();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -144,7 +149,7 @@ public class OpenNLPChatBot {
 				String[] lemmas = lemmatizeTokens(tokens, posTags);
 				
 				// Determine BEST category using lemmatized tokens used a mode that we trained at start.
-				String category = detectCategory(model, lemmas);
+				String category = detectCategory(lemmas);
 				
 				// Get predefined answer from given category & add to answer.
 				if(this.staticAnswers.containsKey(category)) {
@@ -167,7 +172,7 @@ public class OpenNLPChatBot {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private DoccatModel trainCategorizerModel() throws FileNotFoundException, IOException {
+	private void loadModels() throws FileNotFoundException, IOException {
 		// TrainingFile.txt is a custom training data with categories as per our chat requirements.
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("./TrainingFile.txt"));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
@@ -179,29 +184,40 @@ public class OpenNLPChatBot {
 
 		// Train a model with classifications from above file.
 		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, factory);
-		return model;
+		this.categorizerModel = new DocumentCategorizerME(model);
+		
+		try (InputStream modelIn = new FileInputStream("models/en-sent.bin")) {
+			this.sentenceDetectorModel = new SentenceDetectorME(new SentenceModel(modelIn));
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-token.bin")) {
+			this.sentenceTokenizerModel = new TokenizerME(new TokenizerModel(modelIn));
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-pos-maxent.bin")) {
+			this.posTaggingModel = new POSTaggerME(new POSModel(modelIn));
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-lemmatizer.bin")) {
+			this.lemmatizerModel = new LemmatizerME(new LemmatizerModel(modelIn));
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) { 
+			this.parserModel = new ParserModel(modelIn);
+		}
+		
 	}
 
 	/**
 	 * Detect category using given token. Use categorizer feature of Apache OpenNLP.
 	 * 
-	 * @param model
 	 * @param finalTokens
 	 * @return
 	 * @throws IOException
 	 */
-	private String detectCategory(DoccatModel model, String[] finalTokens) throws IOException {
-
-		// Initialize document categorizer tool
-		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(model);
-
+	private String detectCategory(String[] finalTokens) throws IOException {
 		// Get best possible category.
-		double[] probabilitiesOfOutcomes = myCategorizer.categorize(finalTokens);
-		String category = myCategorizer.getBestCategory(probabilitiesOfOutcomes);
+		double[] probabilitiesOfOutcomes = this.categorizerModel.categorize(finalTokens);
+		String category = this.categorizerModel.getBestCategory(probabilitiesOfOutcomes);
 		System.out.println("Category: " + category);
 
 		return category;
-
 	}
 
 	/**
@@ -213,17 +229,10 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] breakSentences(String data) throws FileNotFoundException, IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-sent.bin")) {
+		String[] sentences = this.sentenceDetectorModel.sentDetect(data);
+		System.out.println("Sentence Detection: " + Arrays.stream(sentences).collect(Collectors.joining(" | ")));
 
-			SentenceDetectorME myCategorizer = new SentenceDetectorME(new SentenceModel(modelIn));
-
-			String[] sentences = myCategorizer.sentDetect(data);
-			System.out.println("Sentence Detection: " + Arrays.stream(sentences).collect(Collectors.joining(" | ")));
-
-			return sentences;
-		}
+		return sentences;
 	}
 
 	/**
@@ -236,20 +245,11 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] tokenizeSentence(String sentence) throws FileNotFoundException, IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-token.bin")) {
+		// Tokenize sentence.
+		String[] tokens = this.sentenceTokenizerModel.tokenize(sentence);
+		System.out.println("Tokenizer : " + Arrays.stream(tokens).collect(Collectors.joining(" | ")));
 
-			// Initialize tokenizer tool
-			TokenizerME myCategorizer = new TokenizerME(new TokenizerModel(modelIn));
-
-			// Tokenize sentence.
-			String[] tokens = myCategorizer.tokenize(sentence);
-			System.out.println("Tokenizer : " + Arrays.stream(tokens).collect(Collectors.joining(" | ")));
-
-			return tokens;
-
-		}
+		return tokens;
 	}
 
 	/**
@@ -261,21 +261,11 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] detectPOSTags(String[] tokens) throws IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-pos-maxent.bin")) {
+		// Tag sentence.
+		String[] posTokens = this.posTaggingModel.tag(tokens);
+		System.out.println("POS Tags : " + Arrays.stream(posTokens).collect(Collectors.joining(" | ")));
 
-			// Initialize POS tagger tool
-			POSTaggerME myCategorizer = new POSTaggerME(new POSModel(modelIn));
-
-			// Tag sentence.
-			String[] posTokens = myCategorizer.tag(tokens);
-			System.out.println("POS Tags : " + Arrays.stream(posTokens).collect(Collectors.joining(" | ")));
-
-			return posTokens;
-
-		}
-
+		return posTokens;
 	}
 
 	/**
@@ -288,37 +278,25 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] lemmatizeTokens(String[] tokens, String[] posTags) throws InvalidFormatException, IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-lemmatizer.bin")) {
+		// Tag sentence.
+		String[] lemmaTokens = this.lemmatizerModel.lemmatize(tokens, posTags);
+		System.out.println("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
 
-			// Tag sentence.
-			LemmatizerME myCategorizer = new LemmatizerME(new LemmatizerModel(modelIn));
-			String[] lemmaTokens = myCategorizer.lemmatize(tokens, posTags);
-			System.out.println("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
-			
-			return lemmaTokens;
-		}
+		return lemmaTokens;
 	}
 	
 	private String getNoun(String sentence) {
-		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) {
-   
-			ParserModel model = new ParserModel(modelIn);
-			Parser parser = ParserFactory.create(model);
-			Parse topParses[] = ParserTool.parseLine(sentence.toLowerCase(), parser, 1);
-   
-			topParses[0].show();
-			Parse noun = findParseByType(topParses[0], "NN");
-			if(noun == null) {
-				noun = findParseByType(topParses[0], "NP"); // Couldn't find noun, get the entire noun phrase
-			}
-			return noun.getCoveredText().replace(".", "").replace("!", "").replace("?", "").trim(); // Sanitize and return result
-		} catch(IOException e) {
+		Parser parser = ParserFactory.create(this.parserModel);
+		Parse topParses[] = ParserTool.parseLine(sentence.toLowerCase(), parser, 1);
+
+		topParses[0].show();
+		Parse noun = findParseByType(topParses[0], "NN");
+		if(noun == null) {
+			noun = findParseByType(topParses[0], "NP"); // Couldn't find noun, get the entire noun phrase
 		}
-		return null;
+		return noun.getCoveredText().replace(".", "").replace("!", "").replace("?", "").trim(); // Sanitize and return result
 	}
-	
+
 	private Parse findParseByType(Parse parseTree, String type) {
 		if(parseTree.getType().equalsIgnoreCase(type)) {
 			return parseTree;
@@ -330,7 +308,6 @@ public class OpenNLPChatBot {
 		}
 		return null; // Could not find.
 	}
-
 
 	public static void main(String... args) {
 		new WebServer();
