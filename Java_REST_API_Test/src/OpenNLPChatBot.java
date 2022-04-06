@@ -52,6 +52,7 @@ public class OpenNLPChatBot {
 
 	private Map<String, String> staticAnswers = new HashMap<>();
 	private Map<String, Function<String, String>> dynamicResponses = new HashMap<>();
+	
 	private DocumentCategorizerME categorizerModel;
 	private SentenceDetectorME sentenceDetectorModel;
 	private TokenizerME sentenceTokenizerModel;
@@ -64,23 +65,22 @@ public class OpenNLPChatBot {
 	 */
 	public OpenNLPChatBot() {
 		try {
-		staticAnswers.put("greeting", "Hello, how can I help you?");
-		staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
-		staticAnswers.put("viewing", "The games can be viewed at:");
-		dynamicResponses.put("start", (unused) -> Access.countdown());
-		dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
-		dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers when a specific event is taking place
-
+			staticAnswers.put("greeting", "Hello, how can I help you?");
+			staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
+			staticAnswers.put("viewing", "The games can be viewed at:");
+			dynamicResponses.put("start", (unused) -> Access.countdown());
+			dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
+			dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers when a specific event is taking place
 		} catch (Exception e) {
 			System.out.println("Error " + e);
 		}
-		System.out.println(Access.whenIsNextEvent("Hello"));
+		//System.out.println(Access.whenIsNextEvent("Hello"));
 
 		try {
 			// Train categorizer model to the training data we created.
 			loadModels();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error " + e);
 		}
 	}
 	//Random selector for testing purposes, simulating a question (between asking for an event or asking for a venue)
@@ -185,23 +185,33 @@ public class OpenNLPChatBot {
 		// Train a model with classifications from above file.
 		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, factory);
 		this.categorizerModel = new DocumentCategorizerME(model);
-		
+
 		try (InputStream modelIn = new FileInputStream("models/en-sent.bin")) {
+			System.out.print("Loading setence detector model...");
 			this.sentenceDetectorModel = new SentenceDetectorME(new SentenceModel(modelIn));
+			System.out.println("Done!");
 		}
 		try (InputStream modelIn = new FileInputStream("models/en-token.bin")) {
+			System.out.print("Loading sentence tokenizer model...");
 			this.sentenceTokenizerModel = new TokenizerME(new TokenizerModel(modelIn));
+			System.out.println("Done!");
 		}
 		try (InputStream modelIn = new FileInputStream("models/en-pos-maxent.bin")) {
+			System.out.print("Loading POS tagging model...");
 			this.posTaggingModel = new POSTaggerME(new POSModel(modelIn));
+			System.out.println("Done!");
 		}
 		try (InputStream modelIn = new FileInputStream("models/en-lemmatizer.bin")) {
+			System.out.print("Loading lemmatizer model...");
 			this.lemmatizerModel = new LemmatizerME(new LemmatizerModel(modelIn));
+			System.out.println("Done!");
 		}
-		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) { 
+		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) {
+			System.out.print("Loading parser model...");
 			this.parserModel = new ParserModel(modelIn);
+			System.out.println("Done!");
 		}
-		
+		System.out.println("Finished loading models. Waiting for HTTP request...");
 	}
 
 	/**
