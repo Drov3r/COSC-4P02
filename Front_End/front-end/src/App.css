@@ -15,3 +15,50 @@ h2{
 h3{
   font-family: 'Oswald', sans-serif;
 }
+
+button{
+  background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+}
+
+button:hover{
+  background-position:left bottom;
+  transition:all 0.4s ease;
+}
+
+.links button{
+  background: #001a2b;
+}
+
+.links button:hover{
+  filter: brightness(50%);
+  transition:all 0.4s ease;
+}
+
+input{
+  cursor: text !important;
+}
+
+input::selection{
+  background-color: #001a2b;
+}
+
+.chatBar img:hover{
+  filter: brightness(50%);
+}
+
+.menuItems{
+  background-color: white;
+}
+
+.menuItems h1:hover{
+  filter: brightness(50%);
+  cursor: pointer;
+}
+
+.bar{
+  border-top: 3px solid #bbb;
+  width: 15vw;
+  margin-left: 10%;
+}

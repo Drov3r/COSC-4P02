@@ -50,7 +50,7 @@ function App() {
   function displayHeader(){
       if(!showChat){
       return(
-        <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)'}}>
+        <div style={{position:'absolute', top:0, left:0, height:'10%', width:'100%', backgroundColor:'#004F71'}}>
           <div>
             {/* Label and Icon */}
             <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
@@ -80,8 +80,10 @@ function App() {
   function displayMenuItems(){
 
       return(
-          <div style={{position:'absolute', top:'10%', left:0, width:'100%', height:'90%'}}>
+          <div class="menuItems" style={{position:'absolute', top:'10%', left:0, width:'100%', height:'90%'}}>
             <h1 style={{fontSize:'40px', color:'#004F71', marginTop:'50px', marginLeft:'10%'}}>Menu</h1>
+            <div class="bar"> </div>
+            <h1 style={{fontSize:'40px', color:'#004F71', marginLeft:'10%'}}>Settings</h1>
           </div>
       )
   }
@@ -103,8 +105,7 @@ function App() {
                   </h1>
                 </div>
                                   
-                <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
-                  
+                <div class="chatBar" style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
                   {/* Clear message button*/}
                   <button onClick={()=>clearText()}
                     style={{width:'80px', height:'52px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
@@ -133,7 +134,7 @@ function App() {
                     </button>
                 </div>
 
-                <div style={{ display:'flex', paddingTop:'3%', justifyContent:'space-evenly', alignItems:'center'}}>
+                <div class="links" style={{ display:'flex', paddingTop:'3%', justifyContent:'space-evenly', alignItems:'center'}}>
                 <button onClick={()=>{}}
                     style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer', 
                    backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
