@@ -80,9 +80,9 @@ function App() {
   function displayMenuItems(){
 
       return(
-          <div class="menuItems" style={{position:'absolute', top:'10%', left:0, width:'100%', height:'90%'}}>
+          <div className="menuItems" style={{position:'absolute', top:'10%', left:0, width:'100%', height:'90%'}}>
             <h1 style={{fontSize:'40px', color:'#004F71', marginTop:'50px', marginLeft:'10%'}}>Menu</h1>
-            <div class="bar"> </div>
+            <div className="bar"> </div>
             <h1 style={{fontSize:'40px', color:'#004F71', marginLeft:'10%'}}>Settings</h1>
           </div>
       )
@@ -91,11 +91,11 @@ function App() {
   function displayBody(){
 
     return (
-          <div style={{position:'absolute', left:0, top:'10%', height:'90%', width:'100%', }}>
-            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+          <div style={{position:'absolute', left:0, top:'10%', height:'90%', width:'100%',overflow:'scroll' }}>
+            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%', }}>
               <div>
 
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px', marginTop:'5%'}}>
                   <img src={logoBig} width={'250px'}/>
                 </div>
 
@@ -105,7 +105,7 @@ function App() {
                   </h1>
                 </div>
                                   
-                <div class="chatBar" style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
+                <div className="chatBar" style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
                   {/* Clear message button*/}
                   <button onClick={()=>clearText()}
                     style={{width:'80px', height:'52px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
@@ -134,8 +134,10 @@ function App() {
                     </button>
                 </div>
 
-                <div class="links" style={{ display:'flex', paddingTop:'3%', justifyContent:'space-evenly', alignItems:'center'}}>
-                <button onClick={()=>{}}
+                <div className="links" style={{ display:'flex', paddingTop:'3%', justifyContent:'space-evenly', alignItems:'center'}}>
+                <button onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='https://niagara2022games.ca/'}}
                     style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer', 
                    backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -143,7 +145,9 @@ function App() {
                       <h1 style={{fontSize:'20px', margin:'5px',}}>Main Site</h1>
                     </button>
                 
-                    <button onClick={()=>{}}
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='https://niagara2022games.ca/about/visit-niagara/'}}
                     style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer',  
                      backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -151,7 +155,9 @@ function App() {
                       <h1 style={{fontSize:'20px', margin:'5px'}}>Map</h1>
                     </button>
 
-                    <button onClick={()=>{}}
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='https://niagara2022games.ca/events/'}}
                     style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer',
                      backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -163,7 +169,12 @@ function App() {
                       </div>
                     </button>
                   </div>
+                 
               </div>
+
+            </div>
+            <div style={{width:'100%', height:'15%', backgroundColor:'white'}}>
+                {/* Spacing */}
             </div>
           </div>
           
@@ -257,7 +268,7 @@ function sendMessageOpenChat(){
   MAIN render Loop
   */
   return (
-    <div style={{height:'100%', width:'100%', backgroundColor:'white'}}>
+    <div style={{height:'100%', width:'100%', backgroundColor:'white', }}>
         {displayPages()}
     </div>
   );

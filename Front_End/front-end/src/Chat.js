@@ -1,7 +1,7 @@
 import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
-import logo from './icons/logo1.png'
-import logoBig from './icons/logo2.png'
+import logo from './icons/logo4.png'
+import logoBig from './icons/logo3.png'
 import backButton from './icons/back-button.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
@@ -84,7 +84,17 @@ function Chat({setBackButton, homePageMsg}) {
           text = text.concat(`\nUser: ${dialogue[i].message}`)
         }
     }
-    navigator.clipboard.writeText(text)
+    try{
+      if('clipboard' in navigator){
+        navigator.clipboard.writeText(text)
+      }else{
+        document.execCommand('copy', true, text)
+      }
+    }catch(err){
+      console.log(err)
+    }
+    
+    
     setCopied(true)
   }
 
@@ -152,37 +162,42 @@ function Chat({setBackButton, homePageMsg}) {
     setNewMsg(' ')
 
     let msg = ""
-    
-    const header = {
-        method: "post",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ "message": humanMsg, "conversationID": uuid, "timestamp": Date.now() })
-    };
+    try{
+      const header = {
+          method: "post",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ "message": humanMsg, "conversationID": uuid, "timestamp": Date.now() })
+      };
 
-    const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
-    
+      const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
+      
       const res = await response.json()
       
       msg = res.message
-
-      // auto bot msg
-      // create a message object, get the message from the newMsg state, which is set in input tag
-      const newBotMessage = {message:msg, bot:true}
-      // push new message object to array
-      data.push(newBotMessage)
-
-      // set the state with the new array with bot msg
-      setDialogue(data)
     
-      // force a re-render
-      clearText()
-      
-      // turn the loading wheel off
-      setLoadingWheel(false)
+    }catch (err){
+      console.log(err)
+      msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
+    }
 
-      scrollToBottom()
+    // auto bot msg
+    // create a message object, get the message from the newMsg state, which is set in input tag
+    const newBotMessage = {message:msg, bot:true}
+    // push new message object to array
+    data.push(newBotMessage)
 
-      setCopied(false)
+    // set the state with the new array with bot msg
+    setDialogue(data)
+
+    // force a re-render
+    clearText()
+    
+    // turn the loading wheel off
+    setLoadingWheel(false)
+
+    scrollToBottom()
+
+    setCopied(false)
   }
 
   /*
