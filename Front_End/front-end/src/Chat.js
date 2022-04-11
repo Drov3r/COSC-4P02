@@ -144,60 +144,62 @@ function Chat({setBackButton, homePageMsg}) {
   */
   async function sendMsg(msgFromHomePage){
 
-    // turn the loading wheel on
-    setLoadingWheel(true)
+    if( newMsg!= "" || msgFromHomePage){
+      // turn the loading wheel on
+      setLoadingWheel(true)
 
-    // get the human message
-    const humanMsg = msgFromHomePage ? msgFromHomePage : newMsg
-    // copy the global array of messages
-    const data = dialogue  
-    // create a message object, get the message from the newMsg state, which is set in input tag
-    const newHumanMessage = {message:humanMsg, bot:false}
-    // push new message object to array
-    data.push(newHumanMessage)
-    // set the state with the new array with new human msg
-    setDialogue(data)
+      // get the human message
+      const humanMsg = msgFromHomePage ? msgFromHomePage : newMsg
+      // copy the global array of messages
+      const data = dialogue  
+      // create a message object, get the message from the newMsg state, which is set in input tag
+      const newHumanMessage = {message:humanMsg, bot:false}
+      // push new message object to array
+      data.push(newHumanMessage)
+      // set the state with the new array with new human msg
+      setDialogue(data)
 
-    // empty the text input
-    setNewMsg(' ')
+      // empty the text input
+      setNewMsg(' ')
 
-    let msg = ""
-    try{
-      const header = {
-          method: "post",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ "message": humanMsg, "conversationID": uuid, "timestamp": Date.now() })
-      };
+      let msg = ""
+      try{
+        const header = {
+            method: "post",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ "message": humanMsg, "conversationID": uuid, "timestamp": Date.now() })
+        };
 
-      const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
+        const response = await fetch("http://boomerbot.duckdns.org:8080/api/message", header)   
+        
+        const res = await response.json()
+        
+        msg = res.message
       
-      const res = await response.json()
+      }catch (err){
+        console.log(err)
+        msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
+      }
+
+      // auto bot msg
+      // create a message object, get the message from the newMsg state, which is set in input tag
+      const newBotMessage = {message:msg, bot:true}
+      // push new message object to array
+      data.push(newBotMessage)
+
+      // set the state with the new array with bot msg
+      setDialogue(data)
+
+      // force a re-render
+      clearText()
       
-      msg = res.message
-    
-    }catch (err){
-      console.log(err)
-      msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
+      // turn the loading wheel off
+      setLoadingWheel(false)
+
+      scrollToBottom()
+
+      setCopied(false)
     }
-
-    // auto bot msg
-    // create a message object, get the message from the newMsg state, which is set in input tag
-    const newBotMessage = {message:msg, bot:true}
-    // push new message object to array
-    data.push(newBotMessage)
-
-    // set the state with the new array with bot msg
-    setDialogue(data)
-
-    // force a re-render
-    clearText()
-    
-    // turn the loading wheel off
-    setLoadingWheel(false)
-
-    scrollToBottom()
-
-    setCopied(false)
   }
 
   /*
