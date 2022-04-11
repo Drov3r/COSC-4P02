@@ -3,8 +3,8 @@ import send from './icons/plane-blue.png'
 import trophy from './icons/trophy.png'
 import location from './icons/location.png'
 import link from './icons/link.png'
-import logo from './icons/logo1.png'
-import logoBig from './icons/logo2.png'
+import logo from './icons/logo4.png'
+import logoBig from './icons/logo3.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
@@ -95,7 +95,7 @@ function App() {
             <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%', }}>
               <div>
 
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px', marginTop:'5%'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px', marginTop:window.innerHeight>700?'100px':'10%'}}>
                   <img src={logoBig} width={'250px'}/>
                 </div>
 
