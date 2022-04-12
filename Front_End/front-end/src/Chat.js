@@ -3,11 +3,12 @@ import send from './icons/plane-blue.png'
 import logo from './icons/botlogo.png'
 import logoBig from './icons/bot.png'
 //import bIcon from './icons/badgerIcon.png'
+import trophyImg from './icons/trophy.png'
+import locationImg from './icons/location.png'
+import linkImg from './icons/link.png'
 import bIcon from './icons/badger-blue.png'
 import backButton from './icons/back-button.png'
 import { useEffect, useState, useRef } from 'react';
-import Hamburger from 'hamburger-react'
-import { TailSpin } from  'react-loader-spinner'
 import { v4 as uuidv4 } from 'uuid';
 import TextLoad from './LoadingWheel.js'
 import './App.css';
@@ -147,12 +148,6 @@ function Chat({setBackButton, homePageMsg}) {
   async function sendMsg(msgFromHomePage){
 
     if( newMsg!= "" || msgFromHomePage){
-      // turn the loading wheel on
-      setLoadingWheel(true)
-      const dataz = dialogue
-      const blankBotMessage = {message:"#loading", bot:true,}
-      dataz.push(blankBotMessage)
-      setDialogue(dataz)
 
       // get the human message
       const humanMsg = msgFromHomePage ? msgFromHomePage : newMsg
@@ -164,6 +159,16 @@ function Chat({setBackButton, homePageMsg}) {
       data.push(newHumanMessage)
       // set the state with the new array with new human msg
       setDialogue(data)
+      // force a re-render
+      clearText()
+
+      // turn the loading wheel on
+      setLoadingWheel(true)
+      const loadingData = dialogue
+      const blankBotMessage = {message:"#loading", bot:true,}
+      loadingData.push(blankBotMessage)
+      setDialogue(loadingData)
+      
 
       // empty the text input
       setNewMsg(' ')
@@ -187,31 +192,43 @@ function Chat({setBackButton, homePageMsg}) {
         msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
       }
 
-      // auto bot msg
-      // create a message object, get the message from the newMsg state, which is set in input tag
-      const newBotMessage = {message:msg, bot:true}
-      // push new message object to array
-      data.push(newBotMessage)
+      /* Turn the loading wheel off, display bot msg */
+      setTimeout(()=>{
+        // new bot msg
+        // create a message object, get the message from the post request
+        const newBotMessage = {message:msg, bot:true}
+        // push new message object to array
+        data.push(newBotMessage)
 
-      // set the state with the new array with bot msg
-      setDialogue(data)
+        /* remove loading wheel bubble */
+        const newData = data.filter((log)=>{
+          if(log.message!='#loading'){
+            return log
+          }
+        })
+        setLoadingWheel(false)
 
-      // force a re-render
-      clearText()
+        // set the state with the new array with bot msg
+        setDialogue(newData)
+
+        
+     },2000)
+
+     scrollToBottom()
+     setCopied(false)
       
-      // turn the loading wheel off
+     /* 
+      turn the loading wheel off
+      
+      DEPRECATED - needed to remove from array, for when we copy to clipboard
+      
       setTimeout(()=>{
         setLoadingWheel(false)
         const elements = document.getElementsByClassName('loadBlock');
         while(elements.length > 0){
             elements[0].parentNode.removeChild(elements[0]);
         }
-      })
-      
-
-      scrollToBottom()
-
-      setCopied(false)
+      },2000)*/
     }
   }
 
@@ -237,7 +254,8 @@ function Chat({setBackButton, homePageMsg}) {
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         if(data.message=='#loading'){
-           return ( <div class="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+         /* Bot Loading bubble */
+         return ( <div class="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
             <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
               <div style={{display:'flex', maxWidth:'max-content', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
                 <img src={bIcon} width={'30px'}/>
@@ -250,6 +268,7 @@ function Chat({setBackButton, homePageMsg}) {
             </div>
           </div>)
         }else{
+        /* Bot MSG bubble */
           return (
             <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
               <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
@@ -266,10 +285,11 @@ function Chat({setBackButton, homePageMsg}) {
           )
         }
       }else{
+        /* Human MSG bubble */
         return (
           <div key={index} style={{display:'block', width:'60%',marginLeft:'30%', marginBottom:'25px',   }}>
             <div style={{display:'flex', justifyContent:'flex-end', alignItems:'center',}}>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'rgb(0 79 113)', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px',minWidth:'50px', backgroundColor:'rgb(0 79 113)', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
                 <h3 style={{padding:'15px',fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Oswald',wordBreak:'break-word' }}>
                   {data.message}
                 </h3>
@@ -309,27 +329,6 @@ function Chat({setBackButton, homePageMsg}) {
 
         </div>)
       
-  }
-
-  /*
-  This function returns the message box HTML <input> tag, wrapped in a stylized div
-  */
-  function displayMessageInput(){
-
-      return(
-        <div style={{width:'100%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center', }}>
-          <input value={newMsg} 
-          onChange={setNewMsgFunction} 
-          onKeyDown={enterButtonClicked} 
-          placeholder={'Message'} 
-          
-          style={{marginLeft:'2%',borderRadius:'20px', width:'90%', height:'50px',paddingLeft:'20px', 
-          resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', 
-          borderWidth:'2px', borderColor:'#004F71', fontFamily:'Oswald' }}
-          />
-        </div>
-      ) 
-
   }
 
   function showHeader(){
@@ -381,8 +380,63 @@ function Chat({setBackButton, homePageMsg}) {
                         Helpful Links
                       </h1>
                     </div>
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'500px'}}>
-                    
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'start', height:'500px', overflow:'scroll'}}>
+                    <div className="links">
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='https://niagara2022games.ca/'}}
+                        
+                        style={{width:'100%', height:'30px', borderRadius:'15px', cursor:'pointer', 
+                        backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',marginTop:'20px',
+                        fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                      <div style={{ display:'inline-block',}}>
+                        <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                          <img src={linkImg} style={{width:'15px', marginBottom:'-7px'}}/>
+                        </div>
+                      </div>
+                      <div style={{ display:'inline-block',height:'100%'}}>
+                        <div style={{ display:'flex', justifyContent:'center', alignItems:'center',height:'100%'}}>
+                        <h1 style={{fontSize:'15px', margin:'5px',}}>Main Site</h1>
+                        </div>
+                      </div>
+                    </button>
+                
+                      <button onClick={(e) => {
+                          e.preventDefault();
+                          window.location.href='https://niagara2022games.ca/about/visit-niagara/'}}
+                          style={{width:'100%', height:'30px', borderRadius:'15px', cursor:'pointer',  
+                          backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',marginTop:'20px',
+                          fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                        <div style={{ display:'inline-block',}}>
+                          <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <img src={locationImg} style={{width:'15px', marginBottom:'-7px'}}/>
+                          </div>
+                        </div>
+                        <div style={{ display:'inline-block',height:'100%'}}>
+                        <div style={{ display:'flex', justifyContent:'center', alignItems:'center',height:'100%'}}>
+                          <h1 style={{fontSize:'15px', marginLeft:'5px',}}>Map</h1>
+                        </div>
+                        </div>
+                      </button>
+
+                      <button onClick={(e) => {
+                          e.preventDefault();
+                          window.location.href='https://niagara2022games.ca/events/'}}
+                          style={{width:'100%', height:'30px', borderRadius:'15px', cursor:'pointer',
+                          backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',marginTop:'20px',
+                          fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', }}>
+                        <div style={{ display:'inline-block',}}>
+                          <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <img src={trophyImg} style={{width:'15px', marginBottom:'-7px'}}/>
+                          </div>
+                        </div>
+                        <div style={{ display:'inline-block',height:'100%'}}>
+                        <div style={{ display:'flex', justifyContent:'center', alignItems:'center',height:'100%'}}>
+                          <h1 style={{fontSize:'15px', marginLeft:'5px', }}>Events</h1>
+                        </div>
+                        </div>
+                      </button>
+                    </div>
                     </div>
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                         <button onClick={()=>copyChat()}
@@ -444,23 +498,6 @@ function Chat({setBackButton, homePageMsg}) {
                   {/* Send Message Button*/}
                   <img onClick={()=>sendMsg()} src={send} style={{width:'30px',marginLeft:'-50px',cursor:'pointer', }}/>
                 </div> 
-              {/*<div style={{display:'flex', justifyContent:'right', alignItems:'center', height:'100%',width:'40px',}}>
-                <a onClick={()=>clearText()} style={{cursor:'pointer'}}>
-                  <h1 style={{color:'red', fontSize:'16px', fontWeight:'400',}}>Clear</h1>
-                </a>
-              </div>
-
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:mobile?'75%':'85%' }}>
-                {displayMessageInput()}
-              </div>
-
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'50px'  }}>
-                
-                
-                <a onClick={()=>sendMsg()} style={{cursor:'pointer'}}> 
-                  <img src={send} style={{width:'40px', marginLeft:'5px'}}/>
-                </a>
-              </div> */}
             </div>
 
           </div>
@@ -503,10 +540,11 @@ function Chat({setBackButton, homePageMsg}) {
         {/* Body */}
         {showBody()}
 
-        {/* Loading Wheel */}
+        {/* Loading Wheel - static position / deprecated
         <div style={{position:'absolute', top:'70%', left:!mobile?'10%':0, width:!mobile?'70%':'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
           {displayLoadingWheel()}
         </div>
+        */}
     </div>
   );
 }
