@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
 import { v4 as uuidv4 } from 'uuid';
-
+import TextLoad from './loadingWheel.js'
 import './App.css';
 
 /*
@@ -132,7 +132,7 @@ function Chat({setBackButton, homePageMsg}) {
   */
   function displayLoadingWheel(){
     if(loadingWheel==true){
-      return <TailSpin color="#004F71" height={80} width={80} />
+      return <TextLoad color="#004F71" height={80} width={80} />
     }       
   }
 
