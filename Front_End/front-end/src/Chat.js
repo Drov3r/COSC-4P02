@@ -1,7 +1,9 @@
 import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
-import logo from './icons/logo4.png'
-import logoBig from './icons/logo3.png'
+import logo from './icons/botlogo.png'
+import logoBig from './icons/bot.png'
+//import bIcon from './icons/badgerIcon.png'
+import bIcon from './icons/badger-blue.png'
 import backButton from './icons/back-button.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
@@ -199,8 +201,12 @@ function Chat({setBackButton, homePageMsg}) {
       
       // turn the loading wheel off
       setTimeout(()=>{
-        setLoadingWheel(true)
-      },2000)
+        setLoadingWheel(false)
+        const elements = document.getElementsByClassName('loadBlock');
+        while(elements.length > 0){
+            elements[0].parentNode.removeChild(elements[0]);
+        }
+      })
       
 
       scrollToBottom()
@@ -231,14 +237,14 @@ function Chat({setBackButton, homePageMsg}) {
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         if(data.message=='#loading'){
-           return ( <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
-            <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'2px solid black', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
-                <img src={logo} width={'30px'}/>
+           return ( <div class="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+            <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
+              <div style={{display:'flex', maxWidth:'max-content', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
+                <img src={bIcon} width={'30px'}/>
               </div>
             </div>
-            <div style={{display:'flex', justifyContent:'center', alignItems:'center', wdith:'50%',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
-              <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Oswald', wordBreak:'break-word'}}>
+            <div style={{display:'flex', maxWidth:'max-content' ,justifyContent:'center', alignItems:'center', wdith:'50%',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
+              <h3 style={{padding:'25px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Oswald', wordBreak:'break-word'}}>
               {displayLoadingWheel()}
               </h3>
             </div>
@@ -246,9 +252,9 @@ function Chat({setBackButton, homePageMsg}) {
         }else{
           return (
             <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
-              <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'2px solid black', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
+              <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
                 <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
-                  <img src={logo} width={'30px'}/>
+                  <img src={bIcon} width={'30px'}/>
                 </div>
               </div>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', maxWidth:'max-content',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
@@ -263,8 +269,8 @@ function Chat({setBackButton, homePageMsg}) {
         return (
           <div key={index} style={{display:'block', width:'60%',marginLeft:'30%', marginBottom:'25px',   }}>
             <div style={{display:'flex', justifyContent:'flex-end', alignItems:'center',}}>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'#8DE9F6', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
-                <h3 style={{padding:'15px',fontSize:'20px', color:'#007F90', fontWeight:'400', fontFamily:'Oswald',wordBreak:'break-word' }}>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'rgb(0 79 113)', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
+                <h3 style={{padding:'15px',fontSize:'20px', color:'white', fontWeight:'400', fontFamily:'Oswald',wordBreak:'break-word' }}>
                   {data.message}
                 </h3>
               </div>
@@ -332,8 +338,7 @@ function Chat({setBackButton, homePageMsg}) {
           {/* Label and Icon */}
           <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
-                <img src={logo} width={'40px'}/>
-                <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontFamily:'Oswald', fontWeight:'200'}}>Badger Bot</h1>
+                  <img src={logo} width={'200px'}/>
             </div>
           </div>
 
@@ -394,7 +399,7 @@ function Chat({setBackButton, homePageMsg}) {
                 </div>
               </div>
             </div>
-            <div style={{position:'absolute', top:'10%', left:'30%', height:'80%', width:'70%', overflow:'scroll',boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', zIndex:9}}> 
+            <div style={{position:'absolute', top:'10%', left:'30%', height:'80%', width:'70%', overflowY:'scroll',boxShadow:'rgb(0 0 0 / 71%) 0px 0px 7px -2px', zIndex:9}}> 
               <div style={{display:'inline-block',width:'100%', height:'100%', verticalAlign:'top'}}>
                 {displayChatLogs()}
               </div>
@@ -403,7 +408,7 @@ function Chat({setBackButton, homePageMsg}) {
            : 
           <>
          
-          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflow:'scroll'}}> 
+          <div style={{position:'absolute', top:'10%', left:0, height:'80%', width:'100%', overflowY:'scroll'}}> 
             {displayChatLogs()}
             <div style={{marginTop:'25px',marginBottom:'25px'}}>
               <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -417,7 +422,7 @@ function Chat({setBackButton, homePageMsg}) {
             </div>
           </div></>}
 
-          <div style={{position:'absolute', top:'90%', left: !mobile ?'30%':0, height:'10%', width:!mobile ?'70%':'100%', backgroundColor:'white', boxShadow:'-3px 1px 18px -2px rgba(0,0,0,0.71)', overflow:'hidden', zIndex:9}}>
+          <div style={{position:'absolute', top:'90%', left: !mobile ?'30%':0, height:'10%', width:!mobile ?'70%':'100%', backgroundColor:'white', boxShadow:'1px 0px 3px 0px rgba(0,0,0,0.71)', overflow:'hidden', zIndex:9}}>
                 
             <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
 

@@ -3,8 +3,8 @@ import send from './icons/plane-blue.png'
 import trophy from './icons/trophy.png'
 import location from './icons/location.png'
 import link from './icons/link.png'
-import logo from './icons/logo4.png'
-import logoBig from './icons/logo3.png'
+import logo from './icons/botlogo.png'
+import logoBig from './icons/bot.png'
 import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
@@ -55,10 +55,7 @@ function App() {
             {/* Label and Icon */}
             <div style={{position:'absolute', top:'0', left:'0', height:'100%', width:'100%', }}>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
-                  <img src={logo} width={'40px'}/>
-                  <h1 style={{fontSize:'34px', fontWeight:'bold', color:'white', marginLeft:'15px', fontWeight:'200'}}>
-                    Badger Bot
-                  </h1>
+                  <img src={logo} width={'200px'}/>
               </div>
             </div>
 
@@ -92,11 +89,11 @@ function App() {
 
     return (
           <div style={{position:'absolute', left:0, top:'10%', height:'90%', width:'100%',overflow:'scroll' }}>
-            <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%', }}>
+            <div style={{ display:'flex', justifyContent:'center', alignItems:'flex-start', height:'100%', }}>
               <div>
 
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px', marginTop:window.innerHeight>700?'100px':'10%'}}>
-                  <img src={logoBig} width={'250px'}/>
+                  <img src={logoBig} width={'300px'}/>
                 </div>
 
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>

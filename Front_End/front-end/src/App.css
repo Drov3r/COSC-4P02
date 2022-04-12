@@ -63,45 +63,50 @@ input::selection{
   margin-left: 10%;
 }
 
-.typing {
-  position: relative;
-  padding: 10px;
-  margin-left: 5px;
-  background: #e6e6e6;
-  border-radius: 20px;
+.wait{
+  display:flex;
+  align-items: center;
 }
 
-.typing__dot {
+.d {
   float: left;
-  width: 8px;
-  height: 8px;
   margin: 0 4px;
   background: #001a2b;
   border-radius: 50%;
-  opacity: 0;
-  animation: loadingFade 1s infinite;
+  width: 8px;
+  height: 8px;
+  animation: typing 2s infinite;
+  animation-timing-function: linear;
 }
 
-.typing__dot:nth-child(1) {
+.d:nth-child(1) {
   animation-delay: 0s;
 }
 
-.typing__dot:nth-child(2) {
-  animation-delay: 0.2s;
+.d:nth-child(2) {
+  animation-delay: 0.25s;
 }
 
-.typing__dot:nth-child(3) {
-  animation-delay: 0.4s;
+.d:nth-child(3) {
+  animation-delay: 0.5s;
 }
 
-@keyframes loadingFade {
+@keyframes typing {
   0% {
-    opacity: 0;
+    width: 8px;
+    height: 8px;
+  }
+  25% {
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
   }
   50% {
-    opacity: 0.8;
+    width: 8px;
+    height: 8px;
   }
   100% {
-    opacity: 0;
+    width: 8px;
+    height: 8px;
   }
 }

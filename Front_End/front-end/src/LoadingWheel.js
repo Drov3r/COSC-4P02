@@ -24,10 +24,10 @@ function Chat({setBackButton, homePageMsg}) {
   },[])
 
   function textLoad(){
-      <div className="typing">
-        <div className="typing__dot"></div>
-        <div className="typing__dot"></div>
-        <div className="typing__dot"></div>
+      <div className="wait">
+        <div className="d"></div>
+        <div className="d"></div>
+        <div className="d"></div>
       </div>
   }
 
@@ -36,10 +36,10 @@ function Chat({setBackButton, homePageMsg}) {
   MAIN render Loop
   */
 return (
-  <div className="typing">
-  <div className="typing__dot"></div>
-  <div className="typing__dot"></div>
-  <div className="typing__dot"></div>
+  <div className="wait">
+  <div className="d"></div>
+  <div className="d"></div>
+  <div className="d"></div>
 </div>
   );
 }
