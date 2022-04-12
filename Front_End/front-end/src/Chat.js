@@ -2,7 +2,6 @@ import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
 import logo from './icons/botlogo.png'
 import logoBig from './icons/bot.png'
-//import bIcon from './icons/badgerIcon.png'
 import trophyImg from './icons/trophy.png'
 import locationImg from './icons/location.png'
 import linkImg from './icons/link.png'
@@ -12,6 +11,7 @@ import { useEffect, useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TextLoad from './LoadingWheel.js'
 import './App.css';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 /*
 This is where all the developed code for the apps front end is
@@ -29,12 +29,12 @@ function Chat({setBackButton, homePageMsg}) {
   const [hover, setHover] = useState(false)
   const [mobile, setMobile] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [copyText, setCopyText] = useState("")
 
   /*
   This function is called whenever this component (Chat.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
-        // currently not being used 
         document.title = "Badger Bot"
   })
 
@@ -78,16 +78,19 @@ function Chat({setBackButton, homePageMsg}) {
     setNewMsg("")
   }
 
-  function copyChat(){
+  function copyChat(currentDialogue){
     let text = ""
-    for(let i = 0; i<dialogue.length; i++){
-        if(dialogue[i].bot){
-          text = text.concat(`\nBadger Bot: ${dialogue[i].message}`)
+    for(let i = 0; i<currentDialogue.length; i++){
+        if(currentDialogue[i].bot){
+          text = text.concat(`\nBadger Bot: ${currentDialogue[i].message}`)
         }else{
-          text = text.concat(`\nUser: ${dialogue[i].message}`)
+          text = text.concat(`\nUser: ${currentDialogue[i].message}`)
         }
     }
-    try{
+   
+   /* 
+   //DEPRECATED
+   try{
       if('clipboard' in navigator){
         navigator.clipboard.writeText(text)
       }else{
@@ -95,10 +98,12 @@ function Chat({setBackButton, homePageMsg}) {
       }
     }catch(err){
       console.log(err)
-    }
+    }*/
     
+    setCopyText(text)
     
-    setCopied(true)
+   // console.log(text,"\n\n\n\n",copyText)
+    
   }
 
   /*
@@ -174,6 +179,11 @@ function Chat({setBackButton, homePageMsg}) {
       setNewMsg(' ')
 
       let msg = ""
+
+      // measure the time it takes to make a request
+      var dateStart = new Date();
+      var timeStart = dateStart.getTime();
+     
       try{
         const header = {
             method: "post",
@@ -186,11 +196,17 @@ function Chat({setBackButton, homePageMsg}) {
         const res = await response.json()
         
         msg = res.message
-      
+        
       }catch (err){
         console.log(err)
         msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
       }
+
+      var dateFinish = new Date();
+      var timeFinish = dateFinish.getTime();
+      var difference = timeFinish-timeStart
+      console.log(difference)
+      
 
       /* Turn the loading wheel off, display bot msg */
       setTimeout(()=>{
@@ -210,25 +226,12 @@ function Chat({setBackButton, homePageMsg}) {
 
         // set the state with the new array with bot msg
         setDialogue(newData)
-
+        setCopied(false)
+        copyChat(newData)
         
      },2000)
 
      scrollToBottom()
-     setCopied(false)
-      
-     /* 
-      turn the loading wheel off
-      
-      DEPRECATED - needed to remove from array, for when we copy to clipboard
-      
-      setTimeout(()=>{
-        setLoadingWheel(false)
-        const elements = document.getElementsByClassName('loadBlock');
-        while(elements.length > 0){
-            elements[0].parentNode.removeChild(elements[0]);
-        }
-      },2000)*/
     }
   }
 
@@ -255,7 +258,7 @@ function Chat({setBackButton, homePageMsg}) {
       if(data.bot==true){
         if(data.message=='#loading'){
          /* Bot Loading bubble */
-         return ( <div class="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+         return ( <div className="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
             <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
               <div style={{display:'flex', maxWidth:'max-content', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
                 <img src={bIcon} width={'30px'}/>
@@ -373,14 +376,14 @@ function Chat({setBackButton, homePageMsg}) {
             <>
             <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'30%', overflow:'scroll',zIndex:9}}> 
               <div style={{display:'inline-block',width:'100%', height:'100%', backgroundColor:'#8DE9F6'}}>
-                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
+                <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%',}}>
                   <div>
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                       <h1 style={{fontSize:'17px'}}>
                         Helpful Links
                       </h1>
                     </div>
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'start', height:'500px', overflow:'scroll'}}>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'start', height:'500px', overflow:'scroll',}}>
                     <div className="links">
                     <button onClick={(e) => {
                         e.preventDefault();
@@ -439,12 +442,14 @@ function Chat({setBackButton, homePageMsg}) {
                     </div>
                     </div>
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <button onClick={()=>copyChat()}
-                        style={{width:'250px', height:'60px', borderRadius:'3px', cursor:'pointer',
-                        border:'1px solid red', backgroundColor:'red', color:'white', fontFamily:'Oswald',
-                        fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
-                          {copied?'Copied!':'Copy chat to clipboard'}
+                      <CopyToClipboard text={copyText} onCopy={()=>setCopied(true)}>
+                        <button disabled={copied || loadingWheel}
+                          style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
+                          border:'1px solid red', backgroundColor:'red', color:'white', 
+                          fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
+                            {copied?'Copied!':'Copy chat to clipboard'}
                         </button>
+                      </CopyToClipboard>
                     </div>
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                     
@@ -466,12 +471,14 @@ function Chat({setBackButton, homePageMsg}) {
             {displayChatLogs()}
             <div style={{marginTop:'25px',marginBottom:'25px'}}>
               <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <button onClick={()=>copyChat()}
+                  <CopyToClipboard text={copyText} onCopy={()=>setCopied(true)}>
+                      <button disabled={copied || loadingWheel}
                         style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
                         border:'1px solid red', backgroundColor:'red', color:'white', 
                         fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
                           {copied?'Copied!':'Copy chat to clipboard'}
-                  </button>
+                      </button>
+                  </CopyToClipboard>
               </div>
             </div>
           </div></>}
@@ -511,14 +518,14 @@ function Chat({setBackButton, homePageMsg}) {
 
     return(
       <div style={{width:'75%', height:'100%',display:'flex', justifyContent:'center', alignItems:'center'}}>
-        <input value={newMsg} 
+        <input value={newMsg} disabled={loadingWheel}
         onChange={setNewMsgFunction} 
         onKeyDown={enterButtonClicked} 
         placeholder={'Message'} 
         
         style={{borderRadius:'20px', width:'100%', height:'50px',paddingLeft:'20px', borderBottomLeftRadius:'0px', borderTopLeftRadius:'0px',
         resize:'none', outlineColor:'#004F71', outlineWidth:'2px', borderStyle:'solid', paddingRight:'70px', cursor:'pointer',
-        borderWidth:'0px', borderColor:'#E0E0E0', backgroundColor:'#E0E0E0', fontFamily:'Oswald'}}
+        borderWidth:'0px', borderColor:'#E0E0E0', backgroundColor:'#E0E0E0', fontFamily:'Oswald', fontSize:'24px', outlineStyle:'none'}}
         />
       </div>
     ) 
@@ -539,12 +546,7 @@ function Chat({setBackButton, homePageMsg}) {
 
         {/* Body */}
         {showBody()}
-
-        {/* Loading Wheel - static position / deprecated
-        <div style={{position:'absolute', top:'70%', left:!mobile?'10%':0, width:!mobile?'70%':'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
-          {displayLoadingWheel()}
-        </div>
-        */}
+        
     </div>
   );
 }
