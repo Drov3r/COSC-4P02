@@ -1,20 +1,19 @@
 
 import { useEffect, useState, useRef } from 'react';
+import './App.css';
 
 /*
 This is where all the developed code for the apps front end is
 */
-function LoadingWheel({setBackButton, homePageMsg}) {
+function Chat({setBackButton, homePageMsg}) {
 
-  // initialize our click state variable to 'false'
-  // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
-  const [getter,setter] = useState(false) 
-  
+ 
   /*
   This function is called whenever this component (Chat.js) does a re-render. A change in state variables will cause/force a re-render.
   */
   useEffect(()=>{
-       
+        // currently not being used 
+        document.title = "Badger Bot"
   })
 
   /*
@@ -22,19 +21,28 @@ function LoadingWheel({setBackButton, homePageMsg}) {
   */
   useEffect(()=>{
 
-    
   },[])
+
+  function textLoad(){
+      <div className="typing">
+        <div className="typing__dot"></div>
+        <div className="typing__dot"></div>
+        <div className="typing__dot"></div>
+      </div>
+  }
+
 
   /*
   MAIN render Loop
   */
-  return (
-    <div style={{height:'100%', width:'100%', backgroundColor:'white'}}>
-        
-      
-    </div>
+return (
+  <div className="typing">
+  <div className="typing__dot"></div>
+  <div className="typing__dot"></div>
+  <div className="typing__dot"></div>
+</div>
   );
 }
 
-export default LoadingWheel;
+export default Chat;
 
