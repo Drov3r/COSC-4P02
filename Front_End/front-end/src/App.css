@@ -110,3 +110,12 @@ input::selection{
     height: 8px;
   }
 }
+
+::-moz-selection {
+  background: #8EE9F6 !important;
+  color:white !important;
+}
+::selection {
+  background: #8EE9F6 !important;
+  color:white !important;
+}
