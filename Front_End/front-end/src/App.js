@@ -10,6 +10,7 @@ import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
 import { v4 as uuidv4 } from 'uuid';
 import Chat from './Chat'
+import Helmet from 'react-helmet'
 
 import './App.css';
 
@@ -266,6 +267,9 @@ function sendMessageOpenChat(){
   */
   return (
     <div style={{height:'100%', width:'100%', backgroundColor:'white', }}>
+          <Helmet>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+          </Helmet>
         {displayPages()}
     </div>
   );
