@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import Hamburger from 'hamburger-react'
 import { TailSpin } from  'react-loader-spinner'
 import { v4 as uuidv4 } from 'uuid';
-import TextLoad from './loadingWheel.js'
+import TextLoad from './LoadingWheel.js'
 import './App.css';
 
 /*
