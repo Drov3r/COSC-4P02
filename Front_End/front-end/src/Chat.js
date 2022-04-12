@@ -19,7 +19,7 @@ function Chat({setBackButton, homePageMsg}) {
   // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
   const [click,setClick] = useState(false) 
   const [newMsg,setNewMsg] = useState("") 
-  const [dialogue,setDialogue] = useState([{message:'Hello, Im Badger Bot', bot:true, }])
+  const [dialogue,setDialogue] = useState([{message:'Hello, I\'m Badger Bot', bot:true, }])
   const [loadingWheel, setLoadingWheel] = useState(false);
   const scrollReference = useRef()
   const uuid = uuidv4();
@@ -147,6 +147,10 @@ function Chat({setBackButton, homePageMsg}) {
     if( newMsg!= "" || msgFromHomePage){
       // turn the loading wheel on
       setLoadingWheel(true)
+      const dataz = dialogue
+      const blankBotMessage = {message:"#loading", bot:true,}
+      dataz.push(blankBotMessage)
+      setDialogue(dataz)
 
       // get the human message
       const humanMsg = msgFromHomePage ? msgFromHomePage : newMsg
@@ -194,7 +198,10 @@ function Chat({setBackButton, homePageMsg}) {
       clearText()
       
       // turn the loading wheel off
-      setLoadingWheel(false)
+      setTimeout(()=>{
+        setLoadingWheel(true)
+      },2000)
+      
 
       scrollToBottom()
 
@@ -223,20 +230,35 @@ function Chat({setBackButton, homePageMsg}) {
       
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
-        return (
-          <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+        if(data.message=='#loading'){
+           return ( <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
             <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'2px solid black', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
                 <img src={logo} width={'30px'}/>
               </div>
             </div>
-            <div style={{display:'flex', justifyContent:'center', alignItems:'center', maxWidth:'max-content',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', wdith:'50%',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
               <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Oswald', wordBreak:'break-word'}}>
-                {data.message}
+              {displayLoadingWheel()}
               </h3>
             </div>
-          </div>
-        )
+          </div>)
+        }else{
+          return (
+            <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
+              <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'2px solid black', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
+                <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'40px', height:'40px'}}>
+                  <img src={logo} width={'30px'}/>
+                </div>
+              </div>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', maxWidth:'max-content',minHeight:'90px', borderRadius:'20px', backgroundColor:'white',boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)',overflow:'hidden'}}>
+                <h3 style={{padding:'15px',fontSize:'20px', color:'#004F71', fontWeight:'400', fontFamily:'Oswald', wordBreak:'break-word'}}>
+                  {data.message}
+                </h3>
+              </div>
+            </div>
+          )
+        }
       }else{
         return (
           <div key={index} style={{display:'block', width:'60%',marginLeft:'30%', marginBottom:'25px',   }}>
@@ -477,7 +499,7 @@ function Chat({setBackButton, homePageMsg}) {
         {showBody()}
 
         {/* Loading Wheel */}
-        <div style={{position:'absolute', top:'70%', left:!mobile?'30%':0, width:!mobile?'70%':'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
+        <div style={{position:'absolute', top:'70%', left:!mobile?'10%':0, width:!mobile?'70%':'100%', display:'flex', justifyContent:'center', alignItems:'center', zIndex:10}}>
           {displayLoadingWheel()}
         </div>
     </div>
