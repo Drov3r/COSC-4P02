@@ -240,7 +240,7 @@ function Chat({setBackButton, homePageMsg}) {
       }else{
         return (
           <div key={index} style={{display:'block', width:'60%',marginLeft:'30%', marginBottom:'25px',   }}>
-            <div style={{display:'flex', justifyContent:'right', alignItems:'center', }}>
+            <div style={{display:'flex', justifyContent:'flex-end', alignItems:'center',}}>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center',borderRadius:'20px', maxWidth:'max-content',minHeight:'90px', backgroundColor:'#8DE9F6', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)', overflow:'hidden'}}>
                 <h3 style={{padding:'15px',fontSize:'20px', color:'#007F90', fontWeight:'400', fontFamily:'Oswald',wordBreak:'break-word' }}>
                   {data.message}
