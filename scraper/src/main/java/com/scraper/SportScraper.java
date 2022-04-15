@@ -164,6 +164,7 @@ public final class SportScraper extends Scraper{
              * **********************************************************************************************************
              */
 
+             /*
             tuple = new String[7];
             JSONObject pythonData = null;
              JSONParser jsonParser = new JSONParser();
@@ -221,6 +222,7 @@ public final class SportScraper extends Scraper{
         
 
             printItems();
+            */
     }
 
     public static void main(String[] args) throws IOException {
