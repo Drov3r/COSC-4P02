@@ -32,7 +32,7 @@ public final class CardScraper extends Scraper{
         
         Elements elements = doc.body().getElementsByClass("card rounded shadow");
 
-        System.out.println(doc);
+        //System.out.println(doc);
 
         for (Element el : elements){
 

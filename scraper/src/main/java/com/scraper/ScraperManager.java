@@ -99,7 +99,7 @@ public final class ScraperManager {
     }
 
     public void writeToFile(String tableName, PrintWriter writer){
-        ArrayList<String[]> itemsInDb = dbManager.getFromDB(tableName, new String[]{"*"});
+        ArrayList<String[]> itemsInDb = dbManager.getFromDB(tableName);
         writer.println(tableName);
         for (String[] arr : itemsInDb){
             for (int i=0; i<arr.length; i++){
