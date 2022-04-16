@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -53,11 +54,34 @@ public class DatabaseManager {
                 if ((j+1)<headers.length) sql+=", ";
             }
             sql += " from " + tableName;
+            System.out.println(sql);
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
                 String[] temp = new String[headers.length];
                 for(int i=0; i<headers.length; i++){
                     temp[i] = result.getString(headers[i]);
+                }
+                toReturn.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toReturn;
+    }
+
+    public ArrayList<String[]> getFromDB(String tableName){
+        ArrayList<String[]> toReturn = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "Select * from " + tableName;
+            System.out.println(sql);
+            ResultSet result = statement.executeQuery(sql);
+            
+            while (result.next()) {
+                ResultSetMetaData resultSetMetaData = result.getMetaData();
+                String[] temp = new String[resultSetMetaData.getColumnCount()];
+                for (int i = 0; i < resultSetMetaData.getColumnCount(); i++) {
+                    temp[i] = result.getString(i+1);
                 }
                 toReturn.add(temp);
             }

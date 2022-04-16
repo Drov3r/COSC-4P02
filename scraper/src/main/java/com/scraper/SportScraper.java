@@ -89,14 +89,6 @@ public final class SportScraper extends Scraper{
                     }
                 }
             }
-
-            
-            for (String[] tuples : tupleList) {
-                for (String t : tuples) {
-                    System.out.println(t);
-                }
-                System.out.println();
-            }
             
 
             // for (String[] t : tupleList) {
