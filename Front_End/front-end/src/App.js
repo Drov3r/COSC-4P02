@@ -72,7 +72,7 @@ function App() {
           <input value={newMsg} 
           onChange={setNewMsgFunction} 
           placeholder={'Message'} 
-          
+          id={'search'}
           style={{marginLeft:'5%',borderRadius:'70px', width:'90%', height:'40px', 
           resize:'none', outlineColor:'#EB5757', outlineWidth:'2px', borderStyle:'solid', 
           borderWidth:'2px', borderColor:'#EB5757', fontFamily:'Arial' }}
