@@ -1,17 +1,13 @@
-import menu from './icons/menu-black.png'
 import send from './icons/plane-blue.png'
 import trophy from './icons/trophy.png'
 import location from './icons/location.png'
 import link from './icons/link.png'
 import logo from './icons/botlogo.png'
 import logoBig from './icons/bot.png'
+import battery from './icons/battery.png'
 import { useEffect, useState, useRef } from 'react';
-import Hamburger from 'hamburger-react'
-import { TailSpin } from  'react-loader-spinner'
-import { v4 as uuidv4 } from 'uuid';
 import Chat from './Chat'
-import Helmet from 'react-helmet'
-
+import {HelmetProvider, Helmet} from 'react-helmet-async'
 import './App.css';
 
 /*
@@ -24,6 +20,7 @@ function App() {
   const [click,setClick] = useState(false) 
   const [showChat, setChat] = useState(false)
   const [newMsg,setNewMsg] = useState("") 
+  const [frameRate, setFrameRate] = useState(false)
   /*
   This function is called whenever this component (App.js) does a re-render. A change in state variables will cause/force a re-render.
   */
@@ -45,6 +42,35 @@ function App() {
     setChat(false)
   }
 
+  function toggleFrameRate(){
+    /*
+    if(!frameRate){
+      document.getElementById("d").style.animationDuration = "5s";
+    }*/
+
+    setFrameRate(!frameRate)
+  }
+
+  function hamburgerMenu(){
+
+    const color = 'white'
+    return(
+      <div style={{width:'40px', height:'40px', display:'flex', justifyContent:'center', alignItems:'center', }}>
+        <a onClick={()=>clickMenu()} style={{cursor:'pointer'}}>
+        <div style={{width:'35px', height:'3px', backgroundColor:color, transform:click?'rotate(-135deg) translateY(-7px) translateX(-7px)':'none', transition:frameRate?'1s':'0.2s'}}>
+
+        </div>
+        <div style={{width:'35px', height:'3px', marginBottom:'7px',marginTop:'7px', backgroundColor:color, transform:click?'scaleX(0)':'none', transition:frameRate?'1s':'0.2s'}}>
+
+        </div>
+        <div style={{width:'35px', height:'3px', backgroundColor:color, transform:click?'rotate(-45deg) translateY(-7px) translateX(7px)':'none', transition:frameRate?'1s':'0.2s'}}>
+
+        </div>
+        </a>
+      </div>
+    )
+  }
+  
   /*
   Displays the header dynamically, based on whether we are in chat screen or not
   */
@@ -63,10 +89,13 @@ function App() {
             {/* Menu Button */}
             <div style={{position:'absolute', top:'0', left:'0', width:'15%', height:'100%'}}>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%'}}>
-                <Hamburger color={'white'} onToggle={()=>clickMenu()}/>
+                {/*<Hamburger color={'white'} onToggle={()=>clickMenu()}/>*/}
+                {hamburgerMenu()}
               </div>
             </div>
           </div>
+
+          
         </div>
       )
       }
@@ -79,9 +108,24 @@ function App() {
 
       return(
           <div className="menuItems" style={{position:'absolute', top:'10%', left:0, width:'100%', height:'90%'}}>
-            <h1 style={{fontSize:'40px', color:'#004F71', marginTop:'50px', marginLeft:'10%'}}>Menu</h1>
+            <h1 style={{fontSize:'40px', color:'#004F71', marginTop:'50px', marginLeft:'10%'}}>Settings</h1>
             <div className="bar"> </div>
-            <h1 style={{fontSize:'40px', color:'#004F71', marginLeft:'10%'}}>Settings</h1>
+            <div style={{width:'90%', marginLeft:'10%',marginTop:'25px', height:'60px', }}>
+              
+              <a onClick={()=>toggleFrameRate()} style={{display:'flex', justifyContent:'left', alignItems:'center',height:'100%', cursor:'pointer'}}>
+                <div style={{height:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                  <img src={battery} style={{width:'45px',  }}/>
+                  <h1 style={{fontSize:'25px', color:'#004F71',marginLeft:'15px',}}>Toggle Frame Rate</h1>
+                  <div style={{width:'80px', height:'40px',backgroundColor:frameRate?'#2ECC71':'lightgrey', borderRadius:'30px', border:'3px solid #004F71', marginLeft:'15px'}}>
+                    <div style={{height:'100%',width:'100%', display:'flex', justifyContent:frameRate?'right':'left', alignItems:'center'}}>
+                      <div style={{width:'35px', height:'35px',marginLeft:'10px',marginRight:'10px', backgroundColor:'white', borderRadius:'100px'}}>
+                      </div>
+                    </div>
+                  </div>
+                  <h1 style={{fontSize:'20px', color:'#004F71',marginLeft:'15px',}}>{frameRate?'(slow)':'(fast)'}</h1>
+                </div>
+              </a>
+            </div>
           </div>
       )
   }
@@ -267,9 +311,11 @@ function sendMessageOpenChat(){
   */
   return (
     <div style={{height:'100%', width:'100%', backgroundColor:'white', }}>
-          <Helmet>
+           <HelmetProvider>
+            <Helmet>
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-          </Helmet>
+            </Helmet>
+          </HelmetProvider>
         {displayPages()}
     </div>
   );
