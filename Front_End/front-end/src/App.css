@@ -2,6 +2,7 @@
 
 h1{
   font-family: 'Oswald', sans-serif;
+  margin:0;
 }
 
 p{
@@ -118,4 +119,56 @@ input::selection{
 ::selection {
   background: #8EE9F6 !important;
   color:white !important;
+}
+.goSite{
+  background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+  height:50px;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
+  line-height: 50px;
+  width:120px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.goSite:hover{
+  background-position:left bottom;
+  transition:all 0.4s ease;
+}
+.noSite{
+  background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+  height:50px;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
+  line-height: 50px;
+  width:120px;
+  cursor: pointer;
+}
+.noSite:hover{
+  background-position:left bottom;
+  transition:all 0.4s ease;
+}
+.urlBTN{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  display: flex;
+  width: 30%;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  z-index: 100;
+}
+
+a{
+  text-decoration: none;
 }
