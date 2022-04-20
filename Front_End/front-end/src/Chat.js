@@ -30,6 +30,7 @@ function Chat({setBackButton, homePageMsg}) {
   const [mobile, setMobile] = useState(false)
   const [copied, setCopied] = useState(false)
   const [copyText, setCopyText] = useState("")
+  var link = "https://niagara2022games.ca/"
 
   /*
   This function is called whenever this component (Chat.js) does a re-render. A change in state variables will cause/force a re-render.
@@ -76,6 +77,22 @@ function Chat({setBackButton, homePageMsg}) {
 
   function clearText(){
     setNewMsg("")
+  }
+
+  function goLink(){
+    window.open(link, '_blank').focus();
+  }
+
+  function setLink(linker){
+    link = linker
+    var x = document.getElementById("urlBTN");
+    x.style.visibility = 'visible';
+  }
+
+  function closeButtons(){
+    var x = document.getElementById("urlBTN");
+    x.style.visibility = 'hidden';
+
   }
 
   function copyChat(currentDialogue){
@@ -143,7 +160,6 @@ function Chat({setBackButton, homePageMsg}) {
       return <TextLoad color="#004F71" height={80} width={80} />
     }       
   }
-
   /*
   This function does a post request to the java server to send the 
   msg to the NLP and recives a response, then adds both the human 
@@ -201,6 +217,9 @@ function Chat({setBackButton, homePageMsg}) {
         console.log(err)
         msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
       }
+      
+      
+      // RIGHT HERE CHECK MESSAGE IF YES GO 
 
       var dateFinish = new Date();
       var timeFinish = dateFinish.getTime();
@@ -261,7 +280,6 @@ function Chat({setBackButton, homePageMsg}) {
   This function returns the menu header using an HTML <h1> tag, wrapped in a stylized div
   */
   function displayMenuItems(){
-
       return(
           <div>
             <h1 style={{fontSize:'40px', color:'#004F71', margin:'10%', marginTop:'20%'}}>Menu</h1>
@@ -279,6 +297,7 @@ function Chat({setBackButton, homePageMsg}) {
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         if(data.message=='#loading'){
+          closeButtons()
          /* Bot Loading bubble */
          return ( <div className="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
             <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
@@ -294,6 +313,10 @@ function Chat({setBackButton, homePageMsg}) {
           </div>)
         }else{
         /* Bot MSG bubble */
+          var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+          if(data.message.match(urlRegex)){
+            setLink(data.message.match(urlRegex))
+          }
           return (
             <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
               <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
@@ -504,9 +527,11 @@ function Chat({setBackButton, homePageMsg}) {
               </div>
             </div>
           </div></>}
-
+          <div className='urlBTN' id="urlBTN">
+            <div onClick={()=>closeButtons()} className='noSite'><h1>Stay On Site</h1></div>
+            <div onClick={()=>goLink()} className='goSite'><h1>Take Me There</h1></div>
+          </div>
           <div style={{position:'absolute', top:'90%', left: !mobile ?'30%':0, height:'10%', width:!mobile ?'70%':'100%', backgroundColor:'white', boxShadow:'1px 0px 3px 0px rgba(0,0,0,0.71)', overflow:'hidden', zIndex:9}}>
-                
             <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
 
                 <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
