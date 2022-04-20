@@ -3,7 +3,7 @@ import send from './icons/plane-blue.png'
 import logo from './icons/botlogo.png'
 import logoBig from './icons/bot.png'
 import trophyImg from './icons/trophy.png'
-import locationImg from './icons/location.png'
+import locationImg from './icons/athlete.png'
 import linkImg from './icons/link.png'
 import bIcon from './icons/badger-blue.png'
 import backButton from './icons/back-button.png'
@@ -16,7 +16,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 /*
 This is where all the developed code for the apps front end is
 */
-function Chat({setBackButton, homePageMsg}) {
+function Chat({setBackButton, homePageMsg, frameRate}) {
 
   // initialize our click state variable to 'false'
   // React Hooks: 'click' is the variable we can access, 'setClick' is our "setter function"
@@ -128,7 +128,7 @@ function Chat({setBackButton, homePageMsg}) {
   */
   function scrollToBottom(){
    
-      scrollReference.current?.scrollIntoView({ behavior: 'smooth' })
+      scrollReference.current?.scrollIntoView({ behavior: frameRate?'auto':'smooth' })
   }
 
   /*
@@ -157,7 +157,7 @@ function Chat({setBackButton, homePageMsg}) {
   */
   function displayLoadingWheel(){
     if(loadingWheel==true){
-      return <TextLoad color="#004F71" height={80} width={80} />
+      return <TextLoad color="#004F71" height={80} width={80} frameRate={frameRate} />
     }       
   }
   /*
@@ -291,9 +291,8 @@ function Chat({setBackButton, homePageMsg}) {
   This function returns the dialogue message using an HTML <h3> tag, wrapped in a stylized div
   */
   function displayChatLogs(){
-
     const divItUp = dialogue.map(function(data, index) {
-      
+
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         if(data.message=='#loading'){
@@ -419,7 +418,7 @@ function Chat({setBackButton, homePageMsg}) {
            
           {!mobile ?
             <>
-            <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'30%', overflow:'scroll',zIndex:9}}> 
+            <div style={{position:'absolute', top:'10%', left:0, height:'90%', width:'30%', overflow:'hidden',zIndex:9}}> 
               <div style={{display:'inline-block',width:'100%', height:'100%', backgroundColor:'#8DE9F6'}}>
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height:'100%',}}>
                   <div>
@@ -428,9 +427,9 @@ function Chat({setBackButton, homePageMsg}) {
                         Helpful Links
                       </h1>
                     </div>
-                    <div style={{ display:'flex', justifyContent:'center', alignItems:'start', height:'500px', overflow:'scroll',}}>
+                    <div style={{ display:'flex', justifyContent:'center', alignItems:'start', height:'500px', overflowY:'auto' }}>
                     <div className="links">
-                    <button onClick={(e) => {
+                    <button className={frameRate?'slow':'fast'} onClick={(e) => {
                         e.preventDefault();
                         window.location.href='https://niagara2022games.ca/'}}
                         
@@ -449,7 +448,7 @@ function Chat({setBackButton, homePageMsg}) {
                       </div>
                     </button>
                 
-                      <button onClick={(e) => {
+                      <button className={frameRate?'slow':'fast'} onClick={(e) => {
                           e.preventDefault();
                           window.location.href='https://niagara2022games.ca/about/visit-niagara/'}}
                           style={{width:'100%', height:'30px', borderRadius:'15px', cursor:'pointer',  
@@ -467,7 +466,7 @@ function Chat({setBackButton, homePageMsg}) {
                         </div>
                       </button>
 
-                      <button onClick={(e) => {
+                      <button className={frameRate?'slow':'fast'} onClick={(e) => {
                           e.preventDefault();
                           window.location.href='https://niagara2022games.ca/events/'}}
                           style={{width:'100%', height:'30px', borderRadius:'15px', cursor:'pointer',
@@ -488,7 +487,7 @@ function Chat({setBackButton, homePageMsg}) {
                     </div>
                     <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                       <CopyToClipboard text={copyText} onCopy={()=>setCopied(true)}>
-                        <button disabled={copied || loadingWheel}
+                        <button className={frameRate?'slow':'fast'} disabled={copied || loadingWheel}
                           style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
                           border:'1px solid red', backgroundColor:'red', color:'white', 
                           fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -517,7 +516,7 @@ function Chat({setBackButton, homePageMsg}) {
             <div style={{marginTop:'25px',marginBottom:'25px'}}>
               <div style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
                   <CopyToClipboard text={copyText} onCopy={()=>setCopied(true)}>
-                      <button disabled={copied || loadingWheel}
+                      <button className={frameRate?'slow':'fast'} disabled={copied || loadingWheel}
                         style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
                         border:'1px solid red', backgroundColor:'red', color:'white', 
                         fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -537,7 +536,7 @@ function Chat({setBackButton, homePageMsg}) {
                 <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
                   
                   {/* Clear message button*/}
-                  <button onClick={()=>clearText()}
+                  <button className={frameRate?'slow':'fast'} onClick={()=>clearText()}
                     style={{width:'80px', height:'52px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
                     border:'1px solid red', backgroundColor:'red', color:'white', marginLeft:'-25px',
                     fontSize:'14px', fontWeight:'bold', cursor:'pointer' }}>

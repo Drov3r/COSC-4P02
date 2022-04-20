@@ -5,7 +5,7 @@ import './App.css';
 /*
 This is where all the developed code for the apps front end is
 */
-function Chat({setBackButton, homePageMsg}) {
+function Chat({setBackButton, homePageMsg, frameRate}) {
 
  
   /*
@@ -25,9 +25,9 @@ function Chat({setBackButton, homePageMsg}) {
 
   function textLoad(){
       <div className="wait">
-        <div className="d"></div>
-        <div className="d"></div>
-        <div className="d"></div>
+        <div className={frameRate?"dSlow":"d"}></div>
+        <div className={frameRate?"dSlow":"d"}></div>
+        <div className={frameRate?"dSlow":"d"}></div>
       </div>
   }
 
@@ -37,9 +37,9 @@ function Chat({setBackButton, homePageMsg}) {
   */
 return (
   <div className="wait">
-  <div className="d"></div>
-  <div className="d"></div>
-  <div className="d"></div>
+  <div className={frameRate?"dSlow":"d"}></div>
+  <div className={frameRate?"dSlow":"d"}></div>
+  <div className={frameRate?"dSlow":"d"}></div>
 </div>
   );
 }

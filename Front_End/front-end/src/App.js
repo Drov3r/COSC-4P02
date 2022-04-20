@@ -1,6 +1,6 @@
 import send from './icons/plane-blue.png'
 import trophy from './icons/trophy.png'
-import location from './icons/location.png'
+import athlete from './icons/athlete.png'
 import link from './icons/link.png'
 import logo from './icons/botlogo.png'
 import logoBig from './icons/bot.png'
@@ -41,13 +41,15 @@ function App() {
     clearText()
     setChat(false)
   }
-
+  //var speed 
   function toggleFrameRate(){
-    /*
-    if(!frameRate){
-      document.getElementById("d").style.animationDuration = "5s";
-    }*/
-
+    
+    //if(!frameRate){
+     // document.getElementById("d").style.animationDuration = "5s";
+      //speed = "5s"
+    //}
+    //console.log(document.getElementById("d"))
+    //speed = "2s"
     setFrameRate(!frameRate)
   }
 
@@ -133,7 +135,7 @@ function App() {
   function displayBody(){
 
     return (
-          <div style={{position:'absolute', left:0, top:'10%', height:'90%', width:'100%',overflow:'scroll' }}>
+          <div style={{position:'absolute', left:0, top:'10%', height:'90%', width:'100%',overflow:'auto' }}>
             <div style={{ display:'flex', justifyContent:'center', alignItems:'flex-start', height:'100%', }}>
               <div>
 
@@ -149,7 +151,7 @@ function App() {
                                   
                 <div className="chatBar" style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100%',width:'100%' }}>
                   {/* Clear message button*/}
-                  <button onClick={()=>clearText()}
+                  <button  className={frameRate?'slow':'fast'} onClick={()=>clearText()}
                     style={{width:'80px', height:'52px', borderRadius:'15px', border:'1px solid red', borderTopRightRadius:'0px',borderBottomRightRadius:'0px',
                     border:'1px solid red', backgroundColor:'red', color:'white', marginLeft:'-25px',
                     fontSize:'14px', fontWeight:'bold', cursor:'pointer' }}>
@@ -166,7 +168,7 @@ function App() {
                 </div>
 
                 <div style={{ display:'flex', justifyContent:'center', alignItems:'center', margin:'25px'}}>
-                    <button onClick={()=>setShowChat()}
+                    <button className={frameRate?'slow':'fast'} onClick={()=>setShowChat()}
                     style={{width:'200px', height:'60px', borderRadius:'3px', cursor:'pointer',
                     border:'1px solid red', backgroundColor:'red', color:'white', 
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -189,12 +191,12 @@ function App() {
                 
                     <button onClick={(e) => {
                         e.preventDefault();
-                        window.location.href='https://niagara2022games.ca/about/visit-niagara/'}}
+                        window.location.href='https://cgc.gems.pro/AlumCgc/Alumni/FindAlumni_List.aspx?UseSessionState=Y&ShowAll=Y'}}
                     style={{width:'5em', height:'110px', borderRadius:'15px', cursor:'pointer',  
                      backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',
                     fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
-                      <img src={location} style={{width:'40px', marginBottom:'-7px'}}/>
-                      <h1 style={{fontSize:'20px', margin:'5px'}}>Map</h1>
+                      <img src={athlete} style={{width:'40px', marginBottom:'-7px'}}/>
+                      <h1 style={{fontSize:'20px', margin:'5px'}}>Athletes</h1>
                     </button>
 
                     <button onClick={(e) => {
@@ -230,7 +232,7 @@ function App() {
     if(showChat){
       /* Show Chat Box Page */
 
-      return <Chat setBackButton={callbackBackButton} homePageMsg={newMsg}/>
+      return <Chat setBackButton={callbackBackButton} homePageMsg={newMsg} frameRate={frameRate}/>
 
     }else{
       /* Show Home Page */
