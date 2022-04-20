@@ -205,8 +205,9 @@ function Chat({setBackButton, homePageMsg}) {
       var dateFinish = new Date();
       var timeFinish = dateFinish.getTime();
       var difference = timeFinish-timeStart
-      console.log(difference)
       
+      // always display loading indicator for at least 1.5 seconds. if the reponse takes longer than 1.5 sec, do not delay disappearance of loading indicator
+      if(difference<1500){
 
       /* Turn the loading wheel off, display bot msg */
       setTimeout(()=>{
@@ -230,6 +231,27 @@ function Chat({setBackButton, homePageMsg}) {
         copyChat(newData)
         
      },2000)
+
+    }else{
+      // new bot msg
+        // create a message object, get the message from the post request
+        const newBotMessage = {message:msg, bot:true}
+        // push new message object to array
+        data.push(newBotMessage)
+
+        /* remove loading wheel bubble */
+        const newData = data.filter((log)=>{
+          if(log.message!='#loading'){
+            return log
+          }
+        })
+        setLoadingWheel(false)
+
+        // set the state with the new array with bot msg
+        setDialogue(newData)
+        setCopied(false)
+        copyChat(newData)
+    }
 
      scrollToBottom()
     }
