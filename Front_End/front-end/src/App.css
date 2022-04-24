@@ -177,6 +177,7 @@ input::selection{
   width:120px;
   text-decoration: none;
   cursor: pointer;
+  margin:5px;
 }
 .goSite:hover{
   background-position:left bottom;
@@ -195,21 +196,22 @@ input::selection{
   line-height: 50px;
   width:120px;
   cursor: pointer;
+  margin:5px;
 }
 .noSite:hover{
   background-position:left bottom;
   transition:all 0.4s ease;
 }
 .urlBTN{
-  position: absolute;
-  visibility: hidden;
-  top: 80%;
-  left: 50%;
+  
+  
+  height:'10%';
+  padding-bottom: 25px;
   display: flex;
-  width: 30%;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: flex-end;
+  width: 100%;
+  
+  justify-content: center;
+  align-items: center;
   z-index: 100;
 }
 

@@ -31,6 +31,7 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
   const [copied, setCopied] = useState(false)
   const [copyText, setCopyText] = useState("")
   var link = "https://niagara2022games.ca/"
+  const [displayLink,setDisplayLink] = useState(false)
 
   /*
   This function is called whenever this component (Chat.js) does a re-render. A change in state variables will cause/force a re-render.
@@ -85,14 +86,11 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
 
   function setLink(linker){
     link = linker
-    var x = document.getElementById("urlBTN");
-    x.style.visibility = 'visible';
+    setDisplayLink(true)
   }
 
   function closeButtons(){
-    var x = document.getElementById("urlBTN");
-    x.style.visibility = 'hidden';
-
+    setDisplayLink(false)
   }
 
   function copyChat(currentDialogue){
@@ -104,22 +102,8 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
           text = text.concat(`\nUser: ${currentDialogue[i].message}`)
         }
     }
-   
-   /* 
-   //DEPRECATED
-   try{
-      if('clipboard' in navigator){
-        navigator.clipboard.writeText(text)
-      }else{
-        document.execCommand('copy', true, text)
-      }
-    }catch(err){
-      console.log(err)
-    }*/
     
     setCopyText(text)
-    
-   // console.log(text,"\n\n\n\n",copyText)
     
   }
 
@@ -149,6 +133,22 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
     if(e.keyCode == 13){
       sendMsg()
     }
+  }
+
+  /*
+  If a message contains a link, display a button to click the link
+  */
+  function displayLinkButtons(){
+
+    if(displayLink){
+      return(
+        <div className='urlBTN' id="urlBTN">
+            <div onClick={()=>closeButtons()} className='noSite'><h1>Stay in chat</h1></div>
+            <div onClick={()=>goLink()} className='goSite'><h1>Go to link</h1></div>
+        </div>
+      )
+    }
+    
   }
 
   /*
@@ -217,9 +217,6 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
         console.log(err)
         msg = "Could not receive a response from Badger Bot. Please make sure you are connected to the internet."
       }
-      
-      
-      // RIGHT HERE CHECK MESSAGE IF YES GO 
 
       var dateFinish = new Date();
       var timeFinish = dateFinish.getTime();
@@ -249,6 +246,11 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
         setCopied(false)
         copyChat(newData)
         
+        // make the link buttons appear if msg contains link
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        if(msg.match(urlRegex)){
+          setLink(msg.match(urlRegex))
+        }
      },2000)
 
     }else{
@@ -270,6 +272,12 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
         setDialogue(newData)
         setCopied(false)
         copyChat(newData)
+
+        // make the link buttons appear if msg contains link
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        if(msg.match(urlRegex)){
+          setLink(msg.match(urlRegex))
+        }
     }
 
      scrollToBottom()
@@ -296,7 +304,7 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
       // if the message is from the bot, display on left, otherwise right
       if(data.bot==true){
         if(data.message=='#loading'){
-          closeButtons()
+         
          /* Bot Loading bubble */
          return ( <div className="loadBlock" key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
             <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
@@ -312,10 +320,7 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
           </div>)
         }else{
         /* Bot MSG bubble */
-          var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-          if(data.message.match(urlRegex)){
-            setLink(data.message.match(urlRegex))
-          }
+          
           return (
             <div key={index} style={{display:'block',width:'50%', marginLeft:'10%', marginBottom:'25px', }}>
               <div style={{position:'relative', top:'17px', left:0, marginLeft:'-17px', width:'40px', border:'3px solid #004f71', borderRadius:'40px', height:'40px', backgroundColor:'white'}}>
@@ -372,6 +377,9 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
             {divItUp}
           </div>
           {mobile?<></>:<div style={{height:'25px'}}></div>}
+
+          {displayLinkButtons()}
+
           <div ref={scrollReference}/>
 
         </div>)
@@ -450,7 +458,7 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
                 
                       <button className={frameRate?'slow':'fast'} onClick={(e) => {
                           e.preventDefault();
-                          window.location.href='https://niagara2022games.ca/about/visit-niagara/'}}
+                          window.location.href='https://cgc.gems.pro/AlumCgc/Alumni/FindAlumni_List.aspx?UseSessionState=Y&ShowAll=Y'}}
                           style={{width:'100%', height:'30px', borderRadius:'15px', cursor:'pointer',  
                           backgroundColor:'#00263D', color:'white', border:'1px solid #00263D',marginTop:'20px',
                           fontSize:'24px', fontWeight:'bold', boxShadow:'1px 1px 3px 1px rgba(0,0,0,0.71)' }}>
@@ -461,7 +469,7 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
                         </div>
                         <div style={{ display:'inline-block',height:'100%'}}>
                         <div style={{ display:'flex', justifyContent:'center', alignItems:'center',height:'100%'}}>
-                          <h1 style={{fontSize:'15px', marginLeft:'5px',}}>Map</h1>
+                          <h1 style={{fontSize:'15px', marginLeft:'5px',}}>Athletes</h1>
                         </div>
                         </div>
                       </button>
@@ -505,6 +513,8 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
             <div style={{position:'absolute', top:'10%', left:'30%', height:'80%', width:'70%', overflowY:'scroll',boxShadow:'rgb(0 0 0 / 71%) 0px 0px 7px -2px', zIndex:9}}> 
               <div style={{display:'inline-block',width:'100%', height:'100%', verticalAlign:'top'}}>
                 {displayChatLogs()}
+                
+               
               </div>
             </div>
             </>
@@ -525,11 +535,10 @@ function Chat({setBackButton, homePageMsg, frameRate}) {
                   </CopyToClipboard>
               </div>
             </div>
+            
+            
           </div></>}
-          <div className='urlBTN' id="urlBTN">
-            <div onClick={()=>closeButtons()} className='noSite'><h1>Stay On Site</h1></div>
-            <div onClick={()=>goLink()} className='goSite'><h1>Take Me There</h1></div>
-          </div>
+          
           <div style={{position:'absolute', top:'90%', left: !mobile ?'30%':0, height:'10%', width:!mobile ?'70%':'100%', backgroundColor:'white', boxShadow:'1px 0px 3px 0px rgba(0,0,0,0.71)', overflow:'hidden', zIndex:9}}>
             <div style={{height:'100%', width:'100%',backgroundColor:'white', display:'flex', justifyContent:'center', alignItems:'center',}}>
 
