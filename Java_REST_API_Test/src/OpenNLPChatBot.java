@@ -71,6 +71,7 @@ public class OpenNLPChatBot {
 			dynamicResponses.put("start", (unused) -> Access.countdown());
 			dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
 			dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers when a specific event is taking place
+			dynamicResponses.put("who_is", Access::findPlayer);
 		} catch (Exception e) {
 			System.out.println("Error " + e);
 		}
@@ -155,7 +156,8 @@ public class OpenNLPChatBot {
 				if(this.staticAnswers.containsKey(category)) {
 					answer = answer + " " + staticAnswers.get(category);
 				} else if(this.dynamicResponses.containsKey(category)) {
-					answer = answer + " " + dynamicResponses.get(category).apply(getNoun(sentence));
+					boolean singleWord = !category.equals("who_is");
+					answer = answer + " " + dynamicResponses.get(category).apply(getNoun(sentence, singleWord));
 				}
 			}
 		} catch(Exception e) {
@@ -295,12 +297,15 @@ public class OpenNLPChatBot {
 		return lemmaTokens;
 	}
 	
-	private String getNoun(String sentence) {
+	private String getNoun(String sentence, boolean singleWord) {
 		Parser parser = ParserFactory.create(this.parserModel);
 		Parse topParses[] = ParserTool.parseLine(sentence.toLowerCase(), parser, 1);
 
 		topParses[0].show();
-		Parse noun = findParseByType(topParses[0], "NN");
+		Parse noun = null;
+		if(singleWord) {
+			noun = findParseByType(topParses[0], "NN");
+		}
 		if(noun == null) {
 			noun = findParseByType(topParses[0], "NP"); // Couldn't find noun, get the entire noun phrase
 		}

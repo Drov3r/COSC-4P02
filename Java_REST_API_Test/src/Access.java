@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
@@ -7,7 +10,6 @@ import java.util.ArrayList;
 public class Access {
 
     public static String countdown() {
-    	System.out.println("Debug Print #1");
         //https://codeit.blog/2020/12/06/christmas-count-down-clock-with-java/
         LocalDate today = LocalDate.now();//getting current date
 
@@ -66,4 +68,27 @@ public class Access {
        
         return ans;
     }
+
+    private static final String FIND_PLAYER_SCRIPT = "playerGrabber.py";
+
+    public static String findPlayer(String fullName) {
+    	String firstName = fullName.split(" ")[0];
+    	String lastName = fullName.split(" ")[1];
+        ProcessBuilder pb = new ProcessBuilder().command("python", "-u", FIND_PLAYER_SCRIPT, firstName, lastName);
+        try {
+        	Process p = pb.start();
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            StringBuilder buffer = new StringBuilder();
+            String line = null;
+            while((line = in.readLine()) != null) {
+                buffer.append(line);
+            }
+            System.out.println(buffer.toString());
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }
