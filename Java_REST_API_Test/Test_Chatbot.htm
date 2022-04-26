@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+body {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.time {
+  float: right;
+  color: #aaa;
+}
+
+.darker .time {
+  float: left;
+  color: #999;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Chat Bot</h2>
+
+<div id='messages'>
+</div>
+
+<input type="text" id="message">
+<input type="button" id="send" value="Send">
+
+</body>
+
+<script>
+var now = new Date();
+var id = crypto.randomUUID(); // Create unique conversation ID
+let messages = document.getElementById("messages");
+
+function createChatBubble(message) {
+  let chatBubble = document.createElement("div")
+  chatBubble.className = 'container' + (messages.childElementCount % 2 == 1 ? ' darker' : '');
+
+  chatBubble.innerHTML = `
+    <p>` + message + `</p>
+    <span class="time">` + now.getHours() + ":" + now.getMinutes(); + `</span>
+  `;
+
+  messages.appendChild(chatBubble);
+}
+
+
+$("#send").click(function() {
+  createChatBubble($('#message').val());
+  
+  $.ajax({
+    type: "post",
+    url: "http://192.168.3.50:8080/api/message",
+    data: JSON.stringify({ "message": $('#message').val(),
+                           "conversationID": id,
+                           "timestamp": Date.now()
+						 }),
+    contentType: "text/plain",
+    dataType: "text",
+    success: function(data, status, jqXHR) {
+	  var response = JSON.parse(data)
+	  createChatBubble(response.message);
+      console.log('status: ' + status + ', data: ' + data);
+    }
+  });
+
+});
+</script>
+</html>
