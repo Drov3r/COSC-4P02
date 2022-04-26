@@ -13,20 +13,28 @@ public final class ScraperManager {
         String[] cardStrings = { "name", "date", "description", "link", "imageURL" };
 
 
-        updateDB(
-            chooseScraper("events"), 
-            cardStrings
-        );
+        //updateDB(
+        //    chooseScraper("events"), 
+        //    cardStrings
+        //);
+
+        //updateDB(
+        //    chooseScraper("news"), 
+        //    cardStrings
+        //);
+
+        // updateDB(
+        //     chooseScraper("alumni"), 
+        //     cardStrings
+        // );
 
         updateDB(
-            chooseScraper("news"), 
-            cardStrings
-        );
+            chooseScraper("venues"),
+            new String[]{"venue","description","sport"});
 
-        updateDB(
-            chooseScraper("alumni"), 
-            cardStrings
-        );
+        // updateDB(
+        //     chooseScraper("sports"), 
+        //     new String[]{"sport","day","time","category","subCategory","location"});
 
     }
 
@@ -45,9 +53,12 @@ public final class ScraperManager {
             || tableName.equals("news")){
                 scraper = new CardScraper(tableName);
         }
-        else {
+        else if (tableName.equals("sports")){
             scraper = new SportScraper("sports");
+        } else if (tableName.equals("venues")) {
+            scraper = new VenueScraper("venues");
         }
+
         
         return scraper;
         

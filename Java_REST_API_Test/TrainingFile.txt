@@ -1,0 +1,46 @@
+greeting        hello
+greeting        how are you?
+greeting        hey
+greeting        how's it going
+greeting        good morning
+greeting        good evening
+greeting        good afternoon
+greeting        howdy
+transportation  how do i get to the canada games?
+transportation  how do i get to the event?
+transportation  what bus do i take?
+website         where can i find information?
+website         what is the website?
+website         what is the canada games website?
+start           how long till the games start?
+start           how long until the Canada games Start?
+start           time until the canada games start?
+viewing         where can i watch the games?
+viewing         will they be live streamed?
+viewing         what tv channels will be brodcasting games?
+where_is        where is the event
+where_is        where is the sport
+where_is        where is the sport
+where_is        where is the cycling
+where_is        where is the swimming
+where_is        where is the golf
+where_is        where is the triathalon
+where_is        where is the marathon
+where_is        where is the race
+where_is        where is the javelin
+when_is         when is the event
+when_is         when is the sport
+when_is         when is the cycling
+when_is         when is the swimming
+when_is         when is the golf
+when_is         when is the triathalon
+when_is         when is the marathon
+when_is         when is the race
+when_is         when is the javelin
+who_is          who is Joe Belmo
+who_is          who is Jonathan Drover
+who_is          who is Emma Gibson
+who_is          who is Sidney Crosby
+who_is          who is Braden Saunders
+who_is          who is Peter Griffin
+who_is          who is Adian Larock

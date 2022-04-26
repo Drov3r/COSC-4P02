@@ -7,8 +7,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
 import opennlp.tools.doccat.DoccatFactory;
 import opennlp.tools.doccat.DoccatModel;
@@ -18,6 +21,10 @@ import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.lemmatizer.LemmatizerME;
 import opennlp.tools.lemmatizer.LemmatizerModel;
+import opennlp.tools.parser.Parse;
+import opennlp.tools.parser.Parser;
+import opennlp.tools.parser.ParserFactory;
+import opennlp.tools.parser.ParserModel;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -32,6 +39,7 @@ import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 import opennlp.tools.util.model.ModelUtil;
 
+
 /**
  * Most of this class is borrowed from: https://github.com/itsallbinary/apache-opennlp-chatbot-example
  * 
@@ -42,69 +50,85 @@ import opennlp.tools.util.model.ModelUtil;
  */
 public class OpenNLPChatBot {
 
-	private Map<String, String> questionAnswer = new HashMap<>();
-	private DoccatModel model;
+	private Map<String, String> staticAnswers = new HashMap<>();
+	private Map<String, Function<String, String>> dynamicResponses = new HashMap<>();
+	
+	private DocumentCategorizerME categorizerModel;
+	private SentenceDetectorME sentenceDetectorModel;
+	private TokenizerME sentenceTokenizerModel;
+	private POSTaggerME posTaggingModel;
+	private LemmatizerME lemmatizerModel;
+	private ParserModel parserModel;
 
 	/*
 	 * Questions and answers from https://discover.brocku.ca/registration/faqs/
 	 */
 	public OpenNLPChatBot() {
-		questionAnswer.put("greeting", "Hello, how can I help you?");
-		questionAnswer.put("calendar", "To find out what courses you need to take, you’ll need to review your course calendar. This can be found at brocku.ca/webcal/current/undergrad");
-		questionAnswer.put("timetable", ""
-				+ "To find out when your first-year courses (1PXX, 1FXX, etc.) are taking place, you’ll need to review the course timetable. This can be found at brocku.ca/guides-and-timetables/timetables/?session=fw&type=ug&level=year1\n"
-				+ "\n"
-				+ "To find out when your upper year courses (2PXX, 2FXX, 3PXX, etc.) are taking place, you’ll need to review the returning students timetable. This can be found at brocku.ca/guides-and-timetables/timetables/?session=fw&type=ug&level=all");
-		questionAnswer.put("credits", "First year students usually take 5.0 credits throughout the fall/winter terms and most students choose to take 2.5 credits each term to balance their course load. These courses may be a full (1.0) credit, indicated by an “F” in the course code, or a half (0.5) credit, indicated by a “P”, “Q”, or “V” in the course code. When you are choosing courses, add up the number of credits that you are taking each term, and in total, to ensure that you have a complete and balanced schedule.");
-		questionAnswer.put("restricted", ""
-				+ "Certain courses (ex. BIOL 1P91 and CHEM 1P92) are restricted to majors that are a part of the Faulty of Mathematics and Sciences until the dates indicated in the notes section of the Registration Guide. After this date, the class is open to all other students who have the class as a required course for their program (predominately Faculty of Applied Health Sciences students)\n"
-				+ "\n"
-				+ "Other classes may be restricted to non-major students until the date indicated in the Registration Guide, and these students can add that course as an elective provided there is space available.");
-		questionAnswer.put("conflict", "If you have a scheduling conflict when registering for courses, re-examine the registration guide and see whether one of the conflicting courses is offered at a different time and/or place. You will need to be flexible in your context and elective credits, as your required courses may only be offered at one time.");
-		questionAnswer.put("tuition", "Tuition fees are calculated in early August, and will be posted to a students my.brocku.ca portal under their Student Financial History at that time.");
-		questionAnswer.put("resp", "In order to order a confirmation of enrollment letter for an RESP, you will need to log on to your my.brocku.ca student portal. Choose “Student Self-Serve Menu”, “GenReqForms”, and then “Forms&Services”. Follow the steps and choose the correct form from options, filling out the necessary information. This form can be sent to you by email, fax, mail, or can be picked up from Brock Central @ The Registrar’s Office. Students should ensure they have registered fully before requesting the letter to accurately reflect their status as a student.");
-		questionAnswer.put("electives", "Elective credits are simply courses that are not a part of the required courses for a student in a particular program, and that do not have a prerequisite or any other restrictions. These courses are usually interest-based since the student has some choice as to what they would like to take. While there is not a specific “list” of electives, you can peruse courses that are of interest to you that are open to non-majors and are not part of your program requirements.");
-		questionAnswer.put("class_types", "Find the list of class types here: https://discover.brocku.ca/registration/faqs/");
-		questionAnswer.put("lec_lec2", "The difference between LEC and LEC2 (and/or LEC 3) is simply that some courses require multiple lectures to be able to accommodate the number of students that are enrolled. On the registration guide, the time and location of LEC and LEC 2 and/or LEC 3 will be different, but these are not different options for you to choose from – you must attend all the timeslots to meet the requirements of the course.");
-		questionAnswer.put("permission", "Some courses are restricted to students who are of a certain major or program. If you are interested in taking a course that has certain restrictions, you may require a course override, or permission of the instructor for you to be able to register.");
-		questionAnswer.put("context_credits", "To view a list of context credits, please visit discover.brocku.ca/context-credits");
-		questionAnswer.put("where_register", "When the registration system opens, you’ll need to log in to your my.brocku.ca student portal and click on the Register link on the left-hand side.");
-		questionAnswer.put("text_books", "\n"
-				+ " - The Booklist release date is August 6th  – visit campusstore.brocku.ca to order your textbooks\n"
-				+ " - The Brock Booklist is a list that shows all courses and required course materials as assigned by your professors/ instructors\n"
-				+ " - Purchase early to ensure you have all your course materials for the first day of class\n"
-				+ " - Both digital and print options will be made available whenever possible\n"
-				+ " - Shipping of online orders will be done via courier service, with average shipping taking 2-4 business days\n");
-		questionAnswer.put("advisor", "Your academic advisor can help you with a number of different things — ensuring you’re on the right path to graduate, help add a minor or change majors, etc. — and you can find your advisor by visiting brocku.ca/academic-advising/find-your-advisor");
-		questionAnswer.put("course_codes", "\n"
-				+ " - F → 1.00 credit\n"
-				+ " - G → 1.00 credit\n"
-				+ " - P → 0.50 credit\n"
-				+ " - Q → 0.50 credit\n"
-				+ " - R → 0.50 credit\n"
-				+ " - V → 0.50 credit\n"
-				+ " - Y → 0.25 credit\n");
-		questionAnswer.put("durations", "\n"
-				+ " - D1 course\n"
-				+ "   Duration 1 – September to April\n"
-				+ " - D2 course\n"
-				+ "   Duration 2 – September to December\n"
-				+ " - D3 course\n"
-				+ "   Duration 3 – January to April\n");
-		questionAnswer.put("days_of_week", "\n"
-				+ " - M – Monday\n"
-				+ " - T – Tuesday\n"
-				+ " - W – Wednesday\n"
-				+ " - T or R – Thursday\n"
-				+ " - F – Friday\n");
-		questionAnswer.put("building_codes", "See a list of building codes here: https://discover.brocku.ca/registration/faqs/");
-		
+		try {
+			staticAnswers.put("greeting", "Hello, how can I help you?");
+			staticAnswers.put("transportation", "The events will take place at ... bus routes can be found here: https://www.niagararegion.ca/transit/routes.aspx?home_task=1");
+			staticAnswers.put("viewing", "The games can be viewed at:");
+			dynamicResponses.put("start", (unused) -> Access.countdown());
+			dynamicResponses.put("where_is", Access::venueOrSport); // Answers what events are at a specific venue, or where an event is hosted
+			dynamicResponses.put("when_is", Access::whenIsNextEvent); // Answers when a specific event is taking place
+			dynamicResponses.put("who_is", Access::findPlayer);
+		} catch (Exception e) {
+			System.out.println("Error " + e);
+		}
+		//System.out.println(Access.whenIsNextEvent("Hello"));
+
 		try {
 			// Train categorizer model to the training data we created.
-			model = trainCategorizerModel();
+			loadModels();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error " + e);
 		}
+	}
+	//Random selector for testing purposes, simulating a question (between asking for an event or asking for a venue)
+	private String getSportOrVenue(){
+		Random rand = new Random(); 
+		int upper = 2;
+		int randInt = rand.nextInt(upper);
+		if (randInt == 0) {
+			return getSport();
+		}
+		else {
+			return getVenue();
+		}
+	}
+
+	private String getSport(){
+		Random rand = new Random(); 
+		String sport = null;
+		int upper = 4;
+		int randInt = rand.nextInt(upper);
+		if (randInt == 0) {
+		 	sport = "triathlon";
+		}else if (randInt == 1) {
+		  	sport = "basketball";
+		}else if (randInt == 2) {
+			sport = "swimming";
+		}else if (randInt == 3) {
+		 	sport = "cycling";
+		}
+		return sport;
+	}
+
+	private String getVenue(){
+		Random rand = new Random(); 
+		String sport = null;
+		int upper = 4;
+		int randInt = rand.nextInt(upper);
+		if (randInt == 0) {
+			sport = "Brock Sport Facilities";
+		}else if (randInt == 1) {
+			sport = "Brock University";
+		}else if (randInt == 2) {
+			sport = "Canada Games Park";
+		}else if (randInt == 3) {
+			sport = "Welland International Flatwater Centre";
+		}
+		return sport;
 	}
 	
 	protected String getAnswerToQuestion(String question) {
@@ -126,10 +150,15 @@ public class OpenNLPChatBot {
 				String[] lemmas = lemmatizeTokens(tokens, posTags);
 				
 				// Determine BEST category using lemmatized tokens used a mode that we trained at start.
-				String category = detectCategory(model, lemmas);
+				String category = detectCategory(lemmas);
 				
 				// Get predefined answer from given category & add to answer.
-				answer = answer + " " + questionAnswer.get(category);
+				if(this.staticAnswers.containsKey(category)) {
+					answer = answer + " " + staticAnswers.get(category);
+				} else if(this.dynamicResponses.containsKey(category)) {
+					boolean singleWord = !category.equals("who_is");
+					answer = answer + " " + dynamicResponses.get(category).apply(getNoun(sentence, singleWord));
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -145,42 +174,62 @@ public class OpenNLPChatBot {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private DoccatModel trainCategorizerModel() throws FileNotFoundException, IOException {
-		// faq-categorizer.txt is a custom training data with categories as per our chat requirements.
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("faq-categorizer.txt"));
+	private void loadModels() throws FileNotFoundException, IOException {
+		// TrainingFile.txt is a custom training data with categories as per our chat requirements.
+		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File("./TrainingFile.txt"));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, StandardCharsets.UTF_8);
 		ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
-		DoccatFactory factory = new DoccatFactory(new FeatureGenerator[] { new BagOfWordsFeatureGenerator() });
-
 		TrainingParameters params = ModelUtil.createDefaultTrainingParameters();
 		params.put(TrainingParameters.CUTOFF_PARAM, 0);
+		DoccatFactory factory = new DoccatFactory(new FeatureGenerator[] { new BagOfWordsFeatureGenerator() });
 
 		// Train a model with classifications from above file.
 		DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, factory);
-		return model;
+		this.categorizerModel = new DocumentCategorizerME(model);
+
+		try (InputStream modelIn = new FileInputStream("models/en-sent.bin")) {
+			System.out.print("Loading setence detector model...");
+			this.sentenceDetectorModel = new SentenceDetectorME(new SentenceModel(modelIn));
+			System.out.println("Done!");
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-token.bin")) {
+			System.out.print("Loading sentence tokenizer model...");
+			this.sentenceTokenizerModel = new TokenizerME(new TokenizerModel(modelIn));
+			System.out.println("Done!");
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-pos-maxent.bin")) {
+			System.out.print("Loading POS tagging model...");
+			this.posTaggingModel = new POSTaggerME(new POSModel(modelIn));
+			System.out.println("Done!");
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-lemmatizer.bin")) {
+			System.out.print("Loading lemmatizer model...");
+			this.lemmatizerModel = new LemmatizerME(new LemmatizerModel(modelIn));
+			System.out.println("Done!");
+		}
+		try (InputStream modelIn = new FileInputStream("models/en-parser-chunking.bin")) {
+			System.out.print("Loading parser model...");
+			this.parserModel = new ParserModel(modelIn);
+			System.out.println("Done!");
+		}
+		System.out.println("Finished loading models. Waiting for HTTP request...");
 	}
 
 	/**
 	 * Detect category using given token. Use categorizer feature of Apache OpenNLP.
 	 * 
-	 * @param model
 	 * @param finalTokens
 	 * @return
 	 * @throws IOException
 	 */
-	private String detectCategory(DoccatModel model, String[] finalTokens) throws IOException {
-
-		// Initialize document categorizer tool
-		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(model);
-
+	private String detectCategory(String[] finalTokens) throws IOException {
 		// Get best possible category.
-		double[] probabilitiesOfOutcomes = myCategorizer.categorize(finalTokens);
-		String category = myCategorizer.getBestCategory(probabilitiesOfOutcomes);
+		double[] probabilitiesOfOutcomes = this.categorizerModel.categorize(finalTokens);
+		String category = this.categorizerModel.getBestCategory(probabilitiesOfOutcomes);
 		System.out.println("Category: " + category);
 
 		return category;
-
 	}
 
 	/**
@@ -192,17 +241,10 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] breakSentences(String data) throws FileNotFoundException, IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-sent.bin")) {
+		String[] sentences = this.sentenceDetectorModel.sentDetect(data);
+		System.out.println("Sentence Detection: " + Arrays.stream(sentences).collect(Collectors.joining(" | ")));
 
-			SentenceDetectorME myCategorizer = new SentenceDetectorME(new SentenceModel(modelIn));
-
-			String[] sentences = myCategorizer.sentDetect(data);
-			System.out.println("Sentence Detection: " + Arrays.stream(sentences).collect(Collectors.joining(" | ")));
-
-			return sentences;
-		}
+		return sentences;
 	}
 
 	/**
@@ -215,20 +257,11 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] tokenizeSentence(String sentence) throws FileNotFoundException, IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-token.bin")) {
+		// Tokenize sentence.
+		String[] tokens = this.sentenceTokenizerModel.tokenize(sentence);
+		System.out.println("Tokenizer : " + Arrays.stream(tokens).collect(Collectors.joining(" | ")));
 
-			// Initialize tokenizer tool
-			TokenizerME myCategorizer = new TokenizerME(new TokenizerModel(modelIn));
-
-			// Tokenize sentence.
-			String[] tokens = myCategorizer.tokenize(sentence);
-			System.out.println("Tokenizer : " + Arrays.stream(tokens).collect(Collectors.joining(" | ")));
-
-			return tokens;
-
-		}
+		return tokens;
 	}
 
 	/**
@@ -240,21 +273,11 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] detectPOSTags(String[] tokens) throws IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-pos-maxent.bin")) {
+		// Tag sentence.
+		String[] posTokens = this.posTaggingModel.tag(tokens);
+		System.out.println("POS Tags : " + Arrays.stream(posTokens).collect(Collectors.joining(" | ")));
 
-			// Initialize POS tagger tool
-			POSTaggerME myCategorizer = new POSTaggerME(new POSModel(modelIn));
-
-			// Tag sentence.
-			String[] posTokens = myCategorizer.tag(tokens);
-			System.out.println("POS Tags : " + Arrays.stream(posTokens).collect(Collectors.joining(" | ")));
-
-			return posTokens;
-
-		}
-
+		return posTokens;
 	}
 
 	/**
@@ -267,20 +290,40 @@ public class OpenNLPChatBot {
 	 * @throws IOException
 	 */
 	private String[] lemmatizeTokens(String[] tokens, String[] posTags) throws InvalidFormatException, IOException {
-		// Better to read file once at start of program & store model in instance
-		// variable. but keeping here for simplicity in understanding.
-		try (InputStream modelIn = new FileInputStream("models/en-lemmatizer.bin")) {
+		// Tag sentence.
+		String[] lemmaTokens = this.lemmatizerModel.lemmatize(tokens, posTags);
+		System.out.println("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
 
-			// Tag sentence.
-			LemmatizerME myCategorizer = new LemmatizerME(new LemmatizerModel(modelIn));
-			String[] lemmaTokens = myCategorizer.lemmatize(tokens, posTags);
-			System.out.println("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
-
-			return lemmaTokens;
-
-		}
+		return lemmaTokens;
 	}
 	
+	private String getNoun(String sentence, boolean singleWord) {
+		Parser parser = ParserFactory.create(this.parserModel);
+		Parse topParses[] = ParserTool.parseLine(sentence.toLowerCase(), parser, 1);
+
+		topParses[0].show();
+		Parse noun = null;
+		if(singleWord) {
+			noun = findParseByType(topParses[0], "NN");
+		}
+		if(noun == null) {
+			noun = findParseByType(topParses[0], "NP"); // Couldn't find noun, get the entire noun phrase
+		}
+		return noun.getCoveredText().replace(".", "").replace("!", "").replace("?", "").trim(); // Sanitize and return result
+	}
+
+	private Parse findParseByType(Parse parseTree, String type) {
+		if(parseTree.getType().equalsIgnoreCase(type)) {
+			return parseTree;
+		} else if(parseTree.getChildCount() > 0) {
+			for(Parse child : parseTree.getChildren()) {
+				Parse result = findParseByType(child, type);
+				if(result != null) return result;
+			}
+		}
+		return null; // Could not find.
+	}
+
 	public static void main(String... args) {
 		new WebServer();
 	}

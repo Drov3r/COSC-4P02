@@ -2,7 +2,10 @@
 
 h1{
   font-family: 'Oswald', sans-serif;
+<<<<<<< HEAD
   margin:0;
+=======
+>>>>>>> main
 }
 
 p{
@@ -17,12 +20,17 @@ h3{
   font-family: 'Oswald', sans-serif;
 }
 
+<<<<<<< HEAD
 .fast{
+=======
+button{
+>>>>>>> main
   background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
   background-size: 200% 100%;
   background-position:right bottom;
 }
 
+<<<<<<< HEAD
 .slow{
   background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
   background-size: 200% 100%;
@@ -45,6 +53,10 @@ h3{
 
 .links button:hover{
   filter: brightness(50%);
+=======
+button:hover{
+  background-position:left bottom;
+>>>>>>> main
   transition:all 0.4s ease;
 }
 
@@ -84,6 +96,7 @@ input::selection{
   margin-left: 10%;
 }
 
+<<<<<<< HEAD
 .wait{
   display:flex;
   align-items: center;
@@ -235,4 +248,47 @@ a{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #b30000; 
+=======
+.typing {
+  position: relative;
+  padding: 10px;
+  margin-left: 5px;
+  background: #e6e6e6;
+  border-radius: 20px;
+}
+
+.typing__dot {
+  float: left;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background: #001a2b;
+  border-radius: 50%;
+  opacity: 0;
+  animation: loadingFade 1s infinite;
+}
+
+.typing__dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes loadingFade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+>>>>>>> main
 }
