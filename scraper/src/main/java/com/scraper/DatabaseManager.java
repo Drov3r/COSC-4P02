@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class DatabaseManager {
 
-    private final String pathToCredentials = "/home/griffin/Documents/active_courses/cosc_4p02/creds.txt";
+    private final String pathToCredentials = "C:\\Users\\Justin_Gamer_Zone_PC\\Desktop\\Database\\creds.txt";
     private String url = "";
     private String user = "";
     private String password = "";

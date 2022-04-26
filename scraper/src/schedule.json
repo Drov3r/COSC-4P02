@@ -1,0 +1,1584 @@
+{
+    "Baseball - Male": {
+        "Preliminary | Pool A ": [
+            [
+                "Game 1",
+                "Sunday, August 7, 2022",
+                "10:00",
+                "Welland Baseball Stadium",
+                " ON",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 5",
+                "Sunday, August 7, 2022",
+                "16:00",
+                "Welland Baseball Stadium",
+                " NS",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 10",
+                "Monday, August 8, 2022",
+                "13:00",
+                "Oakes Park",
+                " NS",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                "Game 16",
+                "Tuesday, August 9, 2022",
+                "10:00",
+                "Oakes Park",
+                " ON",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 21",
+                "Tuesday, August 9, 2022",
+                "19:00",
+                "Welland Baseball Stadium",
+                " NS",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 26",
+                "Wednesday, August 10, 2022",
+                "16:00",
+                "Welland Baseball Stadium",
+                " BC",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                " BC",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                " ON",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            [
+                "Game 2",
+                "Sunday, August 7, 2022",
+                "10:00",
+                "Oakes Park",
+                " BC",
+                " ",
+                " NS",
+                " "
+            ],
+            [
+                "Game 7",
+                "Sunday, August 7, 2022",
+                "19:00",
+                "Welland Baseball Stadium",
+                " BC",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                "Game 12",
+                "Monday, August 8, 2022",
+                "16:00",
+                "Oakes Park",
+                " BC",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 17",
+                "Tuesday, August 9, 2022",
+                "10:00",
+                "Welland Baseball Stadium",
+                " BC",
+                " ",
+                " NS",
+                " "
+            ],
+            [
+                "Game 22",
+                "Tuesday, August 9, 2022",
+                "19:00",
+                "Oakes Park",
+                " BC",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                "Game 27",
+                "Wednesday, August 10, 2022",
+                "19:00",
+                "Welland Baseball Stadium",
+                " NS",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                " NS",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                " SK",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ]
+        ],
+        "Preliminary | Pool B": [
+            [
+                "Game 3",
+                "Sunday, August 7, 2022",
+                "13:00",
+                "Welland Baseball Stadium",
+                " NB",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 6",
+                "Sunday, August 7, 2022",
+                "16:00",
+                "Oakes Park",
+                " MB",
+                " ",
+                " NL",
+                " "
+            ],
+            [
+                "Game 9",
+                "Monday, August 8, 2022",
+                "10:00",
+                "Oakes Park",
+                " PE",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 13",
+                "Monday, August 8, 2022",
+                "16:00",
+                "Welland Baseball Stadium",
+                " NL",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 15",
+                "Monday, August 8, 2022",
+                "19:00",
+                "Oakes Park",
+                " MB",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 19",
+                "Tuesday, August 9, 2022",
+                "13:00",
+                "Oakes Park",
+                " AB",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 23",
+                "Wednesday, August 10, 2022",
+                "13:00",
+                "Oakes Park",
+                " NB",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 25",
+                "Wednesday, August 10, 2022",
+                "19:00",
+                "Oakes Park",
+                " AB",
+                " ",
+                " MB",
+                " "
+            ],
+            [
+                " AB",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                " NB",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            [
+                "Game 4",
+                "Sunday, August 7, 2022",
+                "13:00",
+                "Oakes Park",
+                " AB",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 8",
+                "Monday, August 8, 2022",
+                "10:00",
+                "Welland Baseball Stadium",
+                " AB",
+                " ",
+                " NL",
+                " "
+            ],
+            [
+                "Game 11",
+                "Monday, August 8, 2022",
+                "13:00",
+                "Welland Baseball Stadium",
+                " MB",
+                " ",
+                " NB",
+                " "
+            ],
+            [
+                "Game 14",
+                "Monday, August 8, 2022",
+                "19:00",
+                "Welland Baseball Stadium",
+                " AB",
+                " ",
+                " NB",
+                " "
+            ],
+            [
+                "Game 18",
+                "Tuesday, August 9, 2022",
+                "13:00",
+                "Welland Baseball Stadium",
+                " MB",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 20",
+                "Tuesday, August 9, 2022",
+                "16:00",
+                "Oakes Park",
+                " NB",
+                " ",
+                " NL",
+                " "
+            ],
+            [
+                "Game 24",
+                "Wednesday, August 10, 2022",
+                "13:00",
+                "Welland Baseball Stadium",
+                " NL",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                " MB",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                " NL",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ]
+        ],
+        "Quarterfinal": [
+            [
+                "Game 28 (3A vs. 2B)",
+                "Friday, August 12, 2022",
+                "10:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Semifinal": [
+            [
+                "Game 31 (1A vs. 1B)",
+                "Friday, August 12, 2022",
+                "16:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 32 (2A vs. W28)",
+                "Friday, August 12, 2022",
+                "19:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Final": [
+            [
+                "9th / 10th Place Game (5B vs. 6B)",
+                "Friday, August 12, 2022",
+                "11:00",
+                "Oakes Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "5th / 6th Place Game (L28 vs. 4A)",
+                "Saturday, August 13, 2022",
+                "11:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Gold Medal Game (W31 vs. W32)",
+                "Saturday, August 13, 2022",
+                "19:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "7th / 8th Place Game (3B vs. 4B)",
+                "Friday, August 12, 2022",
+                "13:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Bronze Medal Game (L31 vs. L32)",
+                "Saturday, August 13, 2022",
+                "15:00",
+                "Welland Baseball Stadium",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ]
+    },
+    "Softball - Female": {
+        "Preliminary | Pool A": [
+            [
+                "Game 1",
+                "Sunday, August 7, 2022",
+                "10:00",
+                "Southward Community Park",
+                " BC",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 6",
+                "Sunday, August 7, 2022",
+                "16:15",
+                "Southward Community Park",
+                " BC",
+                " ",
+                " MB",
+                " "
+            ],
+            [
+                "Game 9",
+                "Monday, August 8, 2022",
+                "11:00",
+                "Southward Community Park",
+                " PE",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 13",
+                "Monday, August 8, 2022",
+                "16:15",
+                "Southward Community Park",
+                " MB",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 17",
+                "Tuesday, August 9, 2022",
+                "12:00",
+                "Southward Community Park",
+                " BC",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                " BC",
+                "0",
+                "0",
+                " NS",
+                "0",
+                "0"
+            ],
+            [
+                "Game 4",
+                "Sunday, August 7, 2022",
+                "13:00",
+                "Southward Community Park",
+                " NS",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 8",
+                "Monday, August 8, 2022",
+                "10:00",
+                "Southward Community Park",
+                " MB",
+                " ",
+                " NS",
+                " "
+            ],
+            [
+                "Game 12",
+                "Monday, August 8, 2022",
+                "14:00",
+                "Southward Community Park",
+                " BC",
+                " ",
+                " NS",
+                " "
+            ],
+            [
+                "Game 15",
+                "Tuesday, August 9, 2022",
+                "10:00",
+                "Southward Community Park",
+                " MB",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 18",
+                "Tuesday, August 9, 2022",
+                "13:00",
+                "Southward Community Park",
+                " NS",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                " MB",
+                "0",
+                "0",
+                " PE",
+                "0",
+                "0"
+            ]
+        ],
+        "Preliminary | Pool B": [
+            [
+                "Game 2",
+                "Sunday, August 7, 2022",
+                "11:00",
+                "Southward Community Park",
+                " NB",
+                " ",
+                " NL",
+                " "
+            ],
+            [
+                "Game 5",
+                "Sunday, August 7, 2022",
+                "14:00",
+                "Southward Community Park",
+                " NB",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                "Game 10",
+                "Monday, August 8, 2022",
+                "12:00",
+                "Southward Community Park",
+                " AB",
+                " ",
+                " NB",
+                " "
+            ],
+            [
+                "Game 14",
+                "Monday, August 8, 2022",
+                "18:30",
+                "Southward Community Park",
+                " ON",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 19",
+                "Tuesday, August 9, 2022",
+                "14:00",
+                "Southward Community Park",
+                " NL",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                " AB",
+                "0",
+                "0",
+                " NL",
+                "0",
+                "0"
+            ],
+            [
+                "Game 3",
+                "Sunday, August 7, 2022",
+                "12:00",
+                "Southward Community Park",
+                " AB",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 7",
+                "Sunday, August 7, 2022",
+                "18:30",
+                "Southward Community Park",
+                " AB",
+                " ",
+                " NL",
+                " "
+            ],
+            [
+                "Game 11",
+                "Monday, August 8, 2022",
+                "13:00",
+                "Southward Community Park",
+                " NL",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                "Game 16",
+                "Tuesday, August 9, 2022",
+                "11:00",
+                "Southward Community Park",
+                " NB",
+                " ",
+                " QC",
+                " "
+            ],
+            [
+                "Game 20",
+                "Tuesday, August 9, 2022",
+                "16:15",
+                "Southward Community Park",
+                " AB",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                " NB",
+                "0",
+                "0",
+                " ON",
+                "0",
+                "0"
+            ]
+        ],
+        "Qualification": [
+            [
+                "Game 21 (4A vs. 5B)",
+                "Wednesday, August 10, 2022",
+                "10:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 23 (1A vs. 2B)",
+                "Wednesday, August 10, 2022",
+                "12:30",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 25 (W21 vs. 3B)",
+                "Wednesday, August 10, 2022",
+                "15:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 29 (L23 vs. W25)",
+                "Thursday, August 11, 2022",
+                "12:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 31 (W23 vs. W24)",
+                "Thursday, August 11, 2022",
+                "15:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 22 (4B vs. 5A)",
+                "Wednesday, August 10, 2022",
+                "11:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 24 (1B vs. 2A)",
+                "Wednesday, August 10, 2022",
+                "13:30",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 26 (W22 vs. 3A)",
+                "Wednesday, August 10, 2022",
+                "16:30",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 30 (L24 vs. W26)",
+                "Thursday, August 11, 2022",
+                "13:30",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 33 (W29 vs. W30)",
+                "Thursday, August 11, 2022",
+                "18:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Final": [
+            [
+                "9th / 10th Place Game (L21 vs. L22)",
+                "Wednesday, August 10, 2022",
+                "19:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "5th / 6th Place Game (L29 vs. L30)",
+                "Thursday, August 11, 2022",
+                "16:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Gold Medal Game (W31 vs. W34)",
+                "Friday, August 12, 2022",
+                "13:30",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "7th / 8th Place Game (L25 vs. L26)",
+                "Thursday, August 11, 2022",
+                "11:00",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Bronze Medal Game (L31 vs. W33)",
+                "Friday, August 12, 2022",
+                "10:30",
+                "Southward Community Park",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ]
+    },
+    "Basketball - Female": {
+        "Preliminary | Pool A": [
+            [
+                "Game 4",
+                "Monday, August 8, 2022",
+                "15:15",
+                "Niagara College - Welland Campus",
+                " QC",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 10 (L4 vs. L6)",
+                "Tuesday, August 9, 2022",
+                "15:15",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " AB",
+                "0",
+                "0",
+                " QC",
+                "0",
+                "0"
+            ],
+            [
+                "Game 6",
+                "Monday, August 8, 2022",
+                "19:45",
+                "Niagara College - Welland Campus",
+                " AB",
+                " ",
+                " BC",
+                " "
+            ],
+            [
+                "Game 12 (W6 vs. W4)",
+                "Tuesday, August 9, 2022",
+                "19:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " BC",
+                "0",
+                "0",
+                " SK",
+                "0",
+                "0"
+            ]
+        ],
+        "Preliminary | Pool B": [
+            [
+                "Game 1",
+                "Monday, August 8, 2022",
+                "08:30",
+                "Niagara College - Welland Campus",
+                " MB",
+                " ",
+                " NT",
+                " "
+            ],
+            [
+                "Game 9 (W5 vs. W1)",
+                "Tuesday, August 9, 2022",
+                "13:00",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " MB",
+                "0",
+                "0",
+                " ON",
+                "0",
+                "0"
+            ],
+            [
+                "Game 5",
+                "Monday, August 8, 2022",
+                "17:30",
+                "Niagara College - Welland Campus",
+                " ON",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 11 (L5 vs. L1)",
+                "Tuesday, August 9, 2022",
+                "17:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " NT",
+                "0",
+                "0",
+                " PE",
+                "0",
+                "0"
+            ]
+        ],
+        "Preliminary | Pool C": [
+            [
+                "Game 2",
+                "Monday, August 8, 2022",
+                "10:45",
+                "Niagara College - Welland Campus",
+                " NL",
+                " ",
+                " NS",
+                " "
+            ],
+            [
+                "Game 7 (L2 vs. L3)",
+                "Tuesday, August 9, 2022",
+                "08:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " NB",
+                "0",
+                "0",
+                " NS",
+                "0",
+                "0"
+            ],
+            [
+                "Game 3",
+                "Monday, August 8, 2022",
+                "13:00",
+                "Niagara College - Welland Campus",
+                " NB",
+                " ",
+                " YT",
+                " "
+            ],
+            [
+                "Game 8 (W3 vs. W2)",
+                "Tuesday, August 9, 2022",
+                "10:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " NL",
+                "0",
+                "0",
+                " YT",
+                "0",
+                "0"
+            ]
+        ],
+        "Qualification": [
+            [
+                "Game 13 (1B vs. 4C)",
+                "Wednesday, August 10, 2022",
+                "10:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 15 (2C vs. 3B)",
+                "Wednesday, August 10, 2022",
+                "15:15",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 14 (1C vs. 4B)",
+                "Wednesday, August 10, 2022",
+                "13:00",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 16 (2B vs. 3C)",
+                "Wednesday, August 10, 2022",
+                "17:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Consolation": [
+            [
+                "Game 19 (L15 vs. L14)",
+                "Thursday, August 11, 2022",
+                "13:00",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 24 (L18 vs. L21)",
+                "Friday, August 12, 2022",
+                "10:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 20 (L16 vs. L13)",
+                "Thursday, August 11, 2022",
+                "15:15",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 25 (L17 vs. L22)",
+                "Friday, August 12, 2022",
+                "13:00",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Quarterfinal": [
+            [
+                "Game 17 (4A vs. W13)",
+                "Thursday, August 11, 2022",
+                "08:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 21 (2A vs. W15)",
+                "Thursday, August 11, 2022",
+                "17:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 18 (3A vs. W14)",
+                "Thursday, August 11, 2022",
+                "10:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 22 (1A vs. W16)",
+                "Thursday, August 11, 2022",
+                "19:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Semifinal": [
+            [
+                "Game 27 (W18 vs. W21)",
+                "Friday, August 12, 2022",
+                "17:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 28 (W17 vs. W22)",
+                "Friday, August 12, 2022",
+                "19:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Final": [
+            [
+                "11th / 12th Place Game (L19 vs. L20)",
+                "Friday, August 12, 2022",
+                "08:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "7th / 8th Place Game (L24 vs. L25)",
+                "Saturday, August 13, 2022",
+                "08:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Bronze Medal Game (L27 vs. L28)",
+                "Saturday, August 13, 2022",
+                "13:00",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "9th / 10th Place Game (W19 vs. W20)",
+                "Friday, August 12, 2022",
+                "15:15",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "5th / 6th Place Game (W24 vs. W25)",
+                "Saturday, August 13, 2022",
+                "10:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Gold Medal Game (W27 vs. W28)",
+                "Saturday, August 13, 2022",
+                "17:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ]
+    },
+    "Basketball - Male": {
+        "Preliminary | Pool A": [
+            [
+                "Game 4",
+                "Monday, August 8, 2022",
+                "15:15",
+                "Meridian Centre",
+                " QC",
+                " ",
+                " SK",
+                " "
+            ],
+            [
+                "Game 10 (L4 vs. L6)",
+                "Tuesday, August 9, 2022",
+                "15:15",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " NB",
+                "0",
+                "0",
+                " QC",
+                "0",
+                "0"
+            ],
+            [
+                "Game 6",
+                "Monday, August 8, 2022",
+                "19:45",
+                "Meridian Centre",
+                " NB",
+                " ",
+                " ON",
+                " "
+            ],
+            [
+                "Game 12 (W6 vs. W4)",
+                "Tuesday, August 9, 2022",
+                "19:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " ON",
+                "0",
+                "0",
+                " SK",
+                "0",
+                "0"
+            ]
+        ],
+        "Preliminary | Pool B": [
+            [
+                "Game 1",
+                "Monday, August 8, 2022",
+                "08:30",
+                "Meridian Centre",
+                " NS",
+                " ",
+                " NT",
+                " "
+            ],
+            [
+                "Game 9 (W5 vs. W1)",
+                "Tuesday, August 9, 2022",
+                "13:00",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " MB",
+                "0",
+                "0",
+                " NT",
+                "0",
+                "0"
+            ],
+            [
+                "Game 5",
+                "Monday, August 8, 2022",
+                "17:30",
+                "Meridian Centre",
+                " MB",
+                " ",
+                " PE",
+                " "
+            ],
+            [
+                "Game 11 (L5 vs. L1)",
+                "Tuesday, August 9, 2022",
+                "17:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " NS",
+                "0",
+                "0",
+                " PE",
+                "0",
+                "0"
+            ]
+        ],
+        "Preliminary | Pool C": [
+            [
+                "Game 2",
+                "Monday, August 8, 2022",
+                "10:45",
+                "Meridian Centre",
+                " BC",
+                " ",
+                " NL",
+                " "
+            ],
+            [
+                "Game 7 (L2 vs. L3)",
+                "Tuesday, August 9, 2022",
+                "08:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " AB",
+                "0",
+                "0",
+                " NL",
+                "0",
+                "0"
+            ],
+            [
+                "Game 3",
+                "Monday, August 8, 2022",
+                "13:00",
+                "Meridian Centre",
+                " AB",
+                " ",
+                " YT",
+                " "
+            ],
+            [
+                "Game 8 (W3 vs. W2)",
+                "Tuesday, August 9, 2022",
+                "10:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                " BC",
+                "0",
+                "0",
+                " YT",
+                "0",
+                "0"
+            ]
+        ],
+        "Qualification": [
+            [
+                "Game 13 (1B vs. 4C)",
+                "Wednesday, August 10, 2022",
+                "10:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 15 (2C vs. 3B)",
+                "Wednesday, August 10, 2022",
+                "15:15",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 14 (1C vs. 4B)",
+                "Wednesday, August 10, 2022",
+                "13:00",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 16 (2B vs. 3C)",
+                "Wednesday, August 10, 2022",
+                "17:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Consolation": [
+            [
+                "Game 19 (L15 vs. L14)",
+                "Thursday, August 11, 2022",
+                "13:00",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 24 (L18 vs. L21)",
+                "Friday, August 12, 2022",
+                "10:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 20 (L16 vs. L13)",
+                "Thursday, August 11, 2022",
+                "17:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 25 (L17 vs. L22)",
+                "Friday, August 12, 2022",
+                "13:00",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Quarterfinal": [
+            [
+                "Game 17 (4A vs. W13)",
+                "Thursday, August 11, 2022",
+                "08:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 21 (2A vs. W15)",
+                "Thursday, August 11, 2022",
+                "17:30",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 18 (3A vs. W14)",
+                "Thursday, August 11, 2022",
+                "10:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 22 (1A vs. W16)",
+                "Thursday, August 11, 2022",
+                "19:45",
+                "Niagara College - Welland Campus",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Semifinal": [
+            [
+                "Game 27 (W18 vs. W21)",
+                "Friday, August 12, 2022",
+                "17:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Game 28 (W17 vs. W22)",
+                "Friday, August 12, 2022",
+                "19:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ],
+        "Final": [
+            [
+                "11th / 12th Place Game (L19 vs. L20)",
+                "Friday, August 12, 2022",
+                "08:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "7th / 8th Place Game (L24 vs. L25)",
+                "Saturday, August 13, 2022",
+                "08:30",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Bronze Medal Game (L27 vs. L28)",
+                "Saturday, August 13, 2022",
+                "15:15",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "9th / 10th Place Game (W19 vs. W20)",
+                "Friday, August 12, 2022",
+                "15:15",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "5th / 6th Place Game (W24 vs. W25)",
+                "Saturday, August 13, 2022",
+                "10:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ],
+            [
+                "Gold Medal Game (W27 vs. W28)",
+                "Saturday, August 13, 2022",
+                "19:45",
+                "Meridian Centre",
+                "",
+                " ",
+                "",
+                " "
+            ]
+        ]
+    }
+}
