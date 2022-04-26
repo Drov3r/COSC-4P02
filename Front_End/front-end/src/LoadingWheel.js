@@ -5,11 +5,7 @@ import './App.css';
 /*
 This is where all the developed code for the apps front end is
 */
-<<<<<<< HEAD
 function Chat({setBackButton, homePageMsg, frameRate}) {
-=======
-function Chat({setBackButton, homePageMsg}) {
->>>>>>> main
 
  
   /*
@@ -28,17 +24,10 @@ function Chat({setBackButton, homePageMsg}) {
   },[])
 
   function textLoad(){
-<<<<<<< HEAD
       <div className="wait">
         <div className={frameRate?"dSlow":"d"}></div>
         <div className={frameRate?"dSlow":"d"}></div>
         <div className={frameRate?"dSlow":"d"}></div>
-=======
-      <div className="typing">
-        <div className="typing__dot"></div>
-        <div className="typing__dot"></div>
-        <div className="typing__dot"></div>
->>>>>>> main
       </div>
   }
 
@@ -47,17 +36,10 @@ function Chat({setBackButton, homePageMsg}) {
   MAIN render Loop
   */
 return (
-<<<<<<< HEAD
   <div className="wait">
   <div className={frameRate?"dSlow":"d"}></div>
   <div className={frameRate?"dSlow":"d"}></div>
   <div className={frameRate?"dSlow":"d"}></div>
-=======
-  <div className="typing">
-  <div className="typing__dot"></div>
-  <div className="typing__dot"></div>
-  <div className="typing__dot"></div>
->>>>>>> main
 </div>
   );
 }

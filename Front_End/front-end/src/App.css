@@ -2,6 +2,10 @@
 
 h1{
   font-family: 'Oswald', sans-serif;
+<<<<<<< HEAD
+  margin:0;
+=======
+>>>>>>> main
 }
 
 p{
@@ -16,14 +20,43 @@ h3{
   font-family: 'Oswald', sans-serif;
 }
 
+<<<<<<< HEAD
+.fast{
+=======
 button{
+>>>>>>> main
   background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
   background-size: 200% 100%;
   background-position:right bottom;
 }
 
+<<<<<<< HEAD
+.slow{
+  background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+}
+
+.fast:hover{
+  background-position:left bottom;
+  transition:all 0.4s ease;
+}
+
+.slow:hover{
+  background-position:left bottom;
+  transition:all 0.8s ease;
+}
+
+.links button{
+  background: #001a2b;
+}
+
+.links button:hover{
+  filter: brightness(50%);
+=======
 button:hover{
   background-position:left bottom;
+>>>>>>> main
   transition:all 0.4s ease;
 }
 
@@ -63,6 +96,159 @@ input::selection{
   margin-left: 10%;
 }
 
+<<<<<<< HEAD
+.wait{
+  display:flex;
+  align-items: center;
+}
+
+.d {
+  float: left;
+  margin: 0 4px;
+  background: #001a2b;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  animation: typing 2s infinite;
+  animation-timing-function: linear;
+}
+
+.dSlow {
+  float: left;
+  margin: 0 4px;
+  background: #001a2b;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  animation: typing 5s infinite;
+  animation-timing-function: linear;
+}
+
+.d:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.d:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.d:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.dSlow:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dSlow:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.dSlow:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+@keyframes typing {
+  0% {
+    width: 8px;
+    height: 8px;
+  }
+  25% {
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
+  }
+  50% {
+    width: 8px;
+    height: 8px;
+  }
+  100% {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+::-moz-selection {
+  background: #8EE9F6 !important;
+  color:white !important;
+}
+::selection {
+  background: #8EE9F6 !important;
+  color:white !important;
+}
+.goSite{
+  background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+  height:50px;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
+  line-height: 50px;
+  width:120px;
+  text-decoration: none;
+  cursor: pointer;
+  margin:5px;
+}
+.goSite:hover{
+  background-position:left bottom;
+  transition:all 0.4s ease;
+}
+.noSite{
+  background: linear-gradient(to right, #bb1d0c 50%, #E6240F 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+  height:50px;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
+  line-height: 50px;
+  width:120px;
+  cursor: pointer;
+  margin:5px;
+}
+.noSite:hover{
+  background-position:left bottom;
+  transition:all 0.4s ease;
+}
+.urlBTN{
+  
+  
+  height:'10%';
+  padding-bottom: 25px;
+  display: flex;
+  width: 100%;
+  
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+a{
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #001a2b; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+=======
 .typing {
   position: relative;
   padding: 10px;
@@ -104,4 +290,5 @@ input::selection{
   100% {
     opacity: 0;
   }
+>>>>>>> main
 }
