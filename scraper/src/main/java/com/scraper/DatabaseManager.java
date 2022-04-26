@@ -9,14 +9,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DatabaseManager {
 
-    private final String pathToCredentials = "C:\\Users\\Justin_Gamer_Zone_PC\\Desktop\\Database\\creds.txt";
+    private final String pathToCredentials = "/home/griffin/Documents/active_courses/cosc_4p02/creds.txt";
     private String url = "";
     private String user = "";
     private String password = "";
@@ -52,11 +54,34 @@ public class DatabaseManager {
                 if ((j+1)<headers.length) sql+=", ";
             }
             sql += " from " + tableName;
+            System.out.println(sql);
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
                 String[] temp = new String[headers.length];
                 for(int i=0; i<headers.length; i++){
                     temp[i] = result.getString(headers[i]);
+                }
+                toReturn.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toReturn;
+    }
+
+    public ArrayList<String[]> getFromDB(String tableName){
+        ArrayList<String[]> toReturn = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "Select * from " + tableName;
+            System.out.println(sql);
+            ResultSet result = statement.executeQuery(sql);
+            
+            while (result.next()) {
+                ResultSetMetaData resultSetMetaData = result.getMetaData();
+                String[] temp = new String[resultSetMetaData.getColumnCount()];
+                for (int i = 0; i < resultSetMetaData.getColumnCount(); i++) {
+                    temp[i] = result.getString(i+1);
                 }
                 toReturn.add(temp);
             }
@@ -77,7 +102,22 @@ public class DatabaseManager {
             for (String[] item : scraper.items) {
                 if (!exists(item, itemsInDB)){
                     for (int i=0; i<headers.length; i++){
-                        statement.setString(i+1, item[i]);
+                        if (i<headers.length){
+                            if (headers[i].equals("time")){
+                                System.out.println(item[i]);
+                                Timestamp t = new Timestamp(Long.parseLong(item[i]));
+                                statement.setTimestamp(i+1, t);
+                            }
+                            else{
+                                statement.setString(i+1, item[i]);
+                            }
+
+                        }
+                        
+                        else{
+                            statement.setString(i+1, item[i]);
+                        }
+                        
                     }
                     statement.addBatch();
                     System.out.println("added to " + tableName + " - " + item[0]);
@@ -104,13 +144,26 @@ public class DatabaseManager {
         return sql;
     }
 
-    public void deleteFromDB(Scraper scraper, ArrayList<String[]> itemsInDB, String tableName){
-        String sql = "DELETE FROM " + tableName + " WHERE name=?";
+    public void deleteFromDB(Scraper scraper, ArrayList<String[]> itemsInDB, String tableName, String[] headers){
+        String sql = "DELETE FROM " + tableName + " WHERE ";
+        for (int i=0; i<headers.length; i++){
+            sql += headers[i] + "=" + "?";
+            if ((i+1)<headers.length) sql+=" AND ";
+        }
+        System.out.println(sql);
+
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             for (String[] card : itemsInDB) {
                 if (!exists(card, scraper.items)){
-                    statement.setString(1, card[0]);
+                    for (int j=0; j<headers.length; j++){
+                        if (headers[j].equals("time")){
+                            statement.setTimestamp(j+1, Timestamp.valueOf(card[j]));
+                        }
+                        else {
+                            statement.setString(j+1, card[j]);
+                        }
+                    }
                     statement.addBatch();
                     System.out.println("deleted from " + tableName + " - " + card[0]);
                 }
