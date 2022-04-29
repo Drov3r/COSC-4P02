@@ -26,7 +26,7 @@
             </goals>
             <configuration>
               <outputDirectory>
-                  ${project.build.directory}/libs
+                  ${project.basedir}/libs
               </outputDirectory>
             </configuration>
           </execution>
