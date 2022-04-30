@@ -1,4 +1,0 @@
-- Transportation(bus routes etc)
-- Location?
-- News articles?
-- When do the games start?
